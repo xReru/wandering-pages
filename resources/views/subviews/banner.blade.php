@@ -1,3 +1,4 @@
+<head>@vite('resources/css/app.css')</head>
 <header class="bg-white shadow-sm">
     <div class="container mx-auto px-4 py-3">
         <div class="flex items-center justify-between">
@@ -51,7 +52,7 @@
                                     <p class="text-xs uppercase tracking-widest text-indigo-800 font-medium mb-2">NEW
                                         RELEASE</p>
                                     <h1 class="book-title text-5xl md:text-6xl mb-2">Darker by Four</h1>
-                                    <p class="text-gray-600 mb-6">June C.L Tan</p>
+                                    <p class="book-author text-indigo-800 mb-6">June C.L Tan</p>
                                     <p class="text-gray-700 mb-8 text-sm">
                                         Justo habitant at augue ac sed proin consectetur ac urna nisl elit nulla
                                         facilisis viverra dolor sagittis nisi risus egestas adipiscing nibh euismod.
@@ -71,7 +72,7 @@
 
                             <!-- Book Cover -->
                             <div class="book-cover w-full md:w-1/2 flex justify-center">
-                                <img src="https://i.postimg.cc/hPJ8tMPx/dbf.png" alt="Darker by Four Book Cover"
+                                <img src="{{ asset('images/darker-by-four.png') }}" alt="Darker by Four Book Cover"
                                     class="h-auto max-w-full rounded-lg shadow-lg" width="350" height="500">
                             </div>
                         </div>
@@ -85,7 +86,7 @@
                                     <p class="text-xs uppercase tracking-widest text-indigo-800 font-medium mb-2">
                                         BESTSELLER</p>
                                     <h1 class="book-title text-5xl md:text-6xl mb-2">The Dark Within Us</h1>
-                                    <p class="text-gray-600 mb-6">Ann Denton</p>
+                                    <p class="book-author text-indigo-800 mb-6">Ann Denton</p>
                                     <p class="text-gray-700 mb-8 text-sm">
                                         A captivating mystery set in a coastal town where the past and present collide.
                                         Secrets buried for decades resurface with consequences no one expected.
@@ -103,7 +104,7 @@
                                 </div>
                             </div>
                             <div class="book-cover w-full md:w-1/2 flex justify-center">
-                                <img src="https://i.postimg.cc/nLwBxDbT/tdwu.png" alt="Silent Echoes Book Cover"
+                                <img src="{{ asset('images/the-dark-within-us.png') }}" alt="Silent Echoes Book Cover"
                                     class="h-auto max-w-full rounded-lg shadow-lg" width="350" height="500">
                             </div>
                         </div>
@@ -117,7 +118,7 @@
                                     <p class="text-xs uppercase tracking-widest text-indigo-800 font-medium mb-2">COMING
                                         SOON</p>
                                     <h1 class="book-title text-5xl md:text-6xl mb-2">Spin The Dawn</h1>
-                                    <p class="text-gray-600 mb-6">Elizabeth Lim</p>
+                                    <p class="book-author text-indigo-800 mb-6">Elizabeth Lim</p>
                                     <p class="text-gray-700 mb-8 text-sm">
                                         In a world where fire is currency and dragons rule the skies, one woman
                                         discovers her destiny as the last fire wielder who can restore balance to the
@@ -136,7 +137,7 @@
                                 </div>
                             </div>
                             <div class="book-cover w-full md:w-1/2 flex justify-center">
-                                <img src="https://i.postimg.cc/wBSMFcdK/std.png" alt="Spin The Dawn Book Cover"
+                                <img src="{{ asset('images/spin-the-dawn.png') }}" alt="Spin The Dawn Book Cover"
                                     class="h-auto max-w-full rounded-lg shadow-lg" width="350" height="500">
                             </div>
                         </div>
@@ -154,11 +155,13 @@
             perPage: 1,
             perMove: 1,
             gap: '1rem',
+            rewind: true,
             pagination: false,
             arrows: true,
             autoplay: true,
             interval: 3000,
             pauseOnHover: true,
+            easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
             breakpoints: {
                 640: {
                     arrows: false,

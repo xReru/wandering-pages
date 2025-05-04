@@ -30,7 +30,7 @@ body {
 }
 .book-title {
     font-family: 'EBGaramond', regular;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 /* Splide Custom Styles */
@@ -76,3 +76,8 @@ body {
     }
 }
 
+/*BOOK Series page*/
+.bs-title {
+    font-family: 'EBGaramond', regular;
+    font-weight: 100;
+}

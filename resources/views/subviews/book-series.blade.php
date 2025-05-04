@@ -31,7 +31,7 @@
     <!-- Header -->
     <div class="text-center mb-8">
         <p class="text-gray-500 mb-1">Complete Series Of</p>
-        <h1 class="text-4xl font-bold mb-1 text-gray-900">GrishaVerse Series</h1>
+        <h1 class="book-title text-4xl font-bold mb-1 text-gray-900">GrishaVerse Series</h1>
         <p class="text-gray-500 text-sm">Original series of Leigh Bardugo</p>
     </div>
 
@@ -47,7 +47,7 @@
             </div>
             <div class="p-4">
                 <p class="text-gray-500 text-sm mb-1">Fantasy</p>
-                <h3 class="text-xl font-bold mb-1 text-gray-800">Shadow and Bone</h3>
+                <h3 class="bs-title text-xl font-bold mb-1 text-gray-800">Shadow and Bone</h3>
                 <p class="font-bold text-gray-700 mb-2">$24.00</p>
                 <div class="flex justify-between items-center">
                     <button class="favorite-btn bg-transparent border-none text-xl text-gray-300 hover:text-red-500 transition-colors duration-300 focus:outline-none">
@@ -67,7 +67,7 @@
             </div>
             <div class="p-4">
                 <p class="text-gray-500 text-sm mb-1">Fantasy</p>
-                <h3 class="text-xl font-bold mb-1 text-gray-800">Siege and Storm</h3>
+                <h3 class="bs-title text-xl font-bold mb-1 text-gray-800">Siege and Storm</h3>
                 <p class="font-bold text-gray-700 mb-2">$24.00</p>
                 <div class="flex justify-between items-center">
                     <button class="favorite-btn bg-transparent border-none text-xl text-gray-300 hover:text-red-500 transition-colors duration-300 focus:outline-none">
@@ -87,7 +87,7 @@
             </div>
             <div class="p-4">
                 <p class="text-gray-500 text-sm mb-1">Fantasy</p>
-                <h3 class="text-xl font-bold mb-1 text-gray-800">Ruin and Rising</h3>
+                <h3 class="bs-title text-xl font-bold mb-1 text-gray-800">Ruin and Rising</h3>
                 <p class="font-bold text-gray-700 mb-2">$24.00</p>
                 <div class="flex justify-between items-center">
                     <button class="favorite-btn bg-transparent border-none text-xl text-gray-300 hover:text-red-500 transition-colors duration-300 focus:outline-none">

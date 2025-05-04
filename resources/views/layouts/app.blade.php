@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 
 <head>
     <meta charset="UTF-8">
@@ -15,12 +15,14 @@
             font-weight: 400;
             font-style: normal;
         }
+
         @font-face {
             font-family: 'EBGaramond';
             src: url('/fonts/EBGaramond-Regular.ttf') format('truetype');
             font-weight: 400;
             font-style: normal;
         }
+
         @font-face {
             font-family: 'Heebo-Regular';
             src: url('/fonts/Heebo-Regular.ttf') format('truetype');
@@ -30,10 +32,16 @@
     </style>
 </head>
 
-<body>
-    @include('subviews.banner')
-    @include('subviews.book-series')
+<body class="h-full flex flex-col bg-white">
 
+    <main class="flex-grow">
+        @include('subviews.banner')
+        @include('subviews.book-series')
+        @include('subviews.book-series-showcase')
+        @include('subviews.upcoming-book')
+        @include('subviews.mini-book-browse')
+    </main>
+    @include('subviews.footer-section')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/js/splide.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

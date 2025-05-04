@@ -8,6 +8,7 @@
     <title>Wandering Pages | Book Showcase</title>
     @vite('resources/css/app.css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/css/splide.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap');
 
@@ -15,9 +16,7 @@
             font-family: 'DancingScript';
             src: url('/fonts/DancingScript-Regular.ttf') format('truetype');
             font-weight: 400;
-            /* Adjust as needed for different font weights */
             font-style: normal;
-            /* Adjust as needed for different font styles */
         }
 
         body {
@@ -36,15 +35,31 @@
             font-weight: 700;
         }
 
-        .carousel-control {
+        /* Splide Custom Styles */
+        .splide__arrow {
+            background: white;
+            opacity: 1;
             width: 40px;
             height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: #333;
-            font-size: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .splide__arrow svg {
+            width: 1em;
+            height: 1em;
+            fill: #333;
+        }
+
+        .splide__pagination {
+            bottom: -2rem;
+        }
+
+        .splide__pagination__page {
+            background: #ccc;
+        }
+
+        .splide__pagination__page.is-active {
+            background: #6366F1;
         }
 
         .hero-section {

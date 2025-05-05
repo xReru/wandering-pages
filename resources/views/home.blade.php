@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('content')
+    @include('subviews.navbar-section')
+@endsection
 
 @section('content')
     @include('subviews.banner')

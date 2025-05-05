@@ -35,6 +35,7 @@
 <body class="h-full flex flex-col bg-white">
 
     <main class="flex-grow">
+        @include('subviews.navbar-section')
         @include('subviews.banner')
         @include('subviews.book-series')
         @include('subviews.book-series-showcase')

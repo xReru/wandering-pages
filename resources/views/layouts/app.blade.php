@@ -33,14 +33,9 @@
 </head>
 
 <body class="h-full flex flex-col bg-white">
-
+    @include('subviews.navbar-section')
     <main class="flex-grow">
-        @include('subviews.navbar-section')
-        @include('subviews.banner')
-        @include('subviews.book-series')
-        @include('subviews.book-series-showcase')
-        @include('subviews.upcoming-book')
-        @include('subviews.mini-book-browse')
+        @yield('content')
     </main>
     @include('subviews.footer-section')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/js/splide.min.js"></script>

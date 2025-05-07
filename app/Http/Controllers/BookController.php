@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Books;
+use App\Models\Book;
 
 class BookController extends Controller
 {
@@ -42,7 +42,7 @@ class BookController extends Controller
                 'rotate' => 'rotate-0'
             ],
         ];
-        $query = Books::query();
+        $query = Book::query();
 
         // Filtering by genre
         $genre = $request->input('genre');
@@ -64,7 +64,7 @@ class BookController extends Controller
         $books = $query->paginate(10)->withQueryString();
 
         // Get all genres for filter dropdown
-        $genres = Books::select('genre')->distinct()->pluck('genre')->toArray();
+        $genres = Book::select('genre')->distinct()->pluck('genre')->toArray();
         array_unshift($genres, 'All');
 
         return view('browse-books', [

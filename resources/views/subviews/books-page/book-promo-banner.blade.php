@@ -64,14 +64,14 @@
                         @php
                         $leftClass = match($index) {
                             0 => 'left-0',
-                            1 => 'left-1/5',
-                            2 => 'left-2/5',
-                            3 => 'left-3/5',
-                            4 => 'left-4/5',
+                            1 => 'left-[15%]',
+                            2 => 'left-[30%]',
+                            3 => 'left-[45%]',
+                            4 => 'left-[60%]',
                             default => 'left-0',
                         };
                         @endphp
-                        <div class="absolute {{ $leftClass }} w-2/3 h-full z-{{ 40 - ($index * 10) }} transform {{ $book['rotate'] }} hover:rotate-0 hover:scale-105 transition-transform duration-300">
+                        <div class="absolute {{ $leftClass }} w-1/2 h-full z-{{ 50 - ($index * 10) }} transform {{ $book['rotate'] }} hover:rotate-0 hover:scale-110 transition-all duration-300">
                             <img 
                                 src="{{ asset($book['image']) }}" 
                                 alt="{{ $book['title'] }} by {{ $book['author'] }}" 

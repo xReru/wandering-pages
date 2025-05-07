@@ -39,10 +39,17 @@
         <!-- Main Content -->
         <div class="flex-1">
             <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
                     <h1 class="text-3xl font-bold text-gray-900 font-['EBGaramond']">
                         @yield('header')
                     </h1>
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center">
+                            <i class="fas fa-sign-out-alt mr-2"></i>
+                            Logout
+                        </button>
+                    </form>
                 </div>
             </header>
 

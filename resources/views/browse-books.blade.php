@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    @include('subviews.books-page.book-promo-banner')
+    @include('subviews.books-page.book-promo-banner', ['books' => $promoBooks])
     @include('subviews.books-page.best-seller-banner')
 
     <div class="container mx-auto px-2 sm:px-4 py-8">

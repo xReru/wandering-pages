@@ -7,8 +7,41 @@ use App\Models\Books;
 
 class BookController extends Controller
 {
+    
     public function index(Request $request)
-    {
+    {   
+        $promoBooks = [
+            [
+                'title' => 'Before the Darkest Hour',
+                'author' => 'Brenna Harlow',
+                'image' => 'images/before-the-darkest-hour.png',
+                'rotate' => '-rotate-0'
+            ],
+            [
+                'title' => 'Blood at Dusk',
+                'author' => 'Brenna Harlow',
+                'image' => 'images/blood-at-dusk.png',
+                'rotate' => 'rotate-0'
+            ],
+            [
+                'title' => 'Blood After Dawn',
+                'author' => 'Brenna Harlow',
+                'image' => 'images/blood-after-dawn.png',
+                'rotate' => '-rotate-0'
+            ],
+            [
+                'title' => 'Blood follows Midnight',
+                'author' => 'Brenna Harlow',
+                'image' => 'images/blood-follows-midnight.png',
+                'rotate' => 'rotate-0'
+            ],
+            [
+                'title' => 'Blood before Sunrise',
+                'author' => 'Brenna Harlow',
+                'image' => 'images/blood-before-sunrise.png',
+                'rotate' => 'rotate-0'
+            ],
+        ];
         $query = Books::query();
 
         // Filtering by genre
@@ -39,6 +72,7 @@ class BookController extends Controller
             'genres' => $genres,
             'selectedGenre' => $genre ?? 'All',
             'selectedSort' => $sort,
+            'promoBooks' => $promoBooks,
         ]);
     }
 }

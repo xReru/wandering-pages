@@ -5,28 +5,34 @@
     'salePrice' => 43.50,
     'books' => [
         [
-            'title' => 'Before Darkest Hour',
+            'title' => 'Before the Darkest Hour',
             'author' => 'Brenna Harlow',
-            'image' => '/images/books/before-darkest-hour.jpg',
-            'rotate' => '-rotate-3'
+            'image' => '/images/before-the-darkest-hour.png',
+            'rotate' => '-rotate-0'
         ],
         [
-            'title' => 'Dark Sky',
+            'title' => 'Blood at Dusk',
             'author' => 'Brenna Harlow',
-            'image' => '/images/books/dark-sky.jpg',
-            'rotate' => 'rotate-3'
+            'image' => '/images/blood-at-dusk.png',
+            'rotate' => 'rotate-0'
         ],
         [
-            'title' => 'After Dawn',
+            'title' => 'Blood After Dawn',
             'author' => 'Brenna Harlow',
-            'image' => '/images/books/after-dawn.jpg',
-            'rotate' => '-rotate-3'
+            'image' => '/images/blood-after-dawn.png',
+            'rotate' => '-rotate-0'
         ],
         [
-            'title' => 'Shadows Rise',
+            'title' => 'Blood follows Midnight',
             'author' => 'Brenna Harlow',
-            'image' => '/images/books/shadows-rise.jpg',
-            'rotate' => 'rotate-3'
+            'image' => '/images/blood-follows-midnight.png',
+            'rotate' => 'rotate-0'
+        ],
+        [
+            'title' => 'Blood before Sunrise',
+            'author' => 'Brenna Harlow',
+            'image' => '/images/blood-before-sunrise.png',
+            'rotate' => 'rotate-0'
         ],
     ],
     'buyNowUrl' => '#',
@@ -55,11 +61,21 @@
             <div class="p-4 md:w-1/2 lg:w-3/5 relative">
                 <div class="relative h-64 sm:h-72 md:h-80 lg:h-96">
                     @foreach($books as $index => $book)
-                        <div class="absolute {{ $index === 0 ? 'left-0' : ($index === 1 ? 'left-1/4' : ($index === 2 ? 'left-1/2' : 'left-2/3')) }} w-2/3 h-full z-{{ 40 - ($index * 10) }} transform {{ $book['rotate'] }} hover:rotate-0 hover:scale-105 transition-transform duration-300">
+                        @php
+                        $leftClass = match($index) {
+                            0 => 'left-0',
+                            1 => 'left-1/5',
+                            2 => 'left-2/5',
+                            3 => 'left-3/5',
+                            4 => 'left-4/5',
+                            default => 'left-0',
+                        };
+                        @endphp
+                        <div class="absolute {{ $leftClass }} w-2/3 h-full z-{{ 40 - ($index * 10) }} transform {{ $book['rotate'] }} hover:rotate-0 hover:scale-105 transition-transform duration-300">
                             <img 
                                 src="{{ asset($book['image']) }}" 
                                 alt="{{ $book['title'] }} by {{ $book['author'] }}" 
-                                class="h-full w-full object-cover shadow-xl rounded"
+                                class="h-full w-full object-contain shadow-xl rounded"
                                 onerror="this.src='/api/placeholder/320/480';this.onerror='';"
                             >
                         </div>

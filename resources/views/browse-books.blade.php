@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@php
+    use Illuminate\Support\Facades\Storage;
+@endphp
 @section('content')
     @include('subviews.books-page.book-promo-banner', ['books' => $promoBooks])
     @include('subviews.books-page.best-seller-banner')
@@ -30,7 +33,7 @@
             @forelse($books as $book)
                 <div class="bg-white rounded-lg shadow flex flex-col items-center p-4 transition hover:shadow-lg">
                     <img 
-                        src="{{ asset($book->image ?? '/api/placeholder/320/480') }}" 
+                        src="{{ Storage::url($book->image) ?? '/api/placeholder/320/480' }}" 
                         alt="{{ $book->title }} by {{ $book->author }}" 
                         class="h-48 w-full object-contain mb-4 rounded"
                         onerror="this.src='/api/placeholder/320/480';this.onerror='';"

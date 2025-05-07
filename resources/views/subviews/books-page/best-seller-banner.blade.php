@@ -19,7 +19,7 @@
             @foreach($books as $book)
                 <div class="bg-white rounded-lg shadow flex flex-col items-center p-4">
                     <img 
-                        src="{{ asset($book['image']) }}" 
+                        src="{{ Storage::url($book->image) ?? '/api/placeholder/320/480' }}" 
                         alt="{{ $book['title'] }} by {{ $book['author'] }}" 
                         class="h-48 w-full object-contain mb-4 rounded"
                         onerror="this.src='/api/placeholder/320/480';this.onerror='';"

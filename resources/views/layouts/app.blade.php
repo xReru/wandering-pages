@@ -41,26 +41,30 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/js/splide.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            new Splide('.splide', {
-                type: 'fade',
-                perPage: 1,
-                perMove: 1,
-                gap: '1rem',
-                rewind: true,
-                pagination: false,
-                arrows: true,
-                autoplay: true,
-                interval: 3000,
-                pauseOnHover: true,
-                easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
-                breakpoints: {
-                    640: {
-                        arrows: false,
+            const splideElement = document.querySelector('.splide');
+            if (splideElement) {
+                new Splide('.splide', {
+                    type: 'fade',
+                    perPage: 1,
+                    perMove: 1,
+                    gap: '1rem',
+                    rewind: true,
+                    pagination: false,
+                    arrows: true,
+                    autoplay: true,
+                    interval: 3000,
+                    pauseOnHover: true,
+                    easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+                    breakpoints: {
+                        640: {
+                            arrows: false,
+                        }
                     }
-                }
-            }).mount();
+                }).mount();
+            }
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </body>
 
 </html>

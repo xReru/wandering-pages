@@ -10,7 +10,9 @@ Route::middleware(['web'])->group(function () {
     Route::get('/', function () {
         return view('home');
     });
-
+    Route::get('/contact-us', function () {
+        return view('contact');
+    });
     Route::get('/browse-books', [BookController::class, 'index']);
 
     // Auth Routes

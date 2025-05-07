@@ -18,9 +18,9 @@
 
 <body class="bg-gray-200">
     <div class="container mx-auto px-4 py-12" x-data="bookShowcase()">
-        <div class="flex flex-col md:flex-row items-center justify-between">
+        <div class="flex flex-col md:flex-row items-center justify-center">
             <!-- Text Content -->
-            <div class="w-full md:w-1/3 mb-8 md:mb-0 space-y-4">
+            <div class="w-full md:w-1/3 mb-8 md:mb-0 space-y-4 text-center md:text-left">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Buy a Complete Series</h2>
                 <p class="text-lg text-gray-800">SoulBlood Series by Brenna Harlow</p>
                 <button
@@ -30,15 +30,15 @@
             </div>
 
             <!-- Book Slider -->
-            <div class="w-full md:w-2/3.5 relative h-90 md:h-96">
-                <div class="book-cover-container p-20 relative h-full w-full">
+            <div class="w-full md:w-2/3 relative h-[400px] md:h-[500px] flex items-center justify-center">
+                <div class="book-cover-container relative h-full w-full flex items-center justify-center">
                     <template x-for="(book, index) in books" :key="index">
                         <div class="book-cover absolute" :style="getBookStyle(index)" @click="setActiveBook(index)">
-                            <img :src="book . image" :alt="book . title" class="h-64 md:h-80 rounded-md shadow-lg">
+                            <img :src="book.image" :alt="book.title" class="h-48 sm:h-56 md:h-64 lg:h-72 rounded-md shadow-lg">
                         </div>
                     </template>
                 </div>
-                <div class="absolute top-1/2 left-0 right-0 flex justify-between transform -translate-y-1/2">
+                <div class="absolute top-1/2 left-0 right-0 flex justify-between transform -translate-y-1/2 px-4 md:px-8">
                     <button @click="prevBook()"
                         class="bg-white text-gray-800 rounded-full p-2 shadow-lg hover:bg-gray-100 transition duration-300">
                         <i class="fas fa-chevron-left"></i>
@@ -86,26 +86,22 @@
                     getBookStyle(index) {
                         const offset = (index - this.activeIndex + this.books.length) % this.books.length;
                         const zIndex = this.books.length - offset;
-                        let translateX, translateY, rotate, opacity, scale;
+                        let translateX, opacity, scale;
 
                         if (offset === 0) {
                             // Active book
                             translateX = '0%';
-                            translateY = '0%';
-                            rotate = '0deg';
                             opacity = 1;
                             scale = 1;
                         } else {
                             // Other books
-                            translateX = `${25 * offset}%`;
-                            translateY = `${5 * offset}%`;
-                            rotate = `${-5 + (offset * 3)}deg`;
+                            translateX = `${20 * offset}%`;
                             opacity = 1 - (offset * 0.15);
                             scale = 1 - (offset * 0.05);
                         }
 
                         return `
-                        transform: translateX(${translateX}) translateY(${translateY}) rotate(${rotate}) scale(${scale});
+                        transform: translateX(${translateX}) scale(${scale});
                         z-index: ${zIndex};
                         opacity: ${opacity};
                     `;

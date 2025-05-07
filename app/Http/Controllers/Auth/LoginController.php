@@ -9,37 +9,42 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function showLoginForm()
+    public function showLoginForm(Request $request)
     {
-        return view('auth.login');
+        if ($request->is('admin/login')) {
+            return view('auth.login'); // Admin login view
+        } else {
+            return view('subviews.login'); // User login view
+        }
     }
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        if ($request->is('admin/login')) {
+            $credentials = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
 
-        if ($credentials['email'] === 'admin@email.com' && $credentials['password'] === 'admin') {
-            // Find or create admin user
-            $admin = User::firstOrCreate(
-                ['email' => 'admin@email.com'],
-                [
-                    'name' => 'Admin',
-                    'password' => bcrypt('admin')
-                ]
-            );
-            
-            // Log in the admin
-            Auth::login($admin);
-            
-            return redirect()->route('admin.dashboard');
+            if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
+                return redirect()->route('admin.dashboard');
+            }
+
+            return back()->withErrors([
+                'email' => 'The provided credentials do not match our records.',
+            ]);
+        } else {
+            // Customer login
+            $credentials = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
+            if (Auth::guard('customer')->attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
+                return redirect('/test');
+            } else {
+                return back()->withErrors(['email' => 'Invalid credentials.']);
+            }
         }
-
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
     }
 
     public function logout(Request $request)

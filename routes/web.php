@@ -17,9 +17,9 @@ Route::middleware(['web'])->group(function () {
 
     // Auth Routes
     Route::prefix('admin')->group(function () {
-        Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-        Route::post('/login', [LoginController::class, 'login']);
-        Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+        Route::get('/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
+        Route::post('/login', [LoginController::class, 'login'])->name('admin.login.submit');
+        Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
     });
 
     // Admin Routes
@@ -30,5 +30,13 @@ Route::middleware(['web'])->group(function () {
 
         Route::resource('books', AdminBookController::class);
         Route::resource('genres', GenreController::class);
+    });
+
+    // User Login Routes
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('/test', function () {
+        return view('test');
     });
 });

@@ -6,9 +6,9 @@
             <div class="flex items-center space-x-6">
                 <a href="#" class="logo text-gray-800">Wandering Pages</a>
                 <nav class="hidden md:flex space-x-6">
-                    <a href="#" class="text-gray-700 hover:text-gray-900">Home</a>
+                    <a href="/" class="text-gray-700 hover:text-gray-900">Home</a>
                     <a href="#" class="text-gray-700 hover:text-gray-900">Shop</a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900">Contact</a>
+                    <a href="/contact-us" class="text-gray-700 hover:text-gray-900">Contact</a>
                 </nav>
             </div>
 

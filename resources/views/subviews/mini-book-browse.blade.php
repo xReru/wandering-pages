@@ -182,9 +182,9 @@
 
         <!-- Browse All Books Button -->
         <div class="flex justify-center mt-8">
-            <button
+            <a href="/browse-books"
                 class="browse-btn bg-[#5440aa] hover:bg-indigo-700 text-white px-6 py-2 rounded-md font-medium transition duration-300">Browse
-                All Books</button>
+                All Books</a>
         </div>
     </section>
 </div>

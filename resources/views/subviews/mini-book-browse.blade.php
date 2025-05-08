@@ -19,165 +19,48 @@
 
         <!-- First Row of Books -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
-            <!-- Book 1 -->
+            @foreach($books->take(4) as $book)
             <div class="flex flex-col">
                 <div class="relative mb-2">
-                    <img src="{{ asset('images/draw-down-the-moon.png') }}" alt="Draw Down the Moon"
+                    <img src="{{ asset('storage/' . $book->image) }}" alt="{{ $book->title }}"
                         class="book-cover w-full rounded-md shadow-md">
                     <span
-                        class="absolute top-2 left-2 bg-gray-800 bg-opacity-70 text-white text-xs px-2 py-1 rounded">Dark
-                        Fantasy</span>
+                        class="absolute top-2 left-2 bg-gray-800 bg-opacity-70 text-white text-xs px-2 py-1 rounded">{{ $book->genre }}</span>
                 </div>
                 <div class="flex items-start justify-between">
                     <div>
-                        <h3 class="font-semibold text-sm md:text-base">Draw Down the Moon</h3>
-                        <p class="text-gray-600 text-xs md:text-sm">$24.99</p>
+                        <h3 class="font-semibold text-sm md:text-base">{{ $book->title }}</h3>
+                        <p class="text-gray-600 text-xs md:text-sm">${{ number_format($book->price, 2) }}</p>
                     </div>
                     <button class="heart-icon text-gray-400 hover:text-red-600">
                         <i class="far fa-heart"></i>
                     </button>
                 </div>
             </div>
-
-            <!-- Book 2 -->
-            <div class="flex flex-col">
-                <div class="relative mb-2">
-                    <img src="{{ asset('images/modern-divination.png') }}" alt="Modern Divination"
-                        class="book-cover w-full rounded-md shadow-md">
-                    <span
-                        class="absolute top-2 left-2 bg-gray-800 bg-opacity-70 text-white text-xs px-2 py-1 rounded">Fantasy
-                        Horror</span>
-                </div>
-                <div class="flex items-start justify-between">
-                    <div>
-                        <h3 class="font-semibold text-sm md:text-base">Modern Divination</h3>
-                        <p class="text-gray-600 text-xs md:text-sm">$24.99</p>
-                    </div>
-                    <button class="heart-icon text-gray-400 hover:text-red-600">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Book 3 -->
-            <div class="flex flex-col">
-                <div class="relative mb-2">
-                    <img src="{{ asset('images/voice-of-the-ocean.png') }}" alt="Voice of the Ocean"
-                        class="book-cover w-full rounded-md shadow-md">
-                    <span
-                        class="absolute top-2 left-2 bg-gray-800 bg-opacity-70 text-white text-xs px-2 py-1 rounded">Fantasy</span>
-                </div>
-                <div class="flex items-start justify-between">
-                    <div>
-                        <h3 class="font-semibold text-sm md:text-base">Voice of the Ocean</h3>
-                        <p class="text-gray-600 text-xs md:text-sm">$24.99</p>
-                    </div>
-                    <button class="heart-icon text-gray-400 hover:text-red-600">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Book 4 -->
-            <div class="flex flex-col">
-                <div class="relative mb-2">
-                    <img src="{{ asset('images/lovely-dark-and-deep.png') }}" alt="Lovely Dark and Deep"
-                        class="book-cover w-full rounded-md shadow-md">
-                    <span
-                        class="absolute top-2 left-2 bg-gray-800 bg-opacity-70 text-white text-xs px-2 py-1 rounded">Dark
-                        Fantasy</span>
-                </div>
-                <div class="flex items-start justify-between">
-                    <div>
-                        <h3 class="font-semibold text-sm md:text-base">Lovely Dark and Deep</h3>
-                        <p class="text-gray-600 text-xs md:text-sm">$24.99</p>
-                    </div>
-                    <button class="heart-icon text-gray-400 hover:text-red-600">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
-            </div>
+            @endforeach
         </div>
 
         <!-- Second Row of Books -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
-            <!-- Book 5 -->
+            @foreach($books->skip(4)->take(4) as $book)
             <div class="flex flex-col">
                 <div class="relative mb-2">
-                    <img src="{{asset('images/this-monster-of-mine.png')}}" alt="This Monster of Mine"
+                    <img src="{{ asset('storage/' . $book->image) }}" alt="{{ $book->title }}"
                         class="book-cover w-full rounded-md shadow-md">
                     <span
-                        class="absolute top-2 left-2 bg-gray-800 bg-opacity-70 text-white text-xs px-2 py-1 rounded">Mystery</span>
+                        class="absolute top-2 left-2 bg-gray-800 bg-opacity-70 text-white text-xs px-2 py-1 rounded">{{ $book->genre }}</span>
                 </div>
                 <div class="flex items-start justify-between">
                     <div>
-                        <h3 class="font-semibold text-sm md:text-base">This Monster of Mine</h3>
-                        <p class="text-gray-600 text-xs md:text-sm">$24.99</p>
+                        <h3 class="font-semibold text-sm md:text-base">{{ $book->title }}</h3>
+                        <p class="text-gray-600 text-xs md:text-sm">${{ number_format($book->price, 2) }}</p>
                     </div>
                     <button class="heart-icon text-gray-400 hover:text-red-600">
                         <i class="far fa-heart"></i>
                     </button>
                 </div>
             </div>
-
-            <!-- Book 6 -->
-            <div class="flex flex-col">
-                <div class="relative mb-2">
-                    <img src="{{asset('images/unlock-the-dark.png')}}" alt="Unlock the Dark"
-                        class="book-cover w-full rounded-md shadow-md">
-                    <span
-                        class="absolute top-2 left-2 bg-gray-800 bg-opacity-70 text-white text-xs px-2 py-1 rounded">Fantasy</span>
-                </div>
-                <div class="flex items-start justify-between">
-                    <div>
-                        <h3 class="font-semibold text-sm md:text-base">Unlock the Dark</h3>
-                        <p class="text-gray-600 text-xs md:text-sm">$24.99</p>
-                    </div>
-                    <button class="heart-icon text-gray-400 hover:text-red-600">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Book 7 -->
-            <div class="flex flex-col">
-                <div class="relative mb-2">
-                    <img src="{{asset('images/where-the-axe-is-buried.png')}}" alt="Where the Axe is Buried"
-                        class="book-cover w-full rounded-md shadow-md">
-                    <span
-                        class="absolute top-2 left-2 bg-gray-800 bg-opacity-70 text-white text-xs px-2 py-1 rounded">Science
-                        Fiction</span>
-                </div>
-                <div class="flex items-start justify-between">
-                    <div>
-                        <h3 class="font-semibold text-sm md:text-base">Where the Axe is Buried</h3>
-                        <p class="text-gray-600 text-xs md:text-sm">$24.99</p>
-                    </div>
-                    <button class="heart-icon text-gray-400 hover:text-red-600">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Book 8 -->
-            <div class="flex flex-col">
-                <div class="relative mb-2">
-                    <img src="{{asset('images/the-gods-time-forgot.png')}}" alt="The Gods Time Forgot"
-                        class="book-cover w-full rounded-md shadow-md">
-                    <span
-                        class="absolute top-2 left-2 bg-gray-800 bg-opacity-70 text-white text-xs px-2 py-1 rounded">Historical
-                        Fiction</span>
-                </div>
-                <div class="flex items-start justify-between">
-                    <div>
-                        <h3 class="font-semibold text-sm md:text-base">The Gods Time Forgot</h3>
-                        <p class="text-gray-600 text-xs md:text-sm">$24.99</p>
-                    </div>
-                    <button class="heart-icon text-gray-400 hover:text-red-600">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
-            </div>
+            @endforeach
         </div>
 
         <!-- Browse All Books Button -->

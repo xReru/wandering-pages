@@ -7,7 +7,7 @@
 @section('content')
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Books Card -->
                 <div class="bg-white overflow-hidden shadow rounded-lg">
                     <div class="p-5">
@@ -63,6 +63,36 @@
                         <div class="text-sm">
                             <a href="{{ route('admin.genres.index') }}" class="font-medium text-green-600 hover:text-green-900">
                                 View all genres
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Banner Management Card -->
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="p-5">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-purple-500 rounded-md p-3">
+                                <i class="fas fa-images text-white text-2xl"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">
+                                        Banner Slides
+                                    </dt>
+                                    <dd class="flex items-baseline">
+                                        <div class="text-2xl font-semibold text-gray-900">
+                                            {{ \App\Models\BannerSlide::count() }}
+                                        </div>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-5 py-3">
+                        <div class="text-sm">
+                            <a href="{{ route('admin.banner-slides.index') }}" class="font-medium text-purple-600 hover:text-purple-900">
+                                Manage Banner Slides
                             </a>
                         </div>
                     </div>

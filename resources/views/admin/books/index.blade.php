@@ -74,7 +74,7 @@
 
     <!-- Add Book Modal -->
     <div
-        x-data="{ show: false }"
+        x-data="{ show: {{ $errors->any() ? 'true' : 'false' }} }"
         x-show="show"
         x-on:open-modal.window="if ($event.detail === 'add-book') show = true"
         x-on:close-modal.window="show = false"
@@ -126,15 +126,24 @@
 
                     <form action="{{ route('admin.books.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        @if ($errors->any())
+                            <div class="mb-4">
+                                <ul class="text-red-600 text-sm">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <div class="mb-4">
                             <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-                            <input type="text" name="title" id="title" required
+                            <input type="text" name="title" id="title" value="{{ old('title') }}" required
                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
 
                         <div class="mb-4">
                             <label for="author" class="block text-sm font-medium text-gray-700">Author</label>
-                            <input type="text" name="author" id="author" required
+                            <input type="text" name="author" id="author" value="{{ old('author') }}" required
                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
 
@@ -144,20 +153,20 @@
                                 class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                 <option value="">Select a genre</option>
                                 @foreach($genres as $genre)
-                                    <option value="{{ $genre }}">{{ $genre }}</option>
+                                    <option value="{{ $genre }}" {{ old('genre') == $genre ? 'selected' : '' }}>{{ $genre }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="mb-4">
                             <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
-                            <input type="number" name="price" id="price" step="0.01" required
+                            <input type="number" name="price" id="price" step="0.01" value="{{ old('price') }}" required
                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
 
                         <div class="mb-4">
                             <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
-                            <input type="number" name="quantity" id="quantity" required
+                            <input type="number" name="quantity" id="quantity" value="{{ old('quantity') }}" required
                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
 
@@ -165,12 +174,13 @@
                             <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
                             <input type="file" name="image" id="image" accept="image/*"
                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <p class="text-xs text-gray-500 mt-1">Max file size: 2MB (2048 kilobytes). Only JPEG, PNG, JPG, GIF allowed.</p>
                         </div>
 
                         <div class="mb-4">
                             <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
                             <textarea name="description" id="description" rows="3" required
-                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">{{ old('description') }}</textarea>
                         </div>
 
                         <div class="mt-6 flex justify-end space-x-3">

@@ -79,6 +79,11 @@ class BookController extends Controller
     public function show($id)
     {
         $book = Book::findOrFail($id);
-        return view('book-details', compact('book'));
+        // Fetch related books by genre, excluding the current book
+        $relatedBooks = Book::where('genre', $book->genre)
+            ->where('id', '!=', $book->id)
+            ->limit(8)
+            ->get();
+        return view('book-details', compact('book', 'relatedBooks'));
     }
 }

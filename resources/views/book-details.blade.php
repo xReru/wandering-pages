@@ -30,5 +30,6 @@
         <h2 class="text-xl font-bold mb-4 font-['EBGaramond']">Reviews (0)</h2>
         <div class="text-gray-500">No reviews yet.</div>
     </div>
+    @include('subviews.book-details.related-books', ['relatedBooks' => $relatedBooks])
 </div>
 @endsection 

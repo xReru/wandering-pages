@@ -1,4 +1,4 @@
 @extends('layouts.app')
 @section('content')
-    @include('subviews.contact-us')
+    @include('subviews.homepage.contact-us')
 @endsection

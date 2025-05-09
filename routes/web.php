@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\BookController as AdminBookController;
 use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\SignupController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index']);
@@ -39,3 +40,6 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/test', function () {
     return view('test');
 });
+
+Route::get('/signup', [SignupController::class, 'showSignupForm'])->name('signup');
+Route::post('/signup', [SignupController::class, 'signup']);

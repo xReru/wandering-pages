@@ -9,6 +9,9 @@
         <!-- Right: Login Form -->
         <div class="md:w-1/2 w-full flex items-center justify-center p-8">
             <div class="w-full max-w-md">
+                @if (session('success'))
+                    <div class="mb-4 text-green-600 text-center font-semibold">{{ session('success') }}</div>
+                @endif
                 <h2 class="font-['DancingScript'] text-4xl font-cursive font-semibold text-center text-purple-800 mb-2">Log in</h2>
                 <p class="text-center text-gray-500 mb-6">Justo habitant at augue ac sed proin</p>
                 <form action="{{ route('login') }}" method="POST" class="space-y-4">

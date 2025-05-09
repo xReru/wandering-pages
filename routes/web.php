@@ -32,6 +32,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('books', AdminBookController::class);
     Route::resource('genres', GenreController::class);
     Route::resource('banner-slides', \App\Http\Controllers\Admin\BannerSlideController::class);
+
+    // CMS Routes
+    Route::prefix('cms')->name('cms.')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('admin.cms.dashboard');
+        })->name('dashboard');
+    });
 });
 
 // User Login Routes

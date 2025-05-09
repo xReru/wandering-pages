@@ -29,10 +29,16 @@
                 <h2 class="text-2xl font-bold font-['EBGaramond']">Admin Panel</h2>
             </div>
             <nav class="mt-4">
-                <a href="{{ route('admin.books.index') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.books.*') ? 'bg-gray-700' : '' }}">
-                    <i class="fas fa-book mr-2"></i> Books
+                <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.dashboard') ? 'bg-gray-700' : '' }}">
+                    <i class="fas fa-home mr-2"></i> Dashboard
                 </a>
-                <!-- Add more navigation items here -->
+                <a href="{{ route('admin.books.index') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.books.*') ? 'bg-gray-700' : '' }}">
+                    <i class="fas fa-book mr-2"></i> Inventory Management
+                </a>
+                <a href="{{ route('admin.cms.dashboard') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.cms.*') ? 'bg-gray-700' : '' }}">
+                    <i class="fas fa-cogs mr-2"></i> Content Management
+                </a>
+                
             </nav>
         </div>
 

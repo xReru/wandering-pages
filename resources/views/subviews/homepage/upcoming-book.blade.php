@@ -1,17 +1,3 @@
-<head>
-    @vite('resources/css/app.css')
-    <style>
-        .book-cover {
-            transition: all 0.8s ease;
-            transform-origin: center bottom;
-        }
-
-        .book-cover-container {
-            perspective: 1000px;
-        }
-    </style>
-</head>
-
 <div class="min-h-screen w-full flex items-center justify-center px-4 py-12">
     <div class="max-w-5xl w-full overflow-hidden">
         <div class="flex flex-col md:flex-row">

@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-    @include('subviews.banner')
-    @include('subviews.book-series')
-    @include('subviews.book-series-showcase')
-    @include('subviews.upcoming-book')
-    @include('subviews.mini-book-browse')
+    @include('subviews.homepage.banner')
+    @include('subviews.homepage.book-series')
+    @include('subviews.homepage.book-series-showcase')
+    @include('subviews.homepage.upcoming-book')
+    @include('subviews.homepage.mini-book-browse')
 @endsection

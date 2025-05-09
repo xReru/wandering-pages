@@ -14,6 +14,7 @@ Route::get('/contact-us', function () {
     return view('contact');
 });
 Route::get('/browse-books', [BookController::class, 'index']);
+Route::get('/books/{book}', [App\Http\Controllers\BookController::class, 'show'])->name('books.show');
 
 // Auth Routes
 Route::prefix('admin')->group(function () {

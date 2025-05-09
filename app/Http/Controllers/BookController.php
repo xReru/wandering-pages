@@ -75,4 +75,10 @@ class BookController extends Controller
             'promoBooks' => $promoBooks,
         ]);
     }
+
+    public function show($id)
+    {
+        $book = Book::findOrFail($id);
+        return view('book-details', compact('book'));
+    }
 }

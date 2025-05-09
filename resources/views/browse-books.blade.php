@@ -31,7 +31,7 @@
 
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
             @forelse($books as $book)
-                <div class="bg-white rounded-lg shadow flex flex-col items-center p-4 transition hover:shadow-lg">
+                <a href="{{ route('books.show', $book->id) }}" class="bg-white rounded-lg shadow flex flex-col items-center p-4 transition hover:shadow-lg">
                     <img 
                         src="{{ Storage::url($book->image) ?? '/api/placeholder/320/480' }}" 
                         alt="{{ $book->title }} by {{ $book->author }}" 
@@ -51,7 +51,7 @@
                             <button class="bg-white border border-gray-300 hover:bg-purple-50 text-gray-700 text-xs font-medium py-1 px-3 rounded transition duration-300 font-['EBGaramond'] flex items-center gap-1"><i class="far fa-heart"></i></button>
                         </div>
                     </div>
-                </div>
+                </a>
             @empty
                 <div class="col-span-full text-center text-gray-500 py-12 font-['EBGaramond']">No books found.</div>
             @endforelse

@@ -60,7 +60,7 @@
 
                 <!-- Cart Modal -->
                 @if(Auth::guard('customer')->check())
-                <div x-show="$store.cart.open" class="fixed inset-0 bg-black bg-opacity-50 flex justify-end z-50" style="display: none;">
+                <div x-show="$store.cart.open" class="fixed inset-0 flex justify-end z-50" style="display: none;">
                     <div class="bg-white w-96 p-6 shadow-lg h-full overflow-y-auto relative">
                         <button @click="$store.cart.open = false" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">✕</button>
                         <h2 class="text-xl font-bold mb-4">Shopping Cart</h2>

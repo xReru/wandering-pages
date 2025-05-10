@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\SignupController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\NewsletterSubscriberController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index']);
@@ -41,6 +42,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
             return view('admin.cms.dashboard');
         })->name('dashboard');
     });
+
+    // Admin Bulk Email Routes
+    Route::get('/bulk-email', [App\Http\Controllers\Admin\BulkEmailController::class, 'index'])->name('bulk-email.index');
+    Route::post('/bulk-email/send', [App\Http\Controllers\Admin\BulkEmailController::class, 'send'])->name('bulk-email.send');
 });
 
 // User Login Routes
@@ -61,3 +66,5 @@ Route::middleware('auth:customer')->group(function () {
 
 Route::get('/signup', [SignupController::class, 'showSignupForm'])->name('signup');
 Route::post('/signup', [SignupController::class, 'signup']);
+
+Route::post('/newsletter/subscribe', [NewsletterSubscriberController::class, 'store'])->name('newsletter.subscribe');

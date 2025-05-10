@@ -88,10 +88,43 @@
                                             <a href="{{ route('admin.banner-slides.create') }}" class="block text-indigo-600 hover:text-indigo-900">
                                                 <i class="fas fa-plus mr-1"></i> Add New Banner
                                             </a>
+                                            <a href="{{ route('admin.bulk-email.index') }}" class="block text-indigo-600 hover:text-indigo-900">
+                                                <i class="fas fa-envelope mr-1"></i> Send Bulk Email
+                                            </a>
                                         </div>
                                     </dd>
                                 </dl>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter Stats Card -->
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="p-5">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-blue-500 rounded-md p-3">
+                                <i class="fas fa-envelope text-white text-2xl"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">
+                                        Newsletter Subscribers
+                                    </dt>
+                                    <dd class="flex items-baseline">
+                                        <div class="text-2xl font-semibold text-gray-900">
+                                            {{ \App\Models\NewsletterSubscriber::count() }}
+                                        </div>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-5 py-3">
+                        <div class="text-sm">
+                            <a href="{{ route('admin.bulk-email.index') }}" class="font-medium text-blue-600 hover:text-blue-900">
+                                Manage Newsletter
+                            </a>
                         </div>
                     </div>
                 </div>

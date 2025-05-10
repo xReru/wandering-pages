@@ -7,12 +7,14 @@ use App\Http\Controllers\Admin\BookController as AdminBookController;
 use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\SignupController;
+use App\Http\Controllers\CartController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/contact-us', function () {
     return view('contact');
 });
+
 Route::get('/browse-books', [BookController::class, 'index']);
 Route::get('/books/{book}', [App\Http\Controllers\BookController::class, 'show'])->name('books.show');
 
@@ -47,6 +49,14 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/test', function () {
     return view('test');
+});
+
+// Cart Routes
+Route::middleware('auth:customer')->group(function () {
+    Route::get('/cart', [CartController::class, 'getCart']);
+    Route::post('/cart/add', [CartController::class, 'addToCart']);
+    Route::post('/cart/update/{item}', [CartController::class, 'updateCartItem']);
+    Route::delete('/cart/remove/{item}', [CartController::class, 'removeFromCart']);
 });
 
 Route::get('/signup', [SignupController::class, 'showSignupForm'])->name('signup');

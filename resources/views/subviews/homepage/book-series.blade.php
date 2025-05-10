@@ -140,15 +140,29 @@
         addToCartButtons.forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
-                
-                // Get book info
                 const bookCard = this.closest('.book-card');
                 const bookTitle = bookCard.querySelector('h3').textContent;
-                const bookPrice = bookCard.querySelector('p:nth-of-type(2)').textContent;
-                
-                // You can add your cart logic here
-                console.log(`Added to cart: ${bookTitle} - ${bookPrice}`);
-                
+                // You should ideally have a data-book-id attribute for each book card. For now, we'll use a lookup if available.
+                // For demonstration, let's assume you have a JS object mapping titles to IDs:
+                const bookIdMap = {
+                    'Shadow and Bone': 1,
+                    'Siege and Storm': 2,
+                    'Ruin and Rising': 3
+                };
+                const bookId = bookIdMap[bookTitle];
+                if (!bookId) return alert('Book ID not found for ' + bookTitle);
+                fetch('/cart/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
+                    },
+                    body: JSON.stringify({ book_id: bookId, quantity: 1 })
+                }).then(res => res.json()).then(data => {
+                    if (window.cartModal) {
+                        window.cartModal().fetchCart();
+                    }
+                });
                 // Feedback animation
                 this.innerHTML = '<i class="fas fa-check text-green-500"></i>';
                 setTimeout(() => {

@@ -19,4 +19,9 @@ class Customer extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function cart()
+    {
+        return $this->hasOne(ShoppingCart::class, 'user_id');
+    }
 } 

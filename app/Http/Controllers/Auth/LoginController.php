@@ -26,8 +26,16 @@ class LoginController extends Controller
                 'password' => 'required',
             ]);
 
-            if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
-                return redirect()->route('admin.dashboard');
+            if (Auth::attempt($credentials)) {
+                $user = Auth::user();
+                if ($user->is_admin) {
+                    return redirect()->route('admin.dashboard');
+                } else {
+                    Auth::logout();
+                    return back()->withErrors([
+                        'email' => 'You do not have admin privileges.',
+                    ]);
+                }
             }
 
             return back()->withErrors([

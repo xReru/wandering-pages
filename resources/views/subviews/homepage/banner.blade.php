@@ -1,4 +1,4 @@
-<head>@vite('resources/css/app.css')</head>
+
 @if($bannerSlides->isNotEmpty())
 <!-- Hero Section with Book Showcase -->
 <section class="hero-section">

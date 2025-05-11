@@ -5,4 +5,5 @@
     @include('subviews.homepage.book-series-showcase')
     @include('subviews.homepage.upcoming-book')
     @include('subviews.homepage.mini-book-browse')
+    @include('subviews.newsletter-section')
 @endsection

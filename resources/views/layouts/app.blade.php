@@ -40,7 +40,7 @@
     <main class="flex-grow">
         @yield('content')
     </main>
-    @include('subviews.newsletter-section')
+    {{--@include('subviews.newsletter-section')--}}
     @include('subviews.footer-section')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/js/splide.min.js"></script>
     <script>

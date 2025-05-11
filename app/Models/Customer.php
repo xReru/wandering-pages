@@ -13,6 +13,11 @@ class Customer extends Authenticatable
         'name',
         'email',
         'password',
+        'first_name',
+        'last_name',
+        'phone_number',
+        'address',
+        'profile_picture'
     ];
 
     protected $hidden = [

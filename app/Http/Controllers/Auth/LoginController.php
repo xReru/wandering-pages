@@ -47,11 +47,26 @@ class LoginController extends Controller
                 'email' => 'required|email',
                 'password' => 'required',
             ]);
-            if (Auth::guard('customer')->attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
-                return redirect('/test');
-            } else {
-                return back()->withErrors(['email' => 'Invalid credentials.']);
+
+            if (Auth::guard('customer')->attempt($credentials)) {
+                $customer = Auth::guard('customer')->user();
+                
+                // Check if profile is complete
+                if (
+                    !empty($customer->first_name) &&
+                    !empty($customer->last_name) &&
+                    !empty($customer->phone_number) &&
+                    !empty($customer->address)
+                ) {
+                    return redirect()->route('dashboard');
+                }
+                
+                return redirect()->route('customer.profile.check');
             }
+
+            return back()->withErrors([
+                'email' => 'The provided credentials do not match our records.',
+            ]);
         }
     }
 

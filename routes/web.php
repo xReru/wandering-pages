@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\SignupController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\NewsletterSubscriberController;
+use App\Http\Controllers\Customer\CustomerController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index']);
@@ -48,7 +49,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/bulk-email/send', [App\Http\Controllers\Admin\BulkEmailController::class, 'send'])->name('bulk-email.send');
 });
 
-// User Login Routes
+// Customer Login Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -56,8 +57,26 @@ Route::get('/test', function () {
     return view('test');
 });
 
+// Customer Profile Routes
+Route::middleware(['auth:customer'])->group(function () {
+    Route::get('/customer/profile/check', [CustomerController::class, 'checkProfile'])->name('customer.profile.check');
+    Route::get('/customer/profile/setup', [CustomerController::class, 'showStepperForm'])->name('customer.profile.setup');
+    Route::post('/customer/profile/setup', [CustomerController::class, 'storeStepperForm'])->name('customer.profile.store');
+});
+
+// Protected Customer Routes
+Route::middleware(['auth:customer', \App\Http\Middleware\CheckCustomerProfile::class])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('customers.dash');
+    })->name('dashboard');
+    // ... other protected routes
+});
+Route::get('/test-profile', function () {
+    return 'Middleware passed.';
+})->middleware('customer.profile');
+
 // Cart Routes
-Route::middleware('auth:customer')->group(function () {
+Route::middleware(['auth:customer', \App\Http\Middleware\CheckCustomerProfile::class])->group(function () {
     Route::get('/cart', [CartController::class, 'getCart']);
     Route::post('/cart/add', [CartController::class, 'addToCart']);
     Route::post('/cart/update/{item}', [CartController::class, 'updateCartItem']);

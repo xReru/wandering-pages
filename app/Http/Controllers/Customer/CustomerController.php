@@ -64,7 +64,7 @@ class CustomerController extends Controller
         if ($request->hasFile('profile_picture')) {
             $image = $request->file('profile_picture');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('public/profile_pictures', $imageName);
+            $image->storeAs('profile_pictures', $imageName, 'public');
             $customer->profile_picture = 'profile_pictures/' . $imageName;
         }
 
@@ -100,7 +100,7 @@ class CustomerController extends Controller
         if ($request->hasFile('profile_picture')) {
             $image = $request->file('profile_picture');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('public/profile_pictures', $imageName);
+            $image->storeAs('profile_pictures', $imageName, 'public');
             $customer->profile_picture = 'profile_pictures/' . $imageName;
         }
 

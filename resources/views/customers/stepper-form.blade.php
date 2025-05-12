@@ -6,7 +6,24 @@
         <h2 class="text-2xl font-bold mb-2 text-center">Build Your Profile</h2>
         <p class="text-gray-500 mb-6 text-center">This information will let us know more about you.</p>
 
-        <div x-data="{ step: 1 }">
+        @if ($errors->any())
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
+        <div x-data="{ 
+            step: {{ old('step', 1) }},
+            setStep(newStep) {
+                this.step = newStep;
+                // Store the step in a hidden input
+                document.getElementById('current_step').value = newStep;
+            }
+        }">
             <!-- Stepper Navigation -->
             <div class="flex justify-between mb-8">
                 <div :class="step === 1 ? 'font-bold text-blue-600' : 'text-gray-400'">About</div>
@@ -16,13 +33,14 @@
 
             <form method="POST" action="{{ route('customer.profile.store') }}" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="step" id="current_step" value="{{ old('step', 1) }}">
 
                 <!-- Step 1: About -->
                 <div x-show="step === 1" x-cloak>
                     <div class="flex flex-col items-center mb-4">
                         <label class="relative cursor-pointer">
-                            <img id="profilePreview" src="{{ old('profile_picture') ? asset('storage/' . old('profile_picture')) : 'https://via.placeholder.com/100x100?text=Photo' }}" class="w-24 h-24 rounded-lg object-cover mb-2" />
-                            <input type="file" name="profile_picture" class="hidden" accept="image/*" onchange="document.getElementById('profilePreview').src = window.URL.createObjectURL(this.files[0])">
+                            <img id="profilePreview" src="{{ old('profile_pictures') ? asset('storage/' . old('profile_pictures')) : 'https://via.placeholder.com/100x100?text=Photo' }}" class="w-24 h-24 rounded-lg object-cover mb-2" />
+                            <input type="file" name="profile_picture" id="profile_picture" class="hidden" accept="image/*" onchange="document.getElementById('profilePreview').src = window.URL.createObjectURL(this.files[0])">
                             <span class="absolute bottom-2 right-2 bg-blue-600 text-white rounded-full p-1">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2a2.828 2.828 0 11-4-4 2.828 2.828 0 014 4z"></path>
@@ -52,7 +70,7 @@
                         <input type="date" name="date_of_birth" value="{{ old('date_of_birth') }}" class="w-full border rounded px-3 py-2 mt-1" required>
                     </div>
                     <div class="flex justify-end">
-                        <button type="button" @click="step = 2" class="px-4 py-2 bg-blue-600 text-white rounded">Next</button>
+                        <button type="button" @click="setStep(2)" class="px-4 py-2 bg-blue-600 text-white rounded">Next</button>
                     </div>
                 </div>
 
@@ -63,8 +81,8 @@
                         <input type="text" name="phone_number" value="{{ old('phone_number') }}" class="w-full border rounded px-3 py-2 mt-1" placeholder="Eg. +1234567890" required>
                     </div>
                     <div class="flex justify-between">
-                        <button type="button" @click="step = 1" class="px-4 py-2 bg-gray-200 rounded">Back</button>
-                        <button type="button" @click="step = 3" class="px-4 py-2 bg-blue-600 text-white rounded">Next</button>
+                        <button type="button" @click="setStep(1)" class="px-4 py-2 bg-gray-200 rounded">Back</button>
+                        <button type="button" @click="setStep(3)" class="px-4 py-2 bg-blue-600 text-white rounded">Next</button>
                     </div>
                 </div>
 
@@ -75,7 +93,7 @@
                         <textarea name="address" class="w-full border rounded px-3 py-2 mt-1" placeholder="Eg. 123 Main St, City, Country" required>{{ old('address') }}</textarea>
                     </div>
                     <div class="flex justify-between">
-                        <button type="button" @click="step = 2" class="px-4 py-2 bg-gray-200 rounded">Back</button>
+                        <button type="button" @click="setStep(2)" class="px-4 py-2 bg-gray-200 rounded">Back</button>
                         <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Finish</button>
                     </div>
                 </div>

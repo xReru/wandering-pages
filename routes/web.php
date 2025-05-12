@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\SignupController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\NewsletterSubscriberController;
 use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\OrderController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index']);
@@ -68,7 +69,7 @@ Route::middleware(['auth:customer'])->group(function () {
 
 // Protected Customer Routes
 Route::middleware(['auth:customer', \App\Http\Middleware\CheckCustomerProfile::class])->group(function () {
-    
+    Route::get('/customers/order/order-checkout', [OrderController::class, 'checkout'])->name('order.checkout');
     // ... other protected routes
 });
 

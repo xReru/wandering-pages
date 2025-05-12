@@ -90,7 +90,7 @@
                                     </div>
                                 </template>
                                 <div class="mt-4 font-bold">Subtotal: $<span x-text="$store.cart.subtotal"></span></div>
-                                <button class="mt-6 w-full bg-purple-700 text-white py-2 rounded font-bold hover:bg-purple-800 transition">CHECKOUT</button>
+                                <button class="mt-6 w-full bg-purple-700 text-white py-2 rounded font-bold hover:bg-purple-800 transition" @click.prevent="window.location.href='/customers/order/order-checkout'">CHECKOUT</button>
                             </div>
                         </template>
                         <template x-if="!$store.cart.cart || !$store.cart.cart.items || $store.cart.cart.items.length === 0">

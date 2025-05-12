@@ -28,9 +28,9 @@
                 <form action="{{ route('signup') }}" method="POST" class="space-y-4">
                     @csrf
                     <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                        <input id="name" name="name" type="text" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 @error('name') border-red-500 @enderror" placeholder="Your Name" value="{{ old('name') }}">
-                        @error('name')
+                        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                        <input id="username" name="username" type="text" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 @error('username') border-red-500 @enderror" placeholder="Username" value="{{ old('username') }}">
+                        @error('username')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>

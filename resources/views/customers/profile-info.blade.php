@@ -12,12 +12,12 @@
     <div class="flex-1 w-full">
         <h2 class="text-xl font-semibold mb-4 text-gray-800">My Profile</h2>
         <div class="space-y-2">
-            <div><span class="font-medium text-gray-600">Name:</span> {{ Auth::guard('customer')->user()->name }}</div>
+            <div><span class="font-medium text-gray-600">Name:</span> {{ Auth::guard('customer')->user()->first_name }} {{ Auth::guard('customer')->user()->last_name }}</div>
             <div><span class="font-medium text-gray-600">Email:</span> {{ Str::mask(Auth::guard('customer')->user()->email, '*', 2, strpos(Auth::guard('customer')->user()->email, '@') - 2) }}</div>
-            <div><span class="font-medium text-gray-600">Phone:</span> ********{{ substr(Auth::guard('customer')->user()->phone, -2) }}</div>
+            <div><span class="font-medium text-gray-600">Phone:</span> ********{{ substr(Auth::guard('customer')->user()->phone, -4) }}</div>
             <div><span class="font-medium text-gray-600">Address:</span> {{ Auth::guard('customer')->user()->address }}</div>
             <div><span class="font-medium text-gray-600">Gender:</span> {{ Auth::guard('customer')->user()->gender ?? 'N/A' }}</div>
-            <div><span class="font-medium text-gray-600">Date of Birth:</span> ** / ** / {{ Auth::guard('customer')->user()->birth_year ?? '****' }}</div>
+            <div><span class="font-medium text-gray-600">Date of Birth:</span> ** / ** / {{ Auth::guard('customer')->user()->date_of_birth->year ?? '****' }}</div>
             <div><span class="font-medium text-gray-600">Password:</span> ******** <a href="#" class="text-purple-700 text-xs font-semibold ml-2">change</a></div>
         </div>
         <div class="mt-6 text-right">

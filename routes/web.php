@@ -60,6 +60,7 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/customer/profile/check', [CustomerController::class, 'checkProfile'])->name('customer.profile.check');
     Route::get('/customer/profile/setup', [CustomerController::class, 'showStepperForm'])->name('customer.profile.setup');
     Route::post('/customer/profile/setup', [CustomerController::class, 'storeStepperForm'])->name('customer.profile.store');
+    Route::post('/customer/profile/update', [CustomerController::class, 'updateProfile'])->name('customer.profile.update');
     Route::get('/dashboard', function () {
         return view('customers.nav');
     })->name('dashboard');

@@ -53,27 +53,23 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('/test', function () {
-    return view('test');
-});
+
 
 // Customer Profile Routes
 Route::middleware(['auth:customer'])->group(function () {
     Route::get('/customer/profile/check', [CustomerController::class, 'checkProfile'])->name('customer.profile.check');
     Route::get('/customer/profile/setup', [CustomerController::class, 'showStepperForm'])->name('customer.profile.setup');
     Route::post('/customer/profile/setup', [CustomerController::class, 'storeStepperForm'])->name('customer.profile.store');
+    Route::get('/dashboard', function () {
+        return view('customers.nav');
+    })->name('dashboard');
 });
 
 // Protected Customer Routes
 Route::middleware(['auth:customer', \App\Http\Middleware\CheckCustomerProfile::class])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('customers.dash');
-    })->name('dashboard');
+    
     // ... other protected routes
 });
-Route::get('/test-profile', function () {
-    return 'Middleware passed.';
-})->middleware('customer.profile');
 
 // Cart Routes
 Route::middleware(['auth:customer', \App\Http\Middleware\CheckCustomerProfile::class])->group(function () {

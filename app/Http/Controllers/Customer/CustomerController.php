@@ -17,7 +17,9 @@ class CustomerController extends Controller
             !empty($customer->first_name) &&
             !empty($customer->last_name) &&
             !empty($customer->phone_number) &&
-            !empty($customer->address)
+            !empty($customer->address) &&
+            !empty($customer->gender) &&
+            !empty($customer->date_of_birth)
         ) {
             return redirect()->route('dashboard');
         }
@@ -34,7 +36,9 @@ class CustomerController extends Controller
             !empty($customer->first_name) &&
             !empty($customer->last_name) &&
             !empty($customer->phone_number) &&
-            !empty($customer->address)
+            !empty($customer->address) &&
+            !empty($customer->gender) &&
+            !empty($customer->date_of_birth)
         ) {
             return redirect()->route('dashboard');
         }
@@ -50,6 +54,8 @@ class CustomerController extends Controller
             'phone_number' => 'required|string|max:20',
             'address' => 'required|string',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gender' => 'required|in:male,female,other',
+            'date_of_birth' => 'required|date|before:today'
         ]);
 
         $customer = auth()->guard('customer')->user();
@@ -67,6 +73,8 @@ class CustomerController extends Controller
         $customer->last_name = $validated['last_name'];
         $customer->phone_number = $validated['phone_number'];
         $customer->address = $validated['address'];
+        $customer->gender = $validated['gender'];
+        $customer->date_of_birth = $validated['date_of_birth'];
         $customer->save();
 
         return redirect()->route('dashboard')->with('success', 'Profile completed successfully!');

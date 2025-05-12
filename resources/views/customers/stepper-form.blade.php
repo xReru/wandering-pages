@@ -38,6 +38,19 @@
                         <label class="block text-gray-700">Last Name</label>
                         <input type="text" name="last_name" value="{{ old('last_name') }}" class="w-full border rounded px-3 py-2 mt-1" placeholder="Eg. Tomson" required>
                     </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Gender</label>
+                        <select name="gender" class="w-full border rounded px-3 py-2 mt-1" required>
+                            <option value="">Select Gender</option>
+                            <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
+                            <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
+                            <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Date of Birth</label>
+                        <input type="date" name="date_of_birth" value="{{ old('date_of_birth') }}" class="w-full border rounded px-3 py-2 mt-1" required>
+                    </div>
                     <div class="flex justify-end">
                         <button type="button" @click="step = 2" class="px-4 py-2 bg-blue-600 text-white rounded">Next</button>
                     </div>

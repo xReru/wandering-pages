@@ -17,12 +17,18 @@ class Customer extends Authenticatable
         'last_name',
         'phone_number',
         'address',
-        'profile_picture'
+        'profile_picture',
+        'gender',
+        'date_of_birth'
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $casts = [
+        'date_of_birth' => 'date'
     ];
 
     public function cart()

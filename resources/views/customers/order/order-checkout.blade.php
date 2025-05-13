@@ -2,7 +2,7 @@
 
 @php
     use Illuminate\Support\Str;
-    $orderInfo = Str::random(8);
+    $orderInfo = Str::random(10);
     $transactionNo = random_int(1000000000000000, 9999999999999999);
     $subtotal = $cart->items->sum(fn($i) => $i->book->price * $i->quantity);
 @endphp
@@ -102,38 +102,40 @@
                 <div class="text-gray-500">Your cart is empty.</div>
             @endif
         </div>
-        <button id="place-order-btn" class="w-full mt-4 bg-purple-700 text-white py-3 rounded font-bold text-lg hover:bg-purple-800 transition">PLACE ORDER</button>
-    </div>
-</div>
-
-<!-- Payment Modal -->
-<div id="payment-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-white/30 backdrop-blur-[1px] hidden">
-    <div class="bg-white rounded-lg shadow-lg w-full max-w-md mx-4 p-6 relative flex flex-col">
-        <h2 class="text-lg font-serif font-semibold mb-1">PAYMENT</h2>
-        <p class="text-sm text-gray-600 mb-4">Scan this QR code and upload it to pay</p>
-        <hr class="mb-4">
-        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4">
-            <div class="flex-1 w-full">
-                <h3 class="font-semibold text-md mb-2">Order Summary</h3>
-                <div class="text-sm space-y-1 mb-2">
-                    <div class="flex justify-between"><span class="text-gray-500">Pay to</span> <span class="font-medium">Wandering Pages</span></div>
-                    <div class="flex justify-between"><span class="text-gray-500">Order info</span> <span class="break-all" id="modal-order-info">{{ $orderInfo }}</span></div>
-                    <div class="flex justify-between"><span class="text-gray-500">Order amount</span> <span id="modal-order-amount">${{ number_format($subtotal, 2) }}</span></div>
-                    <div class="flex justify-between"><span class="text-gray-500">Transaction no.</span> <span class="break-all" id="modal-transaction-no">{{ $transactionNo }}</span></div>
-                    <div class="flex justify-between font-bold text-base mt-2"><span>Total to pay</span> <span class="text-purple-700" id="modal-total">${{ number_format($subtotal + 20, 2) }}</span></div>
+        <div x-data="{ showModal: false }">
+            <button id="place-order-btn" @click="showModal = true" class="w-full mt-4 bg-purple-700 text-white py-3 rounded font-bold text-lg hover:bg-purple-800 transition">PLACE ORDER</button>
+            <div id="payment-modal" x-show="showModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center bg-white/30 backdrop-blur-[1px]" style="display: none;">
+                <div class="bg-white rounded-lg shadow-lg w-full max-w-md mx-4 p-6 relative flex flex-col">
+                    <h2 class="text-lg font-serif font-semibold mb-1">PAYMENT</h2>
+                    <p class="text-sm text-gray-600 mb-4">Scan this QR code and upload it to pay</p>
+                    <hr class="mb-4">
+                    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+                        <div class="flex-1 w-full">
+                            <h3 class="font-semibold text-md mb-2">Order Summary</h3>
+                            <div class="text-sm space-y-1 mb-2">
+                                <div class="flex justify-between"><span class="text-gray-500">Pay to</span> <span class="font-medium">Wandering Pages</span></div>
+                                <div class="flex justify-between"><span class="text-gray-500">Order info</span> <span class="break-all" id="modal-order-info">{{ $orderInfo }}</span></div>
+                                <div class="flex justify-between"><span class="text-gray-500">Name</span> <span class="font-medium">{{ $user->first_name . ' ' . $user->last_name ?? $user->username }}</span></div>
+                                <div class="flex justify-between"><span class="text-gray-500">Address</span> <span class="font-medium">{{ $user -> address}}</span></div>
+                                <div class="flex justify-between"><span class="text-gray-500">Order amount</span> <span id="modal-order-amount">${{ number_format($subtotal, 2) }}</span></div>
+                                <div class="flex justify-between"><span class="text-gray-500">Transaction no.</span> <span class="break-all" id="modal-transaction-no">{{ $transactionNo }}</span></div>
+                                <div class="flex justify-between font-bold text-base mt-2"><span>Total to pay</span> <span class="text-purple-700" id="modal-total">${{ number_format($subtotal + 20, 2) }}</span></div>
+                            </div>
+                            <button class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-gray-100 rounded text-sm font-medium text-gray-700 hover:bg-gray-200 transition mb-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5v-9m0 0L8.25 7.5m3.75 0l3.75 0M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                Upload Payment Photo
+                            </button>
+                        </div>
+                        <div class="flex-shrink-0 flex flex-col items-center">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=payment" alt="QR Code" class="w-36 h-36 rounded bg-gray-100 border mb-2">
+                        </div>
+                    </div>
+                    <div class="flex gap-2 mt-6">
+                        <button @click="showModal = false" class="w-full bg-purple-700 text-white py-2 rounded font-bold text-base hover:bg-purple-800 transition">Done</button>
+                        <button @click="showModal = false" type="button" class="w-full bg-gray-200 text-gray-700 py-2 rounded font-bold text-base hover:bg-gray-300 transition">Cancel</button>
+                    </div>
                 </div>
-                <button class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-gray-100 rounded text-sm font-medium text-gray-700 hover:bg-gray-200 transition mb-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5v-9m0 0L8.25 7.5m3.75 0l3.75 0M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    Upload Payment Photo
-                </button>
             </div>
-            <div class="flex-shrink-0 flex flex-col items-center">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=payment" alt="QR Code" class="w-36 h-36 rounded bg-gray-100 border mb-2">
-            </div>
-        </div>
-        <div class="flex gap-2 mt-6">
-            <button id="close-modal-btn" class="w-full bg-purple-700 text-white py-2 rounded font-bold text-base hover:bg-purple-800 transition">Done</button>
-            <button id="cancel-modal-btn" type="button" class="w-full bg-gray-200 text-gray-700 py-2 rounded font-bold text-base hover:bg-gray-300 transition">Cancel</button>
         </div>
     </div>
 </div>

@@ -1,5 +1,12 @@
 @extends('layouts.app')
 
+@php
+    use Illuminate\Support\Str;
+    $orderInfo = Str::random(8);
+    $transactionNo = random_int(1000000000000000, 9999999999999999);
+    $subtotal = $cart->items->sum(fn($i) => $i->book->price * $i->quantity);
+@endphp
+
 @section('content')
 <div class="min-h-screen bg-white flex flex-col md:flex-row">
     <!-- Left: Shipping & Payment -->
@@ -43,6 +50,25 @@
                 </div>
             </form>
         </div>
+        <div class="mb-8">
+            <h3 class="text-md font-semibold mb-2 text-gray-700">SHIPPING METHOD</h3>
+            <form id="shipping-method-form" class="space-y-3">
+                <div class="flex items-start space-x-3">
+                    <input type="radio" id="standard_shipping" name="shipping_method" value="standard" class="accent-purple-700 mt-1" checked>
+                    <label for="standard_shipping" class="flex flex-col cursor-pointer text-sm md:text-base">
+                        <span class="font-semibold">Standard Shipping</span>
+                        <span class="text-gray-500 text-xs">Standard Shipping: $20 (5 days - 7 days delivery time)</span>
+                    </label>
+                </div>
+                <div class="flex items-start space-x-3">
+                    <input type="radio" id="express_shipping" name="shipping_method" value="express" class="accent-purple-700 mt-1">
+                    <label for="express_shipping" class="flex flex-col cursor-pointer text-sm md:text-base">
+                        <span class="font-semibold">Express Shipping</span>
+                        <span class="text-gray-500 text-xs">Express Shipping: $50 (2 days - 5 days delivery time)</span>
+                    </label>
+                </div>
+            </form>
+        </div>
     </div>
     <!-- Right: Order Summary -->
     <div class="w-full md:w-[420px] bg-purple-50 px-4 md:px-8 py-6 md:py-10 flex flex-col min-h-[400px] md:min-h-screen">
@@ -61,11 +87,11 @@
                         </div>
                     @endforeach
                 </div>
-                <div class="mt-6 text-sm">
-                    <div class="flex justify-between mb-1"><span>Subtotal:</span> <span>${{ number_format($cart->items->sum(fn($i) => $i->book->price * $i->quantity), 2) }}</span></div>
-                    <div class="flex justify-between mb-1"><span>Shipping fee:</span> <span>$18.00</span></div>
+                <div class="mt-6 text-sm" id="order-summary-prices">
+                    <div class="flex justify-between mb-1"><span>Subtotal:</span> <span id="summary-subtotal">${{ number_format($cart->items->sum(fn($i) => $i->book->price * $i->quantity), 2) }}</span></div>
+                    <div class="flex justify-between mb-1"><span>Shipping fee:</span> <span id="summary-shipping">$20.00</span></div>
                     <hr class="my-2">
-                    <div class="flex justify-between font-bold text-lg"><span>Total:</span> <span>${{ number_format($cart->items->sum(fn($i) => $i->book->price * $i->quantity) + 18, 2) }}</span></div>
+                    <div class="flex justify-between font-bold text-lg"><span>Total:</span> <span id="summary-total">${{ number_format($cart->items->sum(fn($i) => $i->book->price * $i->quantity) + 20, 2) }}</span></div>
                 </div>
                 <form class="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
                     <input type="text" placeholder="Enter Code" class="flex-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm">
@@ -76,7 +102,74 @@
                 <div class="text-gray-500">Your cart is empty.</div>
             @endif
         </div>
-        <button class="w-full mt-4 bg-purple-700 text-white py-3 rounded font-bold text-lg hover:bg-purple-800 transition">PLACE ORDER</button>
+        <button id="place-order-btn" class="w-full mt-4 bg-purple-700 text-white py-3 rounded font-bold text-lg hover:bg-purple-800 transition">PLACE ORDER</button>
     </div>
 </div>
+
+<!-- Payment Modal -->
+<div id="payment-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-white/30 backdrop-blur-[1px] hidden">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md mx-4 p-6 relative flex flex-col">
+        <h2 class="text-lg font-serif font-semibold mb-1">PAYMENT</h2>
+        <p class="text-sm text-gray-600 mb-4">Scan this QR code and upload it to pay</p>
+        <hr class="mb-4">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+            <div class="flex-1 w-full">
+                <h3 class="font-semibold text-md mb-2">Order Summary</h3>
+                <div class="text-sm space-y-1 mb-2">
+                    <div class="flex justify-between"><span class="text-gray-500">Pay to</span> <span class="font-medium">Wandering Pages</span></div>
+                    <div class="flex justify-between"><span class="text-gray-500">Order info</span> <span class="break-all" id="modal-order-info">{{ $orderInfo }}</span></div>
+                    <div class="flex justify-between"><span class="text-gray-500">Order amount</span> <span id="modal-order-amount">${{ number_format($subtotal, 2) }}</span></div>
+                    <div class="flex justify-between"><span class="text-gray-500">Transaction no.</span> <span class="break-all" id="modal-transaction-no">{{ $transactionNo }}</span></div>
+                    <div class="flex justify-between font-bold text-base mt-2"><span>Total to pay</span> <span class="text-purple-700" id="modal-total">${{ number_format($subtotal + 20, 2) }}</span></div>
+                </div>
+                <button class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-gray-100 rounded text-sm font-medium text-gray-700 hover:bg-gray-200 transition mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5v-9m0 0L8.25 7.5m3.75 0l3.75 0M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Upload Payment Photo
+                </button>
+            </div>
+            <div class="flex-shrink-0 flex flex-col items-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=payment" alt="QR Code" class="w-36 h-36 rounded bg-gray-100 border mb-2">
+            </div>
+        </div>
+        <div class="flex gap-2 mt-6">
+            <button id="close-modal-btn" class="w-full bg-purple-700 text-white py-2 rounded font-bold text-base hover:bg-purple-800 transition">Done</button>
+            <button id="cancel-modal-btn" type="button" class="w-full bg-gray-200 text-gray-700 py-2 rounded font-bold text-base hover:bg-gray-300 transition">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const placeOrderBtn = document.getElementById('place-order-btn');
+    const paymentModal = document.getElementById('payment-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const cancelModalBtn = document.getElementById('cancel-modal-btn');
+    const shippingForm = document.getElementById('shipping-method-form');
+    const summaryShipping = document.getElementById('summary-shipping');
+    const summaryTotal = document.getElementById('summary-total');
+    const modalTotal = document.getElementById('modal-total');
+    const modalOrderAmount = document.getElementById('modal-order-amount');
+    const subtotal = parseFloat(document.getElementById('summary-subtotal').textContent.replace('$', ''));
+
+    function updateShipping() {
+        let shippingFee = shippingForm.querySelector('input[name="shipping_method"]:checked').value === 'express' ? 50 : 20;
+        summaryShipping.textContent = `$${shippingFee.toFixed(2)}`;
+        summaryTotal.textContent = `$${(subtotal + shippingFee).toFixed(2)}`;
+        modalTotal.textContent = `$${(subtotal + shippingFee).toFixed(2)}`;
+        modalOrderAmount.textContent = `$${subtotal.toFixed(2)}`;
+    }
+
+    shippingForm.addEventListener('change', updateShipping);
+
+    placeOrderBtn?.addEventListener('click', function(e) {
+        e.preventDefault();
+        paymentModal.classList.remove('hidden');
+        updateShipping();
+    });
+    closeModalBtn?.addEventListener('click', function() {
+        paymentModal.classList.add('hidden');
+    });
+    cancelModalBtn?.addEventListener('click', function() {
+        paymentModal.classList.add('hidden');
+    });
+</script>
 @endsection 

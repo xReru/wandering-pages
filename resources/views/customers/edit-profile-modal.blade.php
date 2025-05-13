@@ -58,4 +58,3 @@
         </form>
     </div>
 </div>
-<!-- Trigger button example: <button @click="openEditProfile = true">Edit Profile</button> --> 

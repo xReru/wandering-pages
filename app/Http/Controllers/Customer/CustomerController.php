@@ -117,4 +117,28 @@ class CustomerController extends Controller
 
         return redirect()->back()->with('success', 'Profile updated successfully!');
     }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/',
+                'confirmed',
+            ],
+        ], [
+            'new_password.regex' => 'Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, and one special character.'
+        ]);
+
+        $customer = Auth::guard('customer')->user();
+        if (!\Hash::check($request->current_password, $customer->password)) {
+            return response()->json(['error' => 'Current password is incorrect.'], 422);
+        }
+        $customer->password = \Hash::make($request->new_password);
+        $customer->save();
+        return response()->json(['success' => 'Password changed successfully.']);
+    }
 } 

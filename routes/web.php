@@ -65,6 +65,7 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/dashboard', function () {
         return view('customers.nav');
     })->name('dashboard');
+    Route::post('/customer/password/change', [CustomerController::class, 'changePassword'])->name('customer.password.change');
 });
 
 // Protected Customer Routes

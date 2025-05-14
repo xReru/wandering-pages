@@ -70,6 +70,9 @@ Route::middleware(['auth:customer'])->group(function () {
 // Protected Customer Routes
 Route::middleware(['auth:customer', \App\Http\Middleware\CheckCustomerProfile::class])->group(function () {
     Route::get('/customers/order/order-checkout', [OrderController::class, 'checkout'])->name('order.checkout');
+    Route::post('/customers/order/submit', [OrderController::class, 'submitOrder'])->name('order.submit');
+    Route::get('/customers/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/customers/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     // ... other protected routes
 });
 

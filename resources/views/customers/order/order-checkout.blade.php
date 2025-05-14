@@ -116,22 +116,33 @@
                                 <div class="flex justify-between"><span class="text-gray-500">Pay to</span> <span class="font-medium">Wandering Pages</span></div>
                                 <div class="flex justify-between"><span class="text-gray-500">Order info</span> <span class="break-all" id="modal-order-info">{{ $orderInfo }}</span></div>
                                 <div class="flex justify-between"><span class="text-gray-500">Name</span> <span class="font-medium">{{ $user->first_name . ' ' . $user->last_name ?? $user->username }}</span></div>
-                                <div class="flex justify-between"><span class="text-gray-500">Address</span> <span class="font-medium">{{ $user -> address}}</span></div>
+                                <div class="flex justify-between"><span class="text-gray-500">Address</span> <span class="font-medium">{{ $user->address }}</span></div>
                                 <div class="flex justify-between"><span class="text-gray-500">Order amount</span> <span id="modal-order-amount">${{ number_format($subtotal, 2) }}</span></div>
                                 <div class="flex justify-between"><span class="text-gray-500">Transaction no.</span> <span class="break-all" id="modal-transaction-no">{{ $transactionNo }}</span></div>
                                 <div class="flex justify-between font-bold text-base mt-2"><span>Total to pay</span> <span class="text-purple-700" id="modal-total">${{ number_format($subtotal + 20, 2) }}</span></div>
                             </div>
-                            <button class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-gray-100 rounded text-sm font-medium text-gray-700 hover:bg-gray-200 transition mb-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5v-9m0 0L8.25 7.5m3.75 0l3.75 0M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                Upload Payment Photo
-                            </button>
+                            <form id="payment-modal-form" class="space-y-4">
+                                <input type="hidden" name="transaction_no" value="{{ $transactionNo }}">
+                                <input type="hidden" name="payment_method" id="payment-method" value="GCash">
+                                <input type="hidden" name="shipping_method" id="shipping-method" value="standard">
+                                <div class="relative">
+                                    <input type="file" id="payment_proof" name="payment_proof" class="hidden" accept="image/*" required>
+                                    <button type="button" onclick="document.getElementById('payment_proof').click()" class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-gray-100 rounded text-sm font-medium text-gray-700 hover:bg-gray-200 transition mb-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5v-9m0 0L8.25 7.5m3.75 0l3.75 0M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                        <span id="upload-text">Upload Payment Photo</span>
+                                    </button>
+                                    <div id="preview-container" class="hidden mt-2">
+                                        <img id="preview-image" src="" alt="Payment Proof Preview" class="max-w-full h-32 object-contain rounded">
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                         <div class="flex-shrink-0 flex flex-col items-center">
                             <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=payment" alt="QR Code" class="w-36 h-36 rounded bg-gray-100 border mb-2">
                         </div>
                     </div>
                     <div class="flex gap-2 mt-6">
-                        <button @click="showModal = false" class="w-full bg-purple-700 text-white py-2 rounded font-bold text-base hover:bg-purple-800 transition">Done</button>
+                        <button id="submit-order-btn" class="w-full bg-purple-700 text-white py-2 rounded font-bold text-base hover:bg-purple-800 transition">Done</button>
                         <button @click="showModal = false" type="button" class="w-full bg-gray-200 text-gray-700 py-2 rounded font-bold text-base hover:bg-gray-300 transition">Cancel</button>
                     </div>
                 </div>
@@ -172,6 +183,87 @@
     });
     cancelModalBtn?.addEventListener('click', function() {
         paymentModal.classList.add('hidden');
+    });
+
+    // Handle payment method selection
+    document.querySelectorAll('input[name="payment_method"]').forEach(input => {
+        input.addEventListener('change', function() {
+            document.getElementById('payment-method').value = this.value;
+        });
+    });
+
+    // Handle shipping method selection
+    document.querySelectorAll('input[name="shipping_method"]').forEach(input => {
+        input.addEventListener('change', function() {
+            document.getElementById('shipping-method').value = this.value;
+            updateShipping();
+        });
+    });
+
+    // Handle payment proof upload
+    document.getElementById('payment_proof').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('preview-image').src = e.target.result;
+                document.getElementById('preview-container').classList.remove('hidden');
+                document.getElementById('upload-text').textContent = 'Change Payment Photo';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Handle order submission
+    document.getElementById('submit-order-btn').addEventListener('click', function() {
+        const form = document.getElementById('payment-modal-form');
+        const formData = new FormData(form);
+        
+        // Validate payment proof
+        const paymentProof = document.getElementById('payment_proof').files[0];
+        if (!paymentProof) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Payment Proof Required',
+                text: 'Please upload your payment proof before proceeding.'
+            });
+            return;
+        }
+
+        // Add the payment proof file to formData
+        formData.append('payment_proof', paymentProof);
+
+        // Submit the order
+        fetch('{{ route("order.submit") }}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Order Placed Successfully',
+                    text: 'Your order has been placed and is pending confirmation.',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(() => {
+                    window.location.href = '{{ route("orders.index") }}';
+                });
+            } else {
+                throw new Error(data.error || 'Failed to place order');
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message || 'Failed to place order. Please try again.'
+            });
+        });
     });
 </script>
 @endsection 

@@ -28,11 +28,23 @@ class Customer extends Authenticatable
     ];
 
     protected $casts = [
-        'date_of_birth' => 'date'
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'date_of_birth' => 'date',
     ];
 
     public function cart()
     {
         return $this->hasOne(ShoppingCart::class, 'user_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
     }
 } 

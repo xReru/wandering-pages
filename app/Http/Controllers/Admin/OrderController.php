@@ -17,7 +17,12 @@ class OrderController extends Controller
             
         return view('admin.orders.index', compact('orders'));
     }
-
+    // Admin Waybill
+    public function waybill(Order $order)
+    {
+        return view('admin.orders.waybill', compact('order'));
+    }
+    
     public function show(Order $order)
     {
         $order->load(['user', 'items.book']);

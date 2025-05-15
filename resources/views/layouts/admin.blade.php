@@ -20,6 +20,9 @@
 
     <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="font-sans antialiased bg-gray-100">
     <div class="min-h-screen flex">
@@ -38,7 +41,9 @@
                 <a href="{{ route('admin.cms.dashboard') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.cms.*') ? 'bg-gray-700' : '' }}">
                     <i class="fas fa-cogs mr-2"></i> Content Management
                 </a>
-                
+                <a href="{{ route('admin.orders.index') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.orders.*') ? 'bg-gray-700' : '' }}">
+                    <i class="fas fa-shopping-cart mr-2"></i> Orders
+                </a>
             </nav>
         </div>
 
@@ -95,5 +100,8 @@
     >
         <span x-text="message"></span>
     </div>
+
+    <!-- Scripts -->
+    @stack('scripts')
 </body>
 </html> 

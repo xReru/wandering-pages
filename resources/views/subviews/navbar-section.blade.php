@@ -44,6 +44,7 @@
                             <div class="px-4 py-2 text-sm text-gray-700">
                                 Welcome, {{ Auth::guard('customer')->user()->username }}
                             </div>
+                            <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
                             <form method="POST" action="{{ route('logout') }}" class="block">
                                 @csrf
                                 <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">

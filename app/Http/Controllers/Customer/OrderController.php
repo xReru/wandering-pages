@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -115,5 +116,45 @@ class OrderController extends Controller
             DB::rollBack();
             return response()->json(['error' => 'Failed to place order: ' . $e->getMessage()], 500);
         }
+    }
+
+    public function pending()
+    {
+        \Log::info('Accessing pending orders page');
+        try {
+            $user = Auth::guard('customer')->user();
+            \Log::info('User authenticated', ['user_id' => $user->id]);
+            
+            $orders = $user->orders()->with('items.book')->where('status', 'pending')->latest()->get();
+            \Log::info('Orders retrieved', ['count' => $orders->count()]);
+            
+            return view('customers.order.pending', [
+                'orders' => $orders
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error in pending orders', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            throw $e;
+        }
+    }
+
+    public function shipping()
+    {
+        $user = Auth::guard('customer')->user();
+        $orders = $user->orders()->with('items.book')->where('status', 'shipped')->latest()->get();
+        return view('customers.order.shipping', [
+            'orders' => $orders
+        ]);
+    }
+
+    public function delivering()
+    {
+        $user = Auth::guard('customer')->user();
+        $orders = $user->orders()->with('items.book')->where('status', 'delivered')->latest()->get();
+        return view('customers.order.delivering', [
+            'orders' => $orders
+        ]);
     }
 } 

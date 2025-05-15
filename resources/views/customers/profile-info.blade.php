@@ -1,3 +1,6 @@
+@extends('layouts.dashboard')
+
+@section('content')
 <div x-data="{ openEditProfile: false, openChangePassword: false, changePasswordLoading: false, changePasswordError: '', changePasswordSuccess: '', current_password: '', new_password: '', new_password_confirmation: '' }">
     <div class="bg-white rounded-lg shadow-md p-8 flex flex-col md:flex-row gap-8 items-center">
         <div class="flex flex-col items-center md:items-start w-full md:w-1/3">
@@ -33,3 +36,5 @@
     </div>
     @include('customers.edit-profile-modal', ['openBinding' => 'openEditProfile'])
     @include('customers.change-password')
+@endsection
+

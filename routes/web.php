@@ -10,7 +10,7 @@ use App\Http\Controllers\Auth\SignupController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\NewsletterSubscriberController;
 use App\Http\Controllers\Customer\CustomerController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Customer\OrderController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index']);
@@ -70,7 +70,7 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::post('/customer/profile/setup', [CustomerController::class, 'storeStepperForm'])->name('customer.profile.store');
     Route::post('/customer/profile/update', [CustomerController::class, 'updateProfile'])->name('customer.profile.update');
     Route::get('/dashboard', function () {
-        return view('customers.nav');
+        return view('customers.profile-info');
     })->name('dashboard');
     Route::post('/customer/password/change', [CustomerController::class, 'changePassword'])->name('customer.password.change');
 });
@@ -80,8 +80,10 @@ Route::middleware(['auth:customer', \App\Http\Middleware\CheckCustomerProfile::c
     Route::get('/customers/order/order-checkout', [OrderController::class, 'checkout'])->name('order.checkout');
     Route::post('/customers/order/submit', [OrderController::class, 'submitOrder'])->name('order.submit');
     Route::get('/customers/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/customers/orders/pending', [OrderController::class, 'pending'])->name('orders.pending');
+    Route::get('/customers/orders/shipping', [OrderController::class, 'shipping'])->name('orders.shipping');
+    Route::get('/customers/orders/delivering', [OrderController::class, 'delivering'])->name('orders.delivering');
     Route::get('/customers/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    // ... other protected routes
 });
 
 // Cart Routes

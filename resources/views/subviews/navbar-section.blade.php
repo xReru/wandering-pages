@@ -1,5 +1,7 @@
 <head>@vite('resources/css/app.css')
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/css/splide.min.css" rel="stylesheet">
+
 </head>
 <header class="bg-white shadow-sm">
     <div class="container mx-auto px-4 py-3">

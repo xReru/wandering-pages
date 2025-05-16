@@ -91,6 +91,7 @@ Route::middleware(['auth:customer', \App\Http\Middleware\CheckCustomerProfile::c
     Route::get('/customers/likes', [\App\Http\Controllers\LikeController::class, 'index'])->name('customers.likes');
     Route::post('/likes', [\App\Http\Controllers\LikeController::class, 'store'])->name('likes.store');
     Route::delete('/likes', [\App\Http\Controllers\LikeController::class, 'destroy'])->name('likes.destroy');
+    Route::get('orders/history', [OrderController::class, 'history'])->name('orders.history');
 });
 
 // Cart Routes

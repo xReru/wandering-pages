@@ -205,4 +205,16 @@ class OrderController extends Controller
             throw $e;
         }
     }
+
+    /**
+     * Show the order history page with tabs for completed, cancelled, and return/refund orders.
+     */
+    public function history()
+    {
+        $user = Auth::guard('customer')->user();
+        $completedOrders = $user->orders()->with('items.book')->where('status', 'completed')->latest()->get();
+        $cancelledOrders = $user->orders()->with('items.book')->where('status', 'cancelled')->latest()->get();
+        $refundedOrders = $user->orders()->with('items.book')->whereIn('status', ['refunded', 'return', 'returned'])->latest()->get();
+        return view('customers.history', compact('completedOrders', 'cancelledOrders', 'refundedOrders'));
+    }
 } 

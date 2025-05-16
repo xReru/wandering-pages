@@ -25,4 +25,9 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Book::class);
     }
+
+    public function rating()
+    {
+        return $this->hasOne(Rating::class);
+    }
 }

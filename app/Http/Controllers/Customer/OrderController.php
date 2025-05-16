@@ -194,7 +194,7 @@ class OrderController extends Controller
             $orders = $user->orders()->with('items.book')->where('status', 'completed')->latest()->get();
             \Log::info('Orders retrieved', ['count' => $orders->count()]);
             
-            return view('customers.order.completed', [
+            return view('customers.order.rating', [
                 'orders' => $orders
             ]);
         } catch (\Exception $e) {

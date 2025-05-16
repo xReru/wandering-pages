@@ -11,6 +11,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\NewsletterSubscriberController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\RatingController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index']);
@@ -83,7 +84,9 @@ Route::middleware(['auth:customer', \App\Http\Middleware\CheckCustomerProfile::c
     Route::get('/customers/orders/pending', [OrderController::class, 'pending'])->name('orders.pending');
     Route::get('/customers/orders/shipping', [OrderController::class, 'shipping'])->name('orders.shipping');
     Route::get('/customers/orders/delivering', [OrderController::class, 'delivering'])->name('orders.delivering');
+    Route::get('/customers/orders/rating', [OrderController::class, 'completed'])->name('orders.completed');
     Route::get('/customers/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/ratings', [RatingController::class, 'store'])->name('ratings.store');
 });
 
 // Cart Routes

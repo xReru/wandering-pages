@@ -15,4 +15,9 @@ class Book extends Model
         'price',
         'quantity',
     ];
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
 }

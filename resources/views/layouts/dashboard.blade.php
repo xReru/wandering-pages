@@ -26,12 +26,17 @@
                 <a href="{{ route('orders.pending') }}" class="flex items-center gap-2 text-blue-600 font-medium hover:text-blue-800"><i class="fas fa-clock"></i> Pending</a>
                 <a href="{{ route('orders.shipping') }}" class="flex items-center gap-2 text-orange-500 font-medium hover:text-orange-700"><i class="fas fa-shipping-fast"></i> Shipping</a>
                 <a href="{{ route('orders.delivering') }}" class="flex items-center gap-2 text-blue-400 font-medium hover:text-blue-600"><i class="fas fa-truck"></i> Delivering</a>
-                <a href="#" class="flex items-center gap-2 text-yellow-500 font-medium hover:text-yellow-700"><i class="fas fa-star"></i> Ratings</a>
+                <a href="{{ route('orders.completed')}}" class="flex items-center gap-2 text-yellow-500 font-medium hover:text-yellow-700"><i class="fas fa-star"></i> Ratings</a>
                 <a href="#" class="flex items-center gap-2 text-red-400 font-medium hover:text-red-600"><i class="fas fa-history"></i> History</a>
             </nav>
         </aside>
         <!-- Main Content -->
         <main class="flex-1 p-8">
+            @if(session('success'))
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <span class="block sm:inline">{{ session('success') }}</span>
+                </div>
+            @endif
             @yield('content')
         </main>
     </div>

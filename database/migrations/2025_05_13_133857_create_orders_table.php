@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('shipping_method');
             $table->string('payment_method');
             $table->string('payment_proof')->nullable();
-            $table->enum('status', ['pending', 'paid', 'shipped', 'delivered', 'cancelled'])->default('pending');
+            $table->enum('status', ['pending', 'paid', 'shipping', 'delivering', 'cancelled', 'completed'])->default('pending');
             $table->text('shipping_address');
             $table->timestamps();
         });

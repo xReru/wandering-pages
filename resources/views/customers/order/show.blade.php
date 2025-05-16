@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
 <div class="min-h-screen bg-white py-8">
@@ -9,8 +9,8 @@
                 <span class="px-4 py-2 rounded-full text-sm font-medium
                     @if($order->status === 'pending') bg-yellow-100 text-yellow-800
                     @elseif($order->status === 'paid') bg-green-100 text-green-800
-                    @elseif($order->status === 'shipped') bg-blue-100 text-blue-800
-                    @elseif($order->status === 'delivered') bg-purple-100 text-purple-800
+                    @elseif($order->status === 'shipping') bg-blue-100 text-blue-800
+                    @elseif($order->status === 'delivering') bg-purple-100 text-purple-800
                     @else bg-red-100 text-red-800
                     @endif">
                     {{ ucfirst($order->status) }}

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
 <div class="min-h-screen bg-white py-8">
@@ -8,7 +8,7 @@
         @if($orders->isEmpty())
             <div class="bg-white rounded-lg shadow p-6 text-center">
                 <p class="text-gray-500">You have no delivering orders.</p>
-                <a href="{{ route('books.index') }}" class="inline-block mt-4 px-6 py-2 bg-purple-700 text-white rounded hover:bg-purple-800 transition">Browse Books</a>
+                <a href="/browse-books" class="inline-block mt-4 px-6 py-2 bg-purple-700 text-white rounded hover:bg-purple-800 transition">Browse Books</a>
             </div>
         @else
             <div class="space-y-6">

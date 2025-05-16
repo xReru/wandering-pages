@@ -18,8 +18,9 @@
                     <option value="">Bulk Actions</option>
                     <option value="pending">Mark as Pending</option>
                     <option value="paid">Mark as Paid</option>
-                    <option value="shipped">Mark as Shipped</option>
-                    <option value="delivered">Mark as Delivered</option>
+                    <option value="shipping">Mark as Shipping</option>
+                    <option value="delivering">Mark as Delivering</option>
+                    <option value="completed">Mark as Completed</option>
                     <option value="cancelled">Mark as Cancelled</option>
                 </select>
                 <button type="submit" id="bulk-update-btn" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled>

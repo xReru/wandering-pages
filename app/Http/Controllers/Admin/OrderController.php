@@ -33,15 +33,16 @@ class OrderController extends Controller
     {
         try {
             $request->validate([
-                'status' => 'required|in:pending,paid,shipped,delivered,cancelled'
+                'status' => 'required|in:pending,paid,shipping,delivering,completed,cancelled'
             ]);
 
             // Define valid status transitions
             $validTransitions = [
                 'pending' => ['paid', 'cancelled'],
-                'paid' => ['shipped', 'cancelled'],
-                'shipped' => ['delivered', 'cancelled'],
-                'delivered' => [],
+                'paid' => ['shipping', 'cancelled'],
+                'shipping' => ['delivering', 'cancelled'],
+                'delivering' => ['completed', 'cancelled'],
+                'completed' => [],
                 'cancelled' => []
             ];
 
@@ -95,7 +96,7 @@ class OrderController extends Controller
         try {
             $request->validate([
                 'selected_orders' => 'required|string',
-                'status' => 'required|in:pending,paid,shipped,delivered,cancelled'
+                'status' => 'required|in:pending,paid,shipping,delivering,completed,cancelled'
             ]);
 
             // Parse the JSON string of selected orders
@@ -114,9 +115,10 @@ class OrderController extends Controller
                     // Define valid status transitions
                     $validTransitions = [
                         'pending' => ['paid', 'cancelled'],
-                        'paid' => ['shipped', 'cancelled'],
-                        'shipped' => ['delivered', 'cancelled'],
-                        'delivered' => [],
+                        'paid' => ['shipping', 'cancelled'],
+                        'shipping' => ['delivering', 'cancelled'],
+                        'delivering' => ['completed', 'cancelled'],
+                        'completed' => [],
                         'cancelled' => []
                     ];
 

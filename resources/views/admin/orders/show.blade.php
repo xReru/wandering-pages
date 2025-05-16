@@ -63,8 +63,9 @@
                             data-order-id="{{ $order->id }}">
                         <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }}>Pending</option>
                         <option value="paid" {{ $order->status === 'paid' ? 'selected' : '' }}>Paid</option>
-                        <option value="shipped" {{ $order->status === 'shipped' ? 'selected' : '' }}>Shipped</option>
-                        <option value="delivered" {{ $order->status === 'delivered' ? 'selected' : '' }}>Delivered</option>
+                        <option value="shipping" {{ $order->status === 'shipping' ? 'selected' : '' }}>Shipping</option>
+                        <option value="delivering" {{ $order->status === 'delivering' ? 'selected' : '' }}>Delivering</option>
+                        <option value="completed" {{ $order->status === 'completed' ? 'selected' : '' }}>Completed</option>
                         <option value="cancelled" {{ $order->status === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                     </select>
                     <button id="update-status-btn" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">

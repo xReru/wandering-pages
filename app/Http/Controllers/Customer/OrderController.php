@@ -142,19 +142,67 @@ class OrderController extends Controller
 
     public function shipping()
     {
-        $user = Auth::guard('customer')->user();
-        $orders = $user->orders()->with('items.book')->where('status', 'shipped')->latest()->get();
-        return view('customers.order.shipping', [
-            'orders' => $orders
-        ]);
+        \Log::info('Accessing shipping orders page');
+        try {
+            $user = Auth::guard('customer')->user();
+            \Log::info('User authenticated', ['user_id' => $user->id]);
+            
+            $orders = $user->orders()->with('items.book')->where('status', 'shipping')->latest()->get();
+            \Log::info('Orders retrieved', ['count' => $orders->count()]);
+            
+            return view('customers.order.shipping', [
+                'orders' => $orders
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error in shipping orders', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            throw $e;
+        }
     }
 
     public function delivering()
     {
-        $user = Auth::guard('customer')->user();
-        $orders = $user->orders()->with('items.book')->where('status', 'delivered')->latest()->get();
-        return view('customers.order.delivering', [
-            'orders' => $orders
-        ]);
+        \Log::info('Accessing delivering orders page');
+        try {
+            $user = Auth::guard('customer')->user();
+            \Log::info('User authenticated', ['user_id' => $user->id]);
+            
+            $orders = $user->orders()->with('items.book')->where('status', 'delivering')->latest()->get();
+            \Log::info('Orders retrieved', ['count' => $orders->count()]);
+            
+            return view('customers.order.delivering', [
+                'orders' => $orders
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error in delivering orders', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            throw $e;
+        }
+    }
+
+    public function completed()
+    {
+        \Log::info('Accessing completed orders page');
+        try {
+            $user = Auth::guard('customer')->user();
+            \Log::info('User authenticated', ['user_id' => $user->id]);
+            
+            $orders = $user->orders()->with('items.book')->where('status', 'completed')->latest()->get();
+            \Log::info('Orders retrieved', ['count' => $orders->count()]);
+            
+            return view('customers.order.completed', [
+                'orders' => $orders
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error in completed orders', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            throw $e;
+        }
     }
 } 

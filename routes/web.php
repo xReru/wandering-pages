@@ -12,6 +12,7 @@ use App\Http\Controllers\NewsletterSubscriberController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\LikeController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index']);
@@ -87,6 +88,9 @@ Route::middleware(['auth:customer', \App\Http\Middleware\CheckCustomerProfile::c
     Route::get('/customers/orders/rating', [OrderController::class, 'completed'])->name('orders.completed');
     Route::get('/customers/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/ratings', [RatingController::class, 'store'])->name('ratings.store');
+    Route::get('/customers/likes', [\App\Http\Controllers\LikeController::class, 'index'])->name('customers.likes');
+    Route::post('/likes', [\App\Http\Controllers\LikeController::class, 'store'])->name('likes.store');
+    Route::delete('/likes', [\App\Http\Controllers\LikeController::class, 'destroy'])->name('likes.destroy');
 });
 
 // Cart Routes

@@ -48,6 +48,11 @@ class Customer extends Authenticatable
         return $this->hasMany(Rating::class, 'user_id');
     }
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
     public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Like;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
@@ -84,6 +86,13 @@ class BookController extends Controller
             ->where('id', '!=', $book->id)
             ->limit(8)
             ->get();
-        return view('book-details', compact('book', 'relatedBooks'));
+        $liked = false;
+        if (Auth::guard('customer')->check()) {
+            $customer = Auth::guard('customer')->user();
+            $liked = Like::where('customer_id', $customer->id)
+                ->where('book_id', $book->id)
+                ->exists();
+        }
+        return view('book-details', compact('book', 'relatedBooks', 'liked'));
     }
 }

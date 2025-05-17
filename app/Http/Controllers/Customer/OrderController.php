@@ -51,7 +51,8 @@ class OrderController extends Controller
             'transaction_no' => 'required|string',
             'payment_method' => 'required|string',
             'shipping_method' => 'required|string',
-            'payment_proof' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+            'payment_proof' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'selected_items' => 'required|json'
         ]);
 
         $user = Auth::guard('customer')->user();
@@ -64,12 +65,18 @@ class OrderController extends Controller
         try {
             DB::beginTransaction();
 
+            // Get selected items from request
+            $selectedItems = json_decode($request->selected_items, true);
+            if (empty($selectedItems)) {
+                return response()->json(['error' => 'No items selected for checkout'], 400);
+            }
+
             // Calculate shipping fee
             $shippingFee = $request->shipping_method === 'express' ? 50 : 20;
             
-            // Calculate total amount
-            $subtotal = $cart->items->sum(function ($item) {
-                return $item->book->price * $item->quantity;
+            // Calculate total amount for selected items only
+            $subtotal = collect($selectedItems)->sum(function ($item) {
+                return $item['book']['price'] * $item['quantity'];
             });
             $totalAmount = $subtotal + $shippingFee;
 
@@ -90,19 +97,23 @@ class OrderController extends Controller
                 'shipping_address' => $user->address
             ]);
 
-            // Create order items
-            foreach ($cart->items as $cartItem) {
+            // Create order items for selected items only
+            foreach ($selectedItems as $selectedItem) {
                 OrderItem::create([
                     'order_id' => $order->id,
-                    'book_id' => $cartItem->book_id,
-                    'quantity' => $cartItem->quantity,
-                    'price_at_time_of_order' => $cartItem->book->price
+                    'book_id' => $selectedItem['book']['id'],
+                    'quantity' => $selectedItem['quantity'],
+                    'price_at_time_of_order' => $selectedItem['book']['price']
                 ]);
+
+                // Remove the selected item from cart
+                $cart->items()->where('book_id', $selectedItem['book']['id'])->delete();
             }
 
-            // Clear the cart
-            $cart->items()->delete();
-            $cart->delete();
+            // If cart is empty after removing selected items, delete the cart
+            if ($cart->items()->count() === 0) {
+                $cart->delete();
+            }
 
             DB::commit();
 

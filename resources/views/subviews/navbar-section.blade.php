@@ -71,6 +71,10 @@
                             <div>
                                 <template x-for="item in $store.cart.cart.items" :key="item.id">
                                     <div class="flex items-center mb-4">
+                                        <input type="checkbox" 
+                                               :checked="item.selected" 
+                                               @change="$store.cart.toggleItemSelection(item.id)"
+                                               class="mr-2 h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
                                         <img :src="item.book.image_url" class="h-16 w-12 object-cover mr-2" alt="Book Cover">
                                         <div class="flex-1">
                                             <div x-text="item.book.title"></div>
@@ -92,8 +96,10 @@
                                         </div>
                                     </div>
                                 </template>
-                                <div class="mt-4 font-bold">Subtotal: $<span x-text="$store.cart.subtotal"></span></div>
-                                <button class="mt-6 w-full bg-purple-700 text-white py-2 rounded font-bold hover:bg-purple-800 transition" @click.prevent="window.location.href='/customers/order/order-checkout'">CHECKOUT</button>
+                                <div class="mt-4 font-bold">Selected Items Subtotal: $<span x-text="$store.cart.selectedSubtotal"></span></div>
+                                <button class="mt-6 w-full bg-purple-700 text-white py-2 rounded font-bold hover:bg-purple-800 transition" 
+                                        @click.prevent="$store.cart.proceedToCheckout()"
+                                        :disabled="!$store.cart.hasSelectedItems">CHECKOUT</button>
                             </div>
                         </template>
                         <template x-if="!$store.cart.cart || !$store.cart.cart.items || $store.cart.cart.items.length === 0">
@@ -113,6 +119,7 @@ document.addEventListener('alpine:init', () => {
         cart: null,
         cartCount: 0,
         subtotal: '0.00',
+        selectedSubtotal: '0.00',
         init() {
             if (document.querySelector('meta[name="csrf-token"]')) {
                 this.fetchCart();
@@ -139,21 +146,56 @@ document.addEventListener('alpine:init', () => {
             })
             .then(data => {
                 this.cart = data;
-                this.cartCount = data && data.items ? data.items.reduce((sum, item) => sum + item.quantity, 0) : 0;
-                this.subtotal = data && data.items ? data.items.reduce((sum, item) => sum + (item.book.price * item.quantity), 0).toFixed(2) : '0.00';
-                // Fix image url if needed
                 if (this.cart && this.cart.items) {
                     this.cart.items.forEach(item => {
+                        item.selected = false; // Initialize selection state
                         item.book.image_url = item.book.image.startsWith('http') ? item.book.image : '/storage/' + item.book.image;
                     });
                 }
+                this.updateCartCounts();
             })
             .catch(error => {
                 console.error('Error fetching cart:', error);
                 this.cart = null;
                 this.cartCount = 0;
                 this.subtotal = '0.00';
+                this.selectedSubtotal = '0.00';
             });
+        },
+        updateCartCounts() {
+            if (!this.cart || !this.cart.items) {
+                this.cartCount = 0;
+                this.subtotal = '0.00';
+                this.selectedSubtotal = '0.00';
+                return;
+            }
+            
+            this.cartCount = this.cart.items.reduce((sum, item) => sum + item.quantity, 0);
+            this.subtotal = this.cart.items.reduce((sum, item) => sum + (item.book.price * item.quantity), 0).toFixed(2);
+            this.selectedSubtotal = this.cart.items
+                .filter(item => item.selected)
+                .reduce((sum, item) => sum + (item.book.price * item.quantity), 0)
+                .toFixed(2);
+        },
+        toggleItemSelection(itemId) {
+            const item = this.cart.items.find(item => item.id === itemId);
+            if (item) {
+                item.selected = !item.selected;
+                this.updateCartCounts();
+            }
+        },
+        get hasSelectedItems() {
+            return this.cart && this.cart.items && this.cart.items.some(item => item.selected);
+        },
+        proceedToCheckout() {
+            const selectedItems = this.cart.items.filter(item => item.selected);
+            if (selectedItems.length === 0) return;
+
+            // Store selected items in session storage
+            sessionStorage.setItem('checkoutItems', JSON.stringify(selectedItems));
+            
+            // Redirect to checkout page
+            window.location.href = '/customers/order/order-checkout';
         },
         updateQuantity(itemId, newQuantity) {
             if (newQuantity < 1) return;

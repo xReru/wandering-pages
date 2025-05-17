@@ -93,6 +93,8 @@ class BookController extends Controller
                 ->where('book_id', $book->id)
                 ->exists();
         }
-        return view('book-details', compact('book', 'relatedBooks', 'liked'));
+        // Load paginated ratings
+        $ratings = $book->ratings()->with('user')->latest()->paginate(5);
+        return view('book-details', compact('book', 'relatedBooks', 'liked', 'ratings'));
     }
 }

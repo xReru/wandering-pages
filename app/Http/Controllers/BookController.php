@@ -46,6 +46,9 @@ class BookController extends Controller
         ];
         $query = Book::query();
 
+        // Only show active books
+        $query->where('is_active', true);
+
         // Filtering by genre
         $genre = $request->input('genre');
         if ($genre && $genre !== 'All') {
@@ -80,10 +83,11 @@ class BookController extends Controller
 
     public function show($id)
     {
-        $book = Book::findOrFail($id);
+        $book = Book::where('is_active', true)->findOrFail($id);
         // Fetch related books by genre, excluding the current book
         $relatedBooks = Book::where('genre', $book->genre)
             ->where('id', '!=', $book->id)
+            ->where('is_active', true)
             ->limit(8)
             ->get();
         $liked = false;

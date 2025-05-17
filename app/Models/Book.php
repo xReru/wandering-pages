@@ -14,6 +14,7 @@ class Book extends Model
         'image',
         'price',
         'quantity',
+        'is_active',
     ];
 
     public function ratings()

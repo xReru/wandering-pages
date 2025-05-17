@@ -28,6 +28,7 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Genre</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
@@ -39,6 +40,11 @@
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $book->genre }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">${{ number_format($book->price, 2) }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $book->quantity }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $book->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                        {{ $book->is_active ? 'Active' : 'Inactive' }}
+                                    </span>
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <button 
                                         x-data
@@ -183,6 +189,15 @@
                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">{{ old('description') }}</textarea>
                         </div>
 
+                        <div class="mb-4">
+                            <label for="is_active" class="block text-sm font-medium text-gray-700">Status</label>
+                            <select name="is_active" id="is_active" required
+                                class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                <option value="1" {{ old('is_active', '1') == '1' ? 'selected' : '' }}>Active</option>
+                                <option value="0" {{ old('is_active') == '0' ? 'selected' : '' }}>Inactive</option>
+                            </select>
+                        </div>
+
                         <div class="mt-6 flex justify-end space-x-3">
                             <button type="button" @click="show = false"
                                 class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -305,6 +320,15 @@
                                 <label for="description_{{ $book->id }}" class="block text-sm font-medium text-gray-700">Description</label>
                                 <textarea name="description" id="description_{{ $book->id }}" rows="3" required
                                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">{{ $book->description }}</textarea>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="is_active_{{ $book->id }}" class="block text-sm font-medium text-gray-700">Status</label>
+                                <select name="is_active" id="is_active_{{ $book->id }}" required
+                                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option value="1" {{ $book->is_active ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{ !$book->is_active ? 'selected' : '' }}>Inactive</option>
+                                </select>
                             </div>
 
                             <div class="mt-6 flex justify-end space-x-3">

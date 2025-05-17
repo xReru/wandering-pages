@@ -90,6 +90,19 @@
                             </div>
                         @endif
                     </div>
+
+                    <!-- Status -->
+                    <div>
+                        <label for="is_active" class="block text-sm font-medium text-gray-700">Status</label>
+                        <select name="is_active" id="is_active" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50">
+                            <option value="1" {{ old('is_active', $book->is_active ?? '1') == '1' ? 'selected' : '' }}>Active</option>
+                            <option value="0" {{ old('is_active', $book->is_active ?? '') == '0' ? 'selected' : '' }}>Inactive</option>
+                        </select>
+                        @error('is_active')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
 
                 <!-- Description -->

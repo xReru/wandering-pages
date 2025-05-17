@@ -32,7 +32,8 @@ class BookController extends Controller
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'required|string'
+            'description' => 'required|string',
+            'is_active' => 'required|boolean'
         ]);
 
         $data = $request->all();
@@ -62,7 +63,8 @@ class BookController extends Controller
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'required|string'
+            'description' => 'required|string',
+            'is_active' => 'required|boolean'
         ]);
 
         $data = $request->all();

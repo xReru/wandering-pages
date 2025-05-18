@@ -96,6 +96,122 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Charts Section -->
+            <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Top Selling Products Chart -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Top Selling Books</h3>
+                    <canvas id="topSellingProductsChart" height="300"></canvas>
+                </div>
+
+                <!-- Order Status Breakdown Chart -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Order Status Breakdown</h3>
+                    <canvas id="orderStatusChart" height="300"></canvas>
+                </div>
+            </div>
         </div>
     </div>
+
+    @push('scripts')
+    <script>
+        // Fetch and render charts when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Top Selling Products Chart
+            fetch('/admin/dashboard/top-selling-products')
+                .then(response => response.json())
+                .then(data => {
+                    new Chart(document.getElementById('topSellingProductsChart'), {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: 'Completed Sales',
+                                data: data.values,
+                                backgroundColor: 'rgba(75, 192, 75, 0.8)',  // Green color for completed sales
+                                borderColor: 'rgba(75, 192, 75, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            return `Completed Sales: ${context.raw} units`;
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        stepSize: 1
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Number of Units Sold'
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Books'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+
+            // Order Status Breakdown Chart
+            fetch('/admin/dashboard/order-status')
+                .then(response => response.json())
+                .then(data => {
+                    new Chart(document.getElementById('orderStatusChart'), {
+                        type: 'pie',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                data: data.values,
+                                backgroundColor: data.colors,
+                                borderColor: data.colors.map(color => color.replace('0.8', '1')),
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        padding: 20,
+                                        usePointStyle: true,
+                                        pointStyle: 'circle'
+                                    }
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            const label = context.label || '';
+                                            const value = context.raw || 0;
+                                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                            const percentage = Math.round((value / total) * 100);
+                                            return `${label}: ${value} (${percentage}%)`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+        });
+    </script>
+    @endpush
 @endsection 

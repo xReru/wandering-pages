@@ -54,6 +54,15 @@ class OrderController extends Controller
                 ], 422);
             }
 
+            // If the new status is 'completed', decrease book quantities
+            if ($request->status === 'completed') {
+                foreach ($order->items as $item) {
+                    $book = $item->book;
+                    $book->quantity -= $item->quantity;
+                    $book->save();
+                }
+            }
+
             // Update the order status
             $order->update([
                 'status' => $request->status

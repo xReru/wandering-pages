@@ -32,9 +32,9 @@ Route::prefix('admin')->group(function () {
 
 // Admin Routes
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/top-selling-products', [App\Http\Controllers\Admin\DashboardController::class, 'getTopSellingProducts']);
+    Route::get('/dashboard/order-status', [App\Http\Controllers\Admin\DashboardController::class, 'getOrderStatus']);
 
     Route::resource('books', AdminBookController::class);
     Route::resource('genres', GenreController::class);
@@ -57,6 +57,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/orders/{order}/status', [App\Http\Controllers\Admin\OrderController::class, 'updateStatus'])->name('orders.update-status');
     Route::post('/orders/bulk-update', [App\Http\Controllers\Admin\OrderController::class, 'bulkUpdate'])->name('orders.bulk-update');
     Route::get('/orders/{order}/waybill', [App\Http\Controllers\Admin\OrderController::class, 'waybill'])->name('orders.waybill');
+
+    // Inventory Management Routes
+    Route::get('/inventory', [App\Http\Controllers\Admin\InventoryController::class, 'index'])->name('inventory.index');
+    Route::get('/inventory/low-stock-alerts', [App\Http\Controllers\Admin\InventoryController::class, 'getLowStockAlerts'])->name('inventory.low-stock-alerts');
 });
 
 // Customer Login Routes

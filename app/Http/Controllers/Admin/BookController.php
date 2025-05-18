@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Genre;
+use App\Models\InventoryLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,8 +14,12 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::latest()->paginate(10);
-        $genres = Genre::pluck('name');
-        return view('admin.books.index', compact('books', 'genres'));
+        $genres = Book::distinct()->pluck('genre');
+        $inventoryLogs = InventoryLog::with(['book', 'order'])
+            ->latest()
+            ->paginate(20);
+
+        return view('admin.books.index', compact('books', 'genres', 'inventoryLogs'));
     }
 
     public function create()

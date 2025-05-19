@@ -47,13 +47,32 @@
                                 Welcome, {{ Auth::guard('customer')->user()->username }}
                             </div>
                             <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
-                            <form method="POST" action="{{ route('logout') }}" class="block">
+                            <form method="POST" action="{{ route('logout') }}" class="block" id="logout-form">
                                 @csrf
-                                <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <button type="button" onclick="confirmLogout()" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                     Logout
                                 </button>
                             </form>
                         </div>
+
+                        <script>
+                            function confirmLogout() {
+                                Swal.fire({
+                                    title: 'Logout',
+                                    text: 'Are you sure you want to logout?',
+                                    icon: 'question',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#6B46C1',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Yes, logout',
+                                    cancelButtonText: 'Cancel'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        document.getElementById('logout-form').submit();
+                                    }
+                                });
+                            }
+                        </script>
                     @else
                         <a href="/login">
                             <i class="fas fa-user-circle text-xl"></i>

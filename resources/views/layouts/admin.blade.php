@@ -54,13 +54,32 @@
                     <h1 class="text-3xl font-bold text-gray-900 font-['EBGaramond']">
                         @yield('header')
                     </h1>
-                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                    <form method="POST" action="{{ route('logout') }}" class="inline" id="admin-logout-form">
                         @csrf
-                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center">
+                        <button type="button" onclick="confirmAdminLogout()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center">
                             <i class="fas fa-sign-out-alt mr-2"></i>
                             Logout
                         </button>
                     </form>
+
+                    <script>
+                        function confirmAdminLogout() {
+                            Swal.fire({
+                                title: 'Logout',
+                                text: 'Are you sure you want to logout?',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#ef4444',
+                                cancelButtonColor: '#6b7280',
+                                confirmButtonText: 'Yes, logout',
+                                cancelButtonText: 'Cancel'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    document.getElementById('admin-logout-form').submit();
+                                }
+                            });
+                        }
+                    </script>
                 </div>
             </header>
 

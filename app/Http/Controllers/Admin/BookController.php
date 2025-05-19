@@ -108,7 +108,9 @@ class BookController extends Controller
         if ($data['quantity'] <= 0) {
             $data['is_active'] = false;
         }
-
+        if ($data['quantity'] > 0) {
+            $data['is_active'] = true;
+        }
         if ($request->hasFile('image')) {
             // Delete old image
             if ($book->image) {

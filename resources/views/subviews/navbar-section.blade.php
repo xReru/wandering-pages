@@ -92,11 +92,16 @@
                                     <div class="flex items-center mb-4">
                                         <input type="checkbox" 
                                                :checked="item.selected" 
-                                               @change="$store.cart.toggleItemSelection(item.id)"
-                                               class="mr-2 h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                               @change="!item.isOutOfStock && $store.cart.toggleItemSelection(item.id)"
+                                               :disabled="item.isOutOfStock"
+                                               class="mr-2 h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded cursor-pointer"
+                                               :class="{'opacity-50 cursor-not-allowed': item.isOutOfStock}">
                                         <img :src="item.book.image_url" class="h-16 w-12 object-cover mr-2" alt="Book Cover">
                                         <div class="flex-1">
-                                            <div x-text="item.book.title"></div>
+                                            <div class="flex items-center">
+                                                <span x-text="item.book.title"></span>
+                                                <span x-show="item.isOutOfStock" class="ml-2 px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded">OUT OF STOCK</span>
+                                            </div>
                                             <div class="flex items-center gap-2 mt-1">
                                                 <button @click="$store.cart.updateQuantity(item.id, item.quantity - 1)" 
                                                         class="bg-gray-200 px-2 py-1 rounded text-sm"
@@ -169,6 +174,10 @@ document.addEventListener('alpine:init', () => {
                     this.cart.items.forEach(item => {
                         item.selected = false; // Initialize selection state
                         item.book.image_url = item.book.image.startsWith('http') ? item.book.image : '/storage/' + item.book.image;
+                        // Ensure quantity is a number
+                        item.quantity = parseInt(item.quantity) || 0;
+                        // Check if item is out of stock based on quantity or is_active
+                        item.isOutOfStock = item.quantity <= 0 || item.book.is_active === 0;
                     });
                 }
                 this.updateCartCounts();
@@ -198,7 +207,7 @@ document.addEventListener('alpine:init', () => {
         },
         toggleItemSelection(itemId) {
             const item = this.cart.items.find(item => item.id === itemId);
-            if (item) {
+            if (item && !item.isOutOfStock) {
                 item.selected = !item.selected;
                 this.updateCartCounts();
             }

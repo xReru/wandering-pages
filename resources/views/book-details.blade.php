@@ -15,7 +15,11 @@
             <p class="text-lg mb-2 font-['EBGaramond']">Author: <a href="#" class="text-purple-700 hover:underline">{{ $book->author }}</a></p>
             <span class="text-purple-700 font-bold text-2xl mb-4 font-['EBGaramond']">${{ number_format($book->price, 2) }}</span>
             <p class="mb-4 text-gray-700 font-['EBGaramond']">{{ $book->description }}</p>
-            @if(Auth::guard('customer')->check())
+            @if($book->quantity <= 0)
+                <div class="mb-6">
+                    <span class="text-red-600 font-semibold">Out of Stock</span>
+                </div>
+            @elseif(Auth::guard('customer')->check())
             <div class="flex items-center gap-2 mb-6" x-data="{
                 qty: 1,
                 liked: {{ $liked ? 'true' : 'false' }},

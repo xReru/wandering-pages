@@ -19,7 +19,7 @@
 
         <!-- First Row of Books -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
-            @foreach($books->take(4) as $book)
+            @foreach($books->where('is_active', true)->take(4) as $book)
             <div class="flex flex-col">
                 <a href="/books/{{ $book->id }}">
                 <div class="relative mb-2">
@@ -41,7 +41,7 @@
 
         <!-- Second Row of Books -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
-            @foreach($books->skip(4)->take(4) as $book)
+            @foreach($books->where('is_active', true)->skip(4)->take(4) as $book)
             <div class="flex flex-col">
                 <a href="/books/{{ $book->id }}">
                 <div class="relative mb-2">

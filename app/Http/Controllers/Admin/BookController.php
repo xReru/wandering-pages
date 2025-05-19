@@ -104,6 +104,11 @@ class BookController extends Controller
         $data = $request->all();
         $data['title'] = trim($data['title']); // Trim whitespace before saving
 
+        // Automatically set is_active to false if quantity is 0
+        if ($data['quantity'] <= 0) {
+            $data['is_active'] = false;
+        }
+
         if ($request->hasFile('image')) {
             // Delete old image
             if ($book->image) {

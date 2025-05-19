@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class BannerSlide extends Model
 {
     protected $fillable = [
-        'title',
-        'author',
-        'description',
-        'image_path',
+        'book_id',
         'status',
         'type',
-        'button_text',
-        'button_link',
         'order'
     ];
+
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
 
     public function getStatusLabelAttribute()
     {

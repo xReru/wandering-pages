@@ -10,7 +10,11 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $bannerSlides = BannerSlide::where('status', 'active')
+        $bannerSlides = BannerSlide::with('book')
+            ->where('status', 'active')
+            ->whereHas('book', function($query) {
+                $query->where('is_active', true);
+            })
             ->orderBy('order')
             ->get();
 

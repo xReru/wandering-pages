@@ -21,6 +21,7 @@ Route::get('/contact-us', function () {
 });
 
 Route::get('/browse-books', [BookController::class, 'index']);
+Route::get('/api/filtered-books', [BookController::class, 'getFilteredBooks']);
 Route::get('/books/{book}', [App\Http\Controllers\BookController::class, 'show'])->name('books.show');
 
 // Auth Routes

@@ -37,7 +37,7 @@ class BookController extends Controller
                 'title' => 'Blood follows Midnight',
                 'author' => 'Brenna Harlow',
                 'image' => 'images/blood-follows-midnight.png',
-                'rotate' => 'rotate-0'
+                'rotate' => '-rotate-0'
             ],
             [
                 'title' => 'Blood before Sunrise',
@@ -121,5 +121,39 @@ class BookController extends Controller
             ->get();
 
         return $bestSellers;
+    }
+
+    public function getFilteredBooks(Request $request)
+    {
+        $query = Book::query();
+        $query->where('is_active', true);
+
+        // Filtering by genre
+        $genre = $request->input('genre');
+        if ($genre && $genre !== 'All') {
+            $query->where('genre', $genre);
+        }
+
+        // Sorting
+        $sort = $request->input('sort', 'best_selling');
+        if ($sort === 'best_selling') {
+            $query->orderByDesc('id');
+            $query->orderBy('price', 'asc');
+        } elseif ($sort === 'price_desc') {
+            $query->orderBy('price', 'desc');
+        }
+
+        $books = $query->paginate(10);
+        
+        $view = view('subviews.books-page.book-grid', ['books' => $books])->render();
+        
+        return response()->json([
+            'html' => $view,
+            'pagination' => [
+                'current_page' => $books->currentPage(),
+                'last_page' => $books->lastPage(),
+                'total' => $books->total(),
+            ]
+        ]);
     }
 }

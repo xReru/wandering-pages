@@ -17,7 +17,7 @@ class SignupController extends Controller
     public function signup(Request $request)
     {
         $validated = $request->validate([
-            'username' => 'required|string|max:255',
+            'username' => 'required|string|max:255|regex:/^[a-zA-Z0-9_]+$/',
             'email' => 'required|string|email|max:255|unique:customers',
             'password' => [
                 'required',
@@ -27,7 +27,9 @@ class SignupController extends Controller
             ],
         ], [
             'password-min' => ' ',
-            'password.regex' => 'Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, and one special character.'
+            'username.regex' => 'Username must be at least 4 characters and include only letters, numbers, and underscores.',
+            'password.regex' => 'Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, and one special character.',
+            'email.unique' => 'This email address is already registered. Please use a different email or try logging in.'
         ]);
 
         $customer = Customer::create([

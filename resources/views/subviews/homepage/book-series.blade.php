@@ -41,19 +41,11 @@
         <div class="book-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 ease-in-out opacity-0 animate-fade-in-up paused hover:shadow-xl hover:-translate-y-2">
             <div class="relative h-90 overflow-hidden">
                 <img src="{{ asset('images/shadow-and-bone.png') }}" alt="Shadow and Bone" class="w-full h-full object-contain max-h-[500px] transition-transform duration-500 ease-in-out group-hover:scale-105">
-                <button class="add-to-cart absolute top-3 right-3 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md opacity-0 scale-90 transition-all duration-300 ease-in-out transform hover:scale-110">
-                    <i class="fas fa-shopping-cart text-gray-700"></i>
-                </button>
             </div>
             <div class="p-4">
                 <p class="text-gray-500 text-sm mb-1">Fantasy</p>
                 <h3 class="bs-title text-xl font-bold mb-1 text-gray-800">Shadow and Bone</h3>
                 <p class="font-bold text-gray-700 mb-2">$24.00</p>
-                <div class="flex justify-between items-center">
-                    <button class="favorite-btn bg-transparent border-none text-xl text-gray-300 hover:text-red-500 transition-colors duration-300 focus:outline-none">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
             </div>
         </div>
 
@@ -61,19 +53,11 @@
         <div class="book-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 ease-in-out opacity-0 animate-fade-in-up paused hover:shadow-xl hover:-translate-y-2">
             <div class="relative h-90 overflow-hidden">
                 <img src="{{ asset('images/siege-and-storm.png') }}" alt="Siege and Storm" class="w-full h-full object-contain max-h-[500px] transition-transform duration-500 ease-in-out group-hover:scale-105">
-                <button class="add-to-cart absolute top-3 right-3 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md opacity-0 scale-90 transition-all duration-300 ease-in-out transform hover:scale-110">
-                    <i class="fas fa-shopping-cart text-gray-700"></i>
-                </button>
             </div>
             <div class="p-4">
                 <p class="text-gray-500 text-sm mb-1">Fantasy</p>
                 <h3 class="bs-title text-xl font-bold mb-1 text-gray-800">Siege and Storm</h3>
                 <p class="font-bold text-gray-700 mb-2">$24.00</p>
-                <div class="flex justify-between items-center">
-                    <button class="favorite-btn bg-transparent border-none text-xl text-gray-300 hover:text-red-500 transition-colors duration-300 focus:outline-none">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
             </div>
         </div>
 
@@ -81,19 +65,11 @@
         <div class="book-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 ease-in-out opacity-0 animate-fade-in-up paused hover:shadow-xl hover:-translate-y-2">
             <div class="relative h-90 overflow-hidden">
                 <img src="{{ asset('images/ruin-and-rising.png') }}" alt="Ruin and Rising" class="w-full h-full object-contain max-h-[500px] transition-transform duration-500 ease-in-out group-hover:scale-105">
-                <button class="add-to-cart absolute top-3 right-3 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md opacity-0 scale-90 transition-all duration-300 ease-in-out transform hover:scale-110">
-                    <i class="fas fa-shopping-cart text-gray-700"></i>
-                </button>
             </div>
             <div class="p-4">
                 <p class="text-gray-500 text-sm mb-1">Fantasy</p>
                 <h3 class="bs-title text-xl font-bold mb-1 text-gray-800">Ruin and Rising</h3>
                 <p class="font-bold text-gray-700 mb-2">$24.00</p>
-                <div class="flex justify-between items-center">
-                    <button class="favorite-btn bg-transparent border-none text-xl text-gray-300 hover:text-red-500 transition-colors duration-300 focus:outline-none">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
             </div>
         </div>
     </div>

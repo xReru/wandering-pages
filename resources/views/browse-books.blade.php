@@ -47,9 +47,6 @@
                         <div class="flex items-center justify-between mt-2">
                             <span class="text-purple-700 font-bold text-lg font-['EBGaramond']">${{ number_format($book->price, 2) }}</span>
                         </div>
-                        <div class="flex items-center mt-3 gap-2">
-                            <button class="bg-white border border-gray-300 hover:bg-purple-50 text-gray-700 text-xs font-medium py-1 px-3 rounded transition duration-300 font-['EBGaramond'] flex items-center gap-1"><i class="far fa-heart"></i></button>
-                        </div>
                     </div>
                 </a>
             @empty

@@ -69,7 +69,6 @@ body {
     .book-container {
         flex-direction: column-reverse;
     }
-
     .book-info,
     .book-cover {
         width: 100%;

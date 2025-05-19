@@ -31,7 +31,20 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:books,title',
+                function ($attribute, $value, $fail) {
+                    $trimmedTitle = trim($value);
+                    $similarBook = Book::whereRaw('LOWER(title) = ?', [strtolower($trimmedTitle)])->first();
+                    
+                    if ($similarBook) {
+                        $fail('A book with a similar title already exists. Please choose a different title.');
+                    }
+                }
+            ],
             'author' => 'required|string|max:255',
             'genre' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
@@ -42,6 +55,7 @@ class BookController extends Controller
         ]);
 
         $data = $request->all();
+        $data['title'] = trim($data['title']); // Trim whitespace before saving
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('books', 'public');
@@ -62,7 +76,22 @@ class BookController extends Controller
     public function update(Request $request, Book $book)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:books,title,' . $book->id,
+                function ($attribute, $value, $fail) use ($book) {
+                    $trimmedTitle = trim($value);
+                    $similarBook = Book::whereRaw('LOWER(title) = ?', [strtolower($trimmedTitle)])
+                        ->where('id', '!=', $book->id)
+                        ->first();
+                    
+                    if ($similarBook) {
+                        $fail('A book with a similar title already exists. Please choose a different title.');
+                    }
+                }
+            ],
             'author' => 'required|string|max:255',
             'genre' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
@@ -73,6 +102,7 @@ class BookController extends Controller
         ]);
 
         $data = $request->all();
+        $data['title'] = trim($data['title']); // Trim whitespace before saving
 
         if ($request->hasFile('image')) {
             // Delete old image

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Like;
 use Illuminate\Support\Facades\Auth;
+use App\Models\OrderItem;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
@@ -72,12 +74,16 @@ class BookController extends Controller
         $genres = Book::select('genre')->distinct()->pluck('genre')->toArray();
         array_unshift($genres, 'All');
 
+        // Get best sellers
+        $bestSellers = $this->getBestSellers();
+
         return view('browse-books', [
             'books' => $books,
             'genres' => $genres,
             'selectedGenre' => $genre ?? 'All',
             'selectedSort' => $sort,
             'promoBooks' => $promoBooks,
+            'bestSellers' => $bestSellers,
         ]);
     }
 
@@ -100,5 +106,20 @@ class BookController extends Controller
         // Load paginated ratings
         $ratings = $book->ratings()->with('user')->latest()->paginate(5);
         return view('book-details', compact('book', 'relatedBooks', 'liked', 'ratings'));
+    }
+
+    public function getBestSellers()
+    {
+        $bestSellers = Book::select('books.*')
+            ->join('order_items', 'books.id', '=', 'order_items.book_id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('orders.status', 'completed')
+            ->where('books.is_active', true)
+            ->groupBy('books.id')
+            ->orderByRaw('SUM(order_items.quantity) DESC')
+            ->limit(6)
+            ->get();
+
+        return $bestSellers;
     }
 }

@@ -19,7 +19,8 @@ class HomeController extends Controller
             ->get();
 
         $books = Book::latest()->take(8)->get();
+        $bestSellers = app(BookController::class)->getBestSellers();
 
-        return view('home', compact('bannerSlides', 'books'));
+        return view('home', compact('bannerSlides', 'books', 'bestSellers'));
     }
 } 

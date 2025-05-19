@@ -21,6 +21,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
             @foreach($books->take(4) as $book)
             <div class="flex flex-col">
+                <a href="/books/{{ $book->id }}">
                 <div class="relative mb-2">
                     <img src="{{ asset('storage/' . $book->image) }}" alt="{{ $book->title }}"
                         class="book-cover w-full rounded-md shadow-md">
@@ -32,10 +33,8 @@
                         <h3 class="font-semibold text-sm md:text-base">{{ $book->title }}</h3>
                         <p class="text-gray-600 text-xs md:text-sm">${{ number_format($book->price, 2) }}</p>
                     </div>
-                    <button class="heart-icon text-gray-400 hover:text-red-600">
-                        <i class="far fa-heart"></i>
-                    </button>
                 </div>
+                </a>
             </div>
             @endforeach
         </div>
@@ -44,6 +43,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
             @foreach($books->skip(4)->take(4) as $book)
             <div class="flex flex-col">
+                <a href="/books/{{ $book->id }}">
                 <div class="relative mb-2">
                     <img src="{{ asset('storage/' . $book->image) }}" alt="{{ $book->title }}"
                         class="book-cover w-full rounded-md shadow-md">
@@ -55,10 +55,8 @@
                         <h3 class="font-semibold text-sm md:text-base">{{ $book->title }}</h3>
                         <p class="text-gray-600 text-xs md:text-sm">${{ number_format($book->price, 2) }}</p>
                     </div>
-                    <button class="heart-icon text-gray-400 hover:text-red-600">
-                        <i class="far fa-heart"></i>
-                    </button>
                 </div>
+                </a>
             </div>
             @endforeach
         </div>

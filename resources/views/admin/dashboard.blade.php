@@ -123,7 +123,7 @@
                 .then(response => response.json())
                 .then(data => {
                     new Chart(document.getElementById('topSellingProductsChart'), {
-                        type: 'bar',
+                        type: 'line',
                         data: {
                             labels: data.labels,
                             datasets: [{
@@ -131,7 +131,10 @@
                                 data: data.values,
                                 backgroundColor: 'rgba(75, 192, 75, 0.8)',  // Green color for completed sales
                                 borderColor: 'rgba(75, 192, 75, 1)',
-                                borderWidth: 1
+                                borderWidth: 1,
+                                pointStyle: 'circle',
+                                pointRadius: 10,
+                                pointHoverRadius: 15
                             }]
                         },
                         options: {

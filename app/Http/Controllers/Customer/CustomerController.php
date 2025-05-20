@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class CustomerController extends Controller
 {
@@ -140,5 +143,65 @@ class CustomerController extends Controller
         $customer->password = \Hash::make($request->new_password);
         $customer->save();
         return response()->json(['success' => 'Password changed successfully.']);
+    }
+
+    public function sendResetLinkEmail(Request $request)
+    {
+        $customer = Auth::guard('customer')->user();
+        
+        if (!$customer) {
+            return response()->json(['error' => 'User not found.'], 404);
+        }
+
+        // Generate a new password reset token
+        $token = Str::random(64);
+        $customer->password_reset_token = $token;
+        $customer->password_reset_token_expires_at = now()->addHours(24);
+        $customer->save();
+
+        // Send the password reset email
+        \Mail::send('emails.reset-password', ['token' => $token, 'customer' => $customer], function($message) use ($customer) {
+            $message->to($customer->email);
+            $message->subject('Password Reset Request');
+        });
+
+        return response()->json(['success' => 'Password reset link has been sent to your email.']);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/',
+                'confirmed',
+            ],
+        ], [
+            'password.regex' => 'Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, and one special character.'
+        ]);
+
+        $customer = \App\Models\Customer::where('email', $request->email)
+            ->where('password_reset_token', $request->token)
+            ->where('password_reset_token_expires_at', '>', now())
+            ->first();
+
+        if (!$customer) {
+            return response()->json(['error' => 'Invalid or expired reset token.'], 422);
+        }
+
+        try {
+            $customer->password = Hash::make($request->password);
+            $customer->password_reset_token = null;
+            $customer->password_reset_token_expires_at = null;
+            $customer->save();
+
+            return response()->json(['success' => 'Password has been reset successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to reset password. Please try again.'], 500);
+        }
     }
 } 

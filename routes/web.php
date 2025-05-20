@@ -80,6 +80,8 @@ Route::middleware(['auth:customer'])->group(function () {
         return view('customers.profile-info');
     })->name('dashboard');
     Route::post('/customer/password/change', [CustomerController::class, 'changePassword'])->name('customer.password.change');
+    Route::post('/customer/password/email', [CustomerController::class, 'sendResetLinkEmail'])->name('customer.password.email');
+    Route::post('/customer/password/reset', [CustomerController::class, 'resetPassword'])->name('customer.password.reset');
 });
 
 // Protected Customer Routes
@@ -125,4 +127,24 @@ Route::get('/check-profile-completion', function () {
                  !empty($customer->address);
 
     return response()->json(['isComplete' => $isComplete]);
+})->middleware('auth:customer');
+
+// Password Reset Routes
+Route::get('/reset-password', function () {
+    return view('customers.reset-password');
+})->name('password.reset');
+
+Route::post('/reset-password', [CustomerController::class, 'resetPassword'])->name('customer.password.reset');
+
+// Test Email Route
+Route::get('/test-email', function() {
+    try {
+        \Mail::raw('This is a test email from your Laravel application.', function($message) {
+            $message->to(Auth::guard('customer')->user()->email)
+                   ->subject('Test Email');
+        });
+        return 'Test email sent successfully!';
+    } catch (\Exception $e) {
+        return 'Error sending email: ' . $e->getMessage();
+    }
 })->middleware('auth:customer');

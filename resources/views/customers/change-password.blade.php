@@ -9,6 +9,18 @@
                     <label class="text-sm text-gray-700">Current Password
                         <input type="password" x-model="current_password" class="w-full border rounded px-2 py-1 mt-1" required />
                     </label>
+                    <div class="flex justify-end">
+                        <button type="button" @click="forgotPasswordLoading = true; forgotPasswordError = ''; forgotPasswordSuccess = ''; fetch('{{ route('customer.password.email') }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content') } }).then(async r => { const data = await r.json(); forgotPasswordLoading = false; if(r.ok && data.success){ forgotPasswordSuccess = data.success; } else { forgotPasswordError = data.error || 'An error occurred.'; } }).catch(() => { forgotPasswordLoading = false; forgotPasswordError = 'An error occurred.'; })" class="text-sm text-purple-700 hover:text-purple-800" :disabled="forgotPasswordLoading">
+                            <span x-show="!forgotPasswordLoading">Forgot Password?</span>
+                            <span x-show="forgotPasswordLoading">Sending...</span>
+                        </button>
+                    </div>
+                    <template x-if="forgotPasswordError">
+                        <div class="text-red-600 text-xs mt-1" x-text="forgotPasswordError"></div>
+                    </template>
+                    <template x-if="forgotPasswordSuccess">
+                        <div class="text-green-600 text-xs mt-1" x-text="forgotPasswordSuccess"></div>
+                    </template>
                     <label class="text-sm text-gray-700">New Password
                         <input type="password" x-model="new_password" class="w-full border rounded px-2 py-1 mt-1" required />
                     </label>

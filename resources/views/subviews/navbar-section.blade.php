@@ -79,59 +79,70 @@
                         </a>
                     @endif
                 </div>
-
+                
                 <!-- Cart Modal -->
-                @if(Auth::guard('customer')->check())
-                <div x-show="$store.cart.open" class="fixed inset-0 flex justify-end z-50" style="display: none;">
-                    <div class="bg-white w-96 p-6 shadow-lg h-full overflow-y-auto relative">
-                        <button @click="$store.cart.open = false" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">✕</button>
-                        <h2 class="text-xl font-bold mb-4">Shopping Cart</h2>
-                        <template x-if="$store.cart.cart && $store.cart.cart.items && $store.cart.cart.items.length">
-                            <div>
-                                <template x-for="item in $store.cart.cart.items" :key="item.id">
-                                    <div class="flex items-center mb-4">
-                                        <input type="checkbox" 
-                                               :checked="item.selected" 
-                                               @change="!item.isOutOfStock && $store.cart.toggleItemSelection(item.id)"
-                                               :disabled="item.isOutOfStock"
-                                               class="mr-2 h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded cursor-pointer"
-                                               :class="{'opacity-50 cursor-not-allowed': item.isOutOfStock}">
-                                        <img :src="item.book.image_url" class="h-16 w-12 object-cover mr-2" alt="Book Cover">
-                                        <div class="flex-1">
-                                            <div class="flex items-center">
-                                                <span x-text="item.book.title"></span>
-                                                <span x-show="item.isOutOfStock" class="ml-2 px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded">OUT OF STOCK</span>
-                                            </div>
-                                            <div class="flex items-center gap-2 mt-1">
-                                                <button @click="$store.cart.updateQuantity(item.id, item.quantity - 1)" 
-                                                        class="bg-gray-200 px-2 py-1 rounded text-sm"
-                                                        :disabled="item.quantity <= 1">-</button>
-                                                <span x-text="item.quantity" class="w-8 text-center"></span>
-                                                <button @click="$store.cart.updateQuantity(item.id, item.quantity + 1)" 
-                                                        class="bg-gray-200 px-2 py-1 rounded text-sm">+</button>
-                                                <button @click="$store.cart.removeItem(item.id)" 
-                                                        class="ml-2 text-red-500 hover:text-red-700">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                            <div class="text-sm text-gray-600">
-                                                $<span x-text="(item.book.price * item.quantity).toFixed(2)"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </template>
-                                <div class="mt-4 font-bold">Selected Items Subtotal: $<span x-text="$store.cart.selectedSubtotal"></span></div>
-                                <button class="mt-6 w-full bg-purple-700 text-white py-2 rounded font-bold hover:bg-purple-800 transition" 
-                                        @click.prevent="$store.cart.proceedToCheckout()"
-                                        :disabled="!$store.cart.hasSelectedItems">CHECKOUT</button>
+@if(Auth::guard('customer')->check())
+<div x-show="$store.cart.open" class="fixed inset-0 flex justify-end z-50" style="display: none;">
+    <div class="bg-white w-full max-w-md p-6 shadow-2xl h-full overflow-y-auto relative flex flex-col">
+        <button @click="$store.cart.open = false" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl">
+            <i class="fas fa-times"></i>
+        </button>
+        <h2 class="text-2xl font-bold mb-6">Shopping Cart</h2>
+        <template x-if="$store.cart.cart && $store.cart.cart.items && $store.cart.cart.items.length">
+            <div class="flex-1">
+                <template x-for="item in $store.cart.cart.items" :key="item.id">
+                    <div class="flex items-center bg-gray-50 rounded-lg shadow-sm p-3 mb-4 group transition">
+                        <input type="checkbox"
+                            :checked="item.selected"
+                            @change="!item.isOutOfStock && $store.cart.toggleItemSelection(item.id)"
+                            :disabled="item.isOutOfStock"
+                            class="mr-3 h-5 w-5 text-purple-600 focus:ring-purple-500 border-gray-300 rounded cursor-pointer transition"
+                            :class="{'opacity-50 cursor-not-allowed': item.isOutOfStock}">
+                        <img :src="item.book.image_url" class="h-16 w-12 object-cover rounded shadow-sm mr-3 border" alt="Book Cover">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between">
+                                <span class="font-semibold truncate" x-text="item.book.title"></span>
+                                <span x-show="item.isOutOfStock" class="ml-2 px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded">OUT OF STOCK</span>
                             </div>
-                        </template>
-                        <template x-if="!$store.cart.cart || !$store.cart.cart.items || $store.cart.cart.items.length === 0">
-                            <div class="text-gray-500">Your cart is empty.</div>
-                        </template>
+                            <div class="flex items-center gap-2 mt-2">
+                                <button @click="$store.cart.updateQuantity(item.id, item.quantity - 1)"
+                                    class="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded text-sm font-bold transition"
+                                    :disabled="item.quantity <= 1">-</button>
+                                <span x-text="item.quantity" class="w-8 text-center font-medium"></span>
+                                <button @click="$store.cart.updateQuantity(item.id, item.quantity + 1)"
+                                    class="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded text-sm font-bold transition">+</button>
+                                <button @click="$store.cart.removeItem(item.id)"
+                                    class="ml-2 text-red-500 hover:text-red-700 transition"
+                                    title="Remove from cart">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <span class="ml-auto text-sm text-gray-700 font-semibold">
+                                    $<span x-text="(item.book.price * item.quantity).toFixed(2)"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
+                </template>
+                <div class="mt-6 p-4 bg-purple-50 rounded-lg flex items-center justify-between font-bold text-lg shadow">
+                    <span>Selected Items Subtotal:</span>
+                    <span class="text-purple-700">$<span x-text="$store.cart.selectedSubtotal"></span></span>
                 </div>
-                @endif
+                <button class="mt-6 w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-lg font-bold text-lg shadow hover:from-purple-700 hover:to-indigo-700 transition disabled:opacity-50"
+                        @click.prevent="$store.cart.proceedToCheckout()"
+                        :disabled="!$store.cart.hasSelectedItems">
+                    CHECKOUT
+                </button>
+            </div>
+        </template>
+        <template x-if="!$store.cart.cart || !$store.cart.cart.items || $store.cart.cart.items.length === 0">
+            <div class="text-gray-400 text-center mt-16">
+                <i class="fas fa-shopping-cart text-4xl mb-4"></i>
+                <div>Your cart is empty.</div>
+            </div>
+        </template>
+    </div>
+</div>
+@endif
             </div>
         </div>
     </div>

@@ -60,7 +60,12 @@ class BookController extends Controller
         // Sorting
         $sort = $request->input('sort', 'best_selling');
         if ($sort === 'best_selling') {
-            $query->orderByDesc('id'); // Placeholder for best selling
+            $query->leftJoin('order_items', 'books.id', '=', 'order_items.book_id')
+                  ->leftJoin('orders', 'order_items.order_id', '=', 'orders.id')
+                  ->where('orders.status', 'completed')
+                  ->select('books.*', DB::raw('COALESCE(SUM(order_items.quantity), 0) as total_sold'))
+                  ->groupBy('books.id')
+                  ->orderByDesc('total_sold');
         } elseif ($sort === 'price_asc') {
             $query->orderBy('price', 'asc');
         } elseif ($sort === 'price_desc') {
@@ -137,7 +142,13 @@ class BookController extends Controller
         // Sorting
         $sort = $request->input('sort', 'best_selling');
         if ($sort === 'best_selling') {
-            $query->orderByDesc('id');
+            $query->leftJoin('order_items', 'books.id', '=', 'order_items.book_id')
+                  ->leftJoin('orders', 'order_items.order_id', '=', 'orders.id')
+                  ->where('orders.status', 'completed')
+                  ->select('books.*', DB::raw('COALESCE(SUM(order_items.quantity), 0) as total_sold'))
+                  ->groupBy('books.id')
+                  ->orderByDesc('total_sold');
+        } elseif ($sort === 'price_asc') {
             $query->orderBy('price', 'asc');
         } elseif ($sort === 'price_desc') {
             $query->orderBy('price', 'desc');

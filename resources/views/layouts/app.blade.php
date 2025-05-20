@@ -37,6 +37,28 @@
 
 <body class="h-full flex flex-col bg-white">
     @include('subviews.navbar-section')
+    
+    @if(Auth::guard('customer')->check() && (empty(Auth::guard('customer')->user()->first_name) || 
+        empty(Auth::guard('customer')->user()->last_name) || 
+        empty(Auth::guard('customer')->user()->phone_number) || 
+        empty(Auth::guard('customer')->user()->address)))
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm text-yellow-700">
+                    Please complete your profile to enjoy a better shopping experience. 
+                    <a href="{{ route('customer.profile.setup') }}" class="font-medium underline text-yellow-700 hover:text-yellow-600">
+                        Complete your profile now
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <main class="flex-grow">
         @yield('content')
     </main>

@@ -219,11 +219,39 @@ document.addEventListener('alpine:init', () => {
             const selectedItems = this.cart.items.filter(item => item.selected);
             if (selectedItems.length === 0) return;
 
-            // Store selected items in session storage
-            sessionStorage.setItem('checkoutItems', JSON.stringify(selectedItems));
-            
-            // Redirect to checkout page
-            window.location.href = '/customers/order/order-checkout';
+            // Check if profile is complete
+            fetch('/check-profile-completion', {
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (!data.isComplete) {
+                    Swal.fire({
+                        title: 'Complete Your Profile',
+                        text: 'Please complete your profile before proceeding to checkout.',
+                        icon: 'warning',
+                        confirmButtonColor: '#6B46C1',
+                        confirmButtonText: 'Complete Profile'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/customer/profile/setup';
+                        }
+                    });
+                    return;
+                }
+
+                // Store selected items in session storage
+                sessionStorage.setItem('checkoutItems', JSON.stringify(selectedItems));
+                
+                // Redirect to checkout page
+                window.location.href = '/customers/order/order-checkout';
+            })
+            .catch(error => {
+                console.error('Error checking profile completion:', error);
+            });
         },
         updateQuantity(itemId, newQuantity) {
             if (newQuantity < 1) return;

@@ -100,7 +100,7 @@ Route::middleware(['auth:customer', \App\Http\Middleware\CheckCustomerProfile::c
 });
 
 // Cart Routes
-Route::middleware(['auth:customer', \App\Http\Middleware\CheckCustomerProfile::class])->group(function () {
+Route::middleware(['auth:customer'])->group(function () {
     Route::get('/cart', [CartController::class, 'getCart']);
     Route::post('/cart/add', [CartController::class, 'addToCart']);
     Route::post('/cart/update/{item}', [CartController::class, 'updateCartItem']);
@@ -111,3 +111,18 @@ Route::get('/signup', [SignupController::class, 'showSignupForm'])->name('signup
 Route::post('/signup', [SignupController::class, 'signup']);
 
 Route::post('/newsletter/subscribe', [NewsletterSubscriberController::class, 'store'])->name('newsletter.subscribe');
+
+Route::get('/check-profile-completion', function () {
+    $customer = auth()->guard('customer')->user();
+    
+    if (!$customer) {
+        return response()->json(['isComplete' => false]);
+    }
+
+    $isComplete = !empty($customer->first_name) && 
+                 !empty($customer->last_name) && 
+                 !empty($customer->phone_number) && 
+                 !empty($customer->address);
+
+    return response()->json(['isComplete' => $isComplete]);
+})->middleware('auth:customer');

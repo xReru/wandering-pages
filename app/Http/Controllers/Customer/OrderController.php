@@ -136,7 +136,7 @@ class OrderController extends Controller
             $user = Auth::guard('customer')->user();
             \Log::info('User authenticated', ['user_id' => $user->id]);
             
-            $orders = $user->orders()->with('items.book')->where('status', 'pending')->latest()->get();
+            $orders = $user->orders()->with('items.book')->whereIn('status', ['pending', 'paid'])->latest()->get();
             \Log::info('Orders retrieved', ['count' => $orders->count()]);
             
             return view('customers.order.pending', [
@@ -227,5 +227,38 @@ class OrderController extends Controller
         $cancelledOrders = $user->orders()->with('items.book')->where('status', 'cancelled')->latest()->get();
         $refundedOrders = $user->orders()->with('items.book')->whereIn('status', ['refunded', 'return', 'returned'])->latest()->get();
         return view('customers.history', compact('completedOrders', 'cancelledOrders', 'refundedOrders'));
+    }
+
+    public function cancel(Order $order)
+    {
+        // Ensure the order belongs to the authenticated user
+        if ($order->user_id !== Auth::guard('customer')->id()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized action'
+            ], 403);
+        }
+
+        // Check if the order can be cancelled
+        if (!in_array($order->status, ['pending', 'paid'])) {
+            return response()->json([
+                'success' => false,
+                'message' => 'This order cannot be cancelled'
+            ], 422);
+        }
+
+        try {
+            $order->update(['status' => 'cancelled']);
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Order cancelled successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to cancel order'
+            ], 500);
+        }
     }
 } 

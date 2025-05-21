@@ -15,7 +15,7 @@
 <div class="container mx-auto px-4 py-12 max-w-6xl">
     <!-- Books Section -->
     <section class="p-6 md:p-8">
-        <h2 class="text-3xl font-bold mb-8 text-black-800" style="font-family: 'EB Garamond', serif;">More Books</h2>
+        <h2 class="font-primary text-3xl font-bold mb-8 text-black-800">More Books</h2>
 
         <!-- First Row of Books -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
@@ -30,8 +30,8 @@
                 </div>
                 <div class="flex items-start justify-between">
                     <div>
-                        <h3 class="font-semibold text-sm md:text-base">{{ $book->title }}</h3>
-                        <p class="text-xs md:text-sm" style="color: #7464B6;">${{ number_format($book->price, 2) }}</p>
+                        <h3 class="font-primary text-lg md:text-lg">{{ $book->title }}</h3>
+                        <p class="font-secondary font-semibold text-xs text-[#6354A0] md:text-sm" >$ {{ number_format($book->price, 2) }}</p>
                     </div>
                 </div>
                 </a>
@@ -52,8 +52,8 @@
                 </div>
                 <div class="flex items-start justify-between">
                     <div>
-                        <h3 class="font-semibold text-sm md:text-base">{{ $book->title }}</h3>
-                        <p class="text-xs md:text-sm" style="color: #7464B6;">${{ number_format($book->price, 2) }}</p>
+                        <h3 class="font-primary text-lg md:text-lg">{{ $book->title }}</h3>
+                        <p class="font-secondary font-semibold text-xs text-[#6354A0] md:text-sm" >$ {{ number_format($book->price, 2) }}</p>
                     </div>
                 </div>
                 </a>

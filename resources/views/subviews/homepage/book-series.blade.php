@@ -45,7 +45,7 @@
             <div class="p-4">
                 <p class="text-gray-500 text-sm mb-1">Fantasy</p>
                 <h3 class="bs-title text-xl font-bold mb-1 text-gray-800">Shadow and Bone</h3>
-                <p class=" mb-2" style="color: #7464B6;">$24.00</p>
+                <p class="font-secondary font-semibold mb-2 text-[#7464b6]">$ 24.00</p>
             </div>
         </div>
 
@@ -57,7 +57,7 @@
             <div class="p-4">
                 <p class="text-gray-500 text-sm mb-1">Fantasy</p>
                 <h3 class="bs-title text-xl font-bold mb-1 text-gray-800">Siege and Storm</h3>
-                <p class=" text-gray-700 mb-2"style="color: #7464B6;">$24.00</p>
+                <p class="font-secondary font-semibold mb-2 text-[#7464b6]">$ 24.00</p>
             </div>
         </div>
 
@@ -69,7 +69,7 @@
             <div class="p-4">
                 <p class="text-gray-500 text-sm mb-1">Fantasy</p>
                 <h3 class="bs-title text-xl font-bold mb-1 text-gray-800">Ruin and Rising</h3>
-                <p class="text-gray-700 mb-2"style="color: #7464B6;">$24.00</p>
+                <p class="font-secondary font-semibold mb-2 text-[#7464b6]">$ 24.00</p>
             </div>
         </div>
     </div>

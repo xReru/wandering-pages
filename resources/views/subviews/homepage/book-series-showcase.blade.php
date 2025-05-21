@@ -22,7 +22,7 @@
             <!-- Text Content -->
             <div class="w-full md:w-1/3 mb-8 md:mb-0 space-y-4 text-center md:text-left">
                 <h2 class="text-3xl md:text-5xl font-bold text-gray-900 font-primary">Buy a Complete Series</h2>
-                <p class="text-lg text-gray-800">SoulBlood Series by Brenna Harlow</p>
+                <p class="font-secondary font-semibold text-lg text-gray-800">SoulBlood Series by Brenna Harlow</p>
                 <button
                     class="bg-[#7464B6] text-white font-sm py-2 px-8 rounded-md hover:bg-[#6354A0] transition duration-300">
                     $43.50

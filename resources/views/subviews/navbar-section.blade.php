@@ -2,21 +2,70 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/css/splide.min.css" rel="stylesheet">
 </head>
-<header class="bg-white shadow-sm">
+<header class="bg-white shadow-sm" x-data="{ mobileMenuOpen: false, showUserModal: false, searchQuery: '', searchResults: [], isSearching: false, showResults: false, searchError: null, mobileSearchOpen: false }" x-init="$store.cart.init()">
     <div class="container mx-auto px-4 py-3">
+        <!-- Mobile Menu Overlay -->
+        <div x-show="mobileMenuOpen" 
+             x-transition:enter="transition-opacity ease-linear duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition-opacity ease-linear duration-300"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+             @click="mobileMenuOpen = false"
+             style="display: none;">
+        </div>
+
+        <!-- Mobile Menu Sidebar -->
+        <div x-show="mobileMenuOpen"
+             x-transition:enter="transition ease-in-out duration-300 transform"
+             x-transition:enter-start="-translate-x-full"
+             x-transition:enter-end="translate-x-0"
+             x-transition:leave="transition ease-in-out duration-300 transform"
+             x-transition:leave-start="translate-x-0"
+             x-transition:leave-end="-translate-x-full"
+             class="fixed top-0 left-0 bottom-0 w-64 bg-white shadow-lg z-50 md:hidden"
+             style="display: none;">
+            <div class="p-4 border-b border-gray-200">
+                <button @click="mobileMenuOpen = false" class="text-gray-700 hover:text-gray-900 focus:outline-none">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <nav class="flex flex-col">
+                <a href="{{ route('home') }}" class="text-gray-700 hover:text-gray-900 px-4 py-4" @click="mobileMenuOpen = false">Home</a>
+                <a href="{{ route('browse-books') }}" class="text-gray-700 hover:text-gray-900 px-4 py-4" @click="mobileMenuOpen = false">Shop</a>
+                <a href="{{ route('contact-us') }}" class="text-gray-700 hover:text-gray-900 px-4 py-4" @click="mobileMenuOpen = false">Contact</a>
+            </nav>
+        </div>
+
         <div class="flex items-center justify-between">
             <!-- Logo and Navigation -->
             <div class="flex items-center space-x-6">
-                <a href="{{ route('home') }}" class="logo text-gray-800">Wandering Pages</a>
-                <nav class="hidden md:flex space-x-6">
-                    <a href="{{ route('home') }}" class="text-gray-700 hover:text-gray-900">Home</a>
-                    <a href="{{ route('browse-books') }}" class="text-gray-700 hover:text-gray-900">Shop</a>
-                    <a href="{{ route('contact-us') }}" class="text-gray-700 hover:text-gray-900">Contact</a>
+                <!-- Mobile Menu Button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-gray-700 hover:text-gray-900 focus:outline-none mr-4">
+                    <i class="fas text-xl" :class="mobileMenuOpen ? 'fa-times' : 'fa-bars'"></i>
+                </button>
+                
+                <!-- Logo -->
+                <a href="{{ route('home') }}" class="logo text-gray-800 md:mr-6">Wandering Pages</a>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-2">
+                    <a href="{{ route('home') }}" class="px-6 py-2 text-gray-700 hover:text-gray-900 mx-1">Home</a>
+                    <a href="{{ route('browse-books') }}" class="px-6 py-2 text-gray-700 hover:text-gray-900 mx-1">Shop</a>
+                    <a href="{{ route('contact-us') }}" class="px-6 py-2 text-gray-700 hover:text-gray-900 mx-1">Contact</a>
                 </nav>
             </div>
 
             <!-- Search, Cart and Account -->
-            <div class="flex items-center space-x-4" x-data="{ showUserModal: false, searchQuery: '', searchResults: [], isSearching: false, showResults: false, searchError: null }" x-init="$store.cart.init()">
+            <div class="flex items-center space-x-4">
+                <!-- Mobile Search Button -->
+                <button @click="mobileSearchOpen = true" class="md:hidden text-gray-700 hover:text-gray-900 focus:outline-none">
+                    <i class="fas fa-search text-xl"></i>
+                </button>
+
+                <!-- Desktop Search -->
                 <div class="relative w-48 hidden md:block">
                     <input type="text" 
                            x-model="searchQuery"
@@ -94,6 +143,98 @@
                         No books found
                     </div>
                 </div>
+
+                <!-- Mobile Search Modal -->
+                <div x-show="mobileSearchOpen" 
+                     class="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden"
+                     @click.away="mobileSearchOpen = false"
+                     style="display: none;">
+                    <div class="bg-white p-4" @click.stop>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold">Search Books</h3>
+                            <button @click="mobileSearchOpen = false" class="text-gray-500 hover:text-gray-700">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="relative">
+                            <input type="text" 
+                                   x-model="searchQuery"
+                                   @input.debounce.300ms="
+                                       if(searchQuery.length > 2) {
+                                           isSearching = true;
+                                           showResults = true;
+                                           searchError = null;
+                                           fetch('/search-books?query=' + encodeURIComponent(searchQuery))
+                                               .then(response => {
+                                                   if (!response.ok) {
+                                                       throw new Error('Search failed. Please try again.');
+                                                   }
+                                                   return response.json();
+                                               })
+                                               .then(data => {
+                                                   if (data.error) {
+                                                       throw new Error(data.error);
+                                                   }
+                                                   searchResults = data;
+                                                   isSearching = false;
+                                               })
+                                               .catch(error => {
+                                                   console.error('Search error:', error);
+                                                   searchError = error.message;
+                                                   searchResults = [];
+                                                   isSearching = false;
+                                               });
+                                       } else {
+                                           searchResults = [];
+                                           showResults = false;
+                                           searchError = null;
+                                       }
+                                   "
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-md" 
+                                   placeholder="Search books...">
+                            <button class="absolute right-2 inset-y-0 flex items-center text-gray-400">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Mobile Search Results -->
+                        <div class="mt-4 max-h-[60vh] overflow-y-auto">
+                            <template x-if="isSearching">
+                                <div class="text-center py-4">
+                                    <i class="fas fa-spinner fa-spin text-indigo-600"></i>
+                                    <span class="ml-2 text-gray-600">Searching...</span>
+                                </div>
+                            </template>
+                            
+                            <template x-if="searchError">
+                                <div class="text-center py-4 text-red-600">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <span class="ml-2" x-text="searchError"></span>
+                                </div>
+                            </template>
+                            
+                            <template x-if="showResults && !isSearching && !searchError && searchResults.length === 0">
+                                <div class="text-center py-4 text-gray-600">
+                                    No books found
+                                </div>
+                            </template>
+                            
+                            <template x-for="book in searchResults" :key="book.id">
+                                <a :href="'/books/' + book.id" 
+                                   @click="mobileSearchOpen = false"
+                                   class="flex items-center p-3 hover:bg-gray-100 border-b border-gray-100">
+                                    <img :src="book.image_url" class="w-12 h-16 object-cover rounded shadow-sm mr-3" :alt="book.title">
+                                    <div>
+                                        <div class="font-medium text-gray-900" x-text="book.title"></div>
+                                        <div class="text-sm text-gray-600" x-text="book.author"></div>
+                                        <div class="text-sm font-medium text-indigo-600">$<span x-text="book.price"></span></div>
+                                    </div>
+                                </a>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
                 @if(Auth::guard('customer')->check())
                 <div class="flex items-center">
                     <span class="text-indigo-800 font-medium mr-1">$<span x-text="$store.cart.subtotal">0.00</span></span>

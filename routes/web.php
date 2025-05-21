@@ -87,9 +87,11 @@ Route::middleware(['auth:customer'])->group(function () {
         return view('customers.profile-info');
     })->name('dashboard');
     Route::post('/customer/password/change', [CustomerController::class, 'changePassword'])->name('customer.password.change');
-    Route::post('/customer/password/email', [CustomerController::class, 'sendResetLinkEmail'])->name('customer.password.email');
-    Route::post('/customer/password/reset', [CustomerController::class, 'resetPassword'])->name('customer.password.reset');
 });
+
+// Password Reset Routes (accessible to guests)
+Route::post('/customer/password/email', [CustomerController::class, 'sendResetLinkEmail'])->name('customer.password.email');
+Route::post('/customer/password/reset', [CustomerController::class, 'resetPassword'])->name('customer.password.reset');
 
 // Protected Customer Routes
 Route::middleware(['auth:customer', \App\Http\Middleware\CheckCustomerProfile::class])->group(function () {
@@ -135,13 +137,6 @@ Route::get('/check-profile-completion', function () {
 
     return response()->json(['isComplete' => $isComplete]);
 })->middleware('auth:customer');
-
-// Password Reset Routes
-Route::get('/reset-password', function () {
-    return view('customers.reset-password');
-})->name('password.reset');
-
-Route::post('/reset-password', [CustomerController::class, 'resetPassword'])->name('customer.password.reset');
 
 // Test Email Route
 Route::get('/test-email', function() {

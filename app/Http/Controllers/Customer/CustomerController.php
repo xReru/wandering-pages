@@ -147,8 +147,7 @@ class CustomerController extends Controller
 
     public function sendResetLinkEmail(Request $request)
     {
-        $customer = Auth::guard('customer')->user();
-        
+        $customer = \App\Models\Customer::where('email', $request->email)->first();
         if (!$customer) {
             return response()->json(['error' => 'User not found.'], 404);
         }

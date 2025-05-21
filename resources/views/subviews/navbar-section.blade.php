@@ -1,7 +1,6 @@
 <head>@vite('resources/css/app.css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/css/splide.min.css" rel="stylesheet">
-
 </head>
 <header class="bg-white shadow-sm">
     <div class="container mx-auto px-4 py-3">
@@ -19,8 +18,8 @@
             <!-- Search, Cart and Account -->
             <div class="flex items-center space-x-4" x-data="{ showUserModal: false }" x-init="$store.cart.init()">
                 <div class="relative w-48 hidden md:block">
-                    <input type="text" class="w-full px-4 py-1 border rounded-md" placeholder="Search...">
-                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
+                    <input type="text" class="w-full px-4 py-1 border border-gray-300 rounded-md" placeholder="Search...">
+                    <button class="absolute right-2 inset-y-0 flex items-center text-gray-400 search-icon-btn">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>

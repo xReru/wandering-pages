@@ -11,6 +11,7 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
 /*Global styles*/
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap');
 
@@ -24,10 +25,12 @@ body {
     font-size: 2.2rem;
     font-weight: 700;
 }
-.book-author{
+
+.book-author {
     font-family: 'EBGaramond', regular;
     font-weight: 700;
 }
+
 .book-title {
     font-family: 'EBGaramond', regular;
     font-weight: 600;
@@ -69,6 +72,7 @@ body {
     .book-container {
         flex-direction: column-reverse;
     }
+
     .book-info,
     .book-cover {
         width: 100%;

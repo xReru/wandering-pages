@@ -29,6 +29,39 @@
             date_of_birth: '{{ old('date_of_birth') }}',
             // Step 2 field
             phone_number: '{{ old('phone_number') }}',
+            country_code: '{{ old('country_code', '+1') }}',
+            countrySearch: '',
+            showDropdown: false,
+            countries: [
+                { code: '+1', name: 'United States/Canada' },
+                { code: '+44', name: 'United Kingdom' },
+                { code: '+61', name: 'Australia' },
+                { code: '+86', name: 'China' },
+                { code: '+91', name: 'India' },
+                { code: '+81', name: 'Japan' },
+                { code: '+49', name: 'Germany' },
+                { code: '+33', name: 'France' },
+                { code: '+63', name: 'Philippines' },
+                { code: '+34', name: 'Spain' },
+                { code: '+7', name: 'Russia' },
+                { code: '+82', name: 'South Korea' },
+                { code: '+55', name: 'Brazil' },
+                { code: '+52', name: 'Mexico' },
+                { code: '+31', name: 'Netherlands' },
+                { code: '+41', name: 'Switzerland' }
+            ],
+            get filteredCountries() {
+                if (!this.countrySearch) return this.countries;
+                return this.countries.filter(country => 
+                    country.name.toLowerCase().includes(this.countrySearch.toLowerCase()) ||
+                    country.code.includes(this.countrySearch)
+                );
+            },
+            selectCountry(country) {
+                this.country_code = country.code;
+                this.countrySearch = country.code;
+                this.showDropdown = false;
+            },
             // Step 3 field
             address: `{{ old('address') }}`,
             get isStep1Valid() {
@@ -45,7 +78,7 @@
             <div class="flex items-center justify-between mb-8 w-full">
                 <!-- Step 1: About -->
                 <div class="flex flex-col items-center ">
-                    <div :class="step === 1 ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-400'" class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-gray-200">
+                    <div :class="step === 1 ? 'bg-[#7464B6] text-white' : 'bg-gray-100 text-gray-400'" class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-gray-200">
                         <!-- About Icon -->
                         <i class="fas fa-info-circle text-lg"></i>
                     </div>
@@ -55,7 +88,7 @@
                 <div class="flex-1 h-1 bg-gray-300 mx-2 mb-5"></div>
                 <!-- Step 2: Phone -->
                 <div class="flex flex-col items-center ">
-                    <div :class="step === 2 ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-400'" class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-gray-200">
+                    <div :class="step === 2 ? 'bg-[#7464B6] text-white' : 'bg-gray-100 text-gray-400'" class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-gray-200">
                         <!-- Phone Icon -->
                         <i class="fas fa-phone text-lg"></i>
                     </div>
@@ -65,7 +98,7 @@
                 <div class="flex-1 h-1 bg-gray-300 mx-2 mb-5"></div>
                 <!-- Step 3: Address -->
                 <div class="flex flex-col items-center ">
-                    <div :class="step === 3 ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-400'" class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-gray-200">
+                    <div :class="step === 3 ? 'bg-[#7464B6] text-white' : 'bg-gray-100 text-gray-400'" class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-gray-200">
                         <!-- Address Icon -->
                         <i class="fas fa-home text-lg"></i>
                     </div>
@@ -112,7 +145,7 @@
                         </div>
                     </div>
                     <div class="flex justify-end">
-                        <button type="button" @click="setStep(2)" class="px-4 py-2 bg-black text-white rounded" :disabled="!isStep1Valid" :class="!isStep1Valid ? 'opacity-50 cursor-not-allowed' : ''">Next</button>
+                        <button type="button" @click="setStep(2)" class="px-4 py-2 bg-[#7464B6] text-white rounded" :disabled="!isStep1Valid" :class="!isStep1Valid ? 'opacity-50 cursor-not-allowed' : ''">Next</button>
                     </div>
                 </div>
 
@@ -120,11 +153,53 @@
                 <div x-show="step === 2" x-cloak>
                     <div class="mb-4">
                         <label class="block text-gray-700">Phone Number</label>
-                        <input type="text" name="phone_number" x-model="phone_number" value="{{ old('phone_number') }}" class="w-full border rounded px-3 py-2 mt-1" placeholder="Eg. +1234567890" required>
+                        <div class="flex gap-2">
+                            <div class="relative w-32" @click.away="showDropdown = false">
+                                <div class="relative">
+                                    <div class="flex items-center">
+                                        <input 
+                                            type="text" 
+                                            x-model="countrySearch"
+                                            @click="showDropdown = true"
+                                            @input="if(countrySearch.startsWith('+')) { country_code = countrySearch; showDropdown = false }"
+                                            placeholder="+1"
+                                            class="w-full border rounded-l px-3 py-2 mt-1"
+                                        >
+                                        <button 
+                                            type="button"
+                                            @click="showDropdown = !showDropdown"
+                                            class="border border-l-0 rounded-r px-2 py-2 mt-1 bg-gray-50 hover:bg-gray-100"
+                                        >
+                                            <i class="fas fa-chevron-down text-gray-500"></i>
+                                        </button>
+                                    </div>
+                                    <div 
+                                        x-show="showDropdown"
+                                        x-transition:enter="transition ease-out duration-200"
+                                        x-transition:enter-start="opacity-0 transform scale-95"
+                                        x-transition:enter-end="opacity-100 transform scale-100"
+                                        x-transition:leave="transition ease-in duration-150"
+                                        x-transition:leave-start="opacity-100 transform scale-100"
+                                        x-transition:leave-end="opacity-0 transform scale-95"
+                                        class="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-y-auto"
+                                    >
+                                        <template x-for="country in filteredCountries" :key="country.code">
+                                            <div 
+                                                @click="selectCountry(country)"
+                                                class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                                                x-text="country.code + ' ' + country.name"
+                                            ></div>
+                                        </template>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="country_code" x-model="country_code">
+                            </div>
+                            <input type="text" name="phone_number" x-model="phone_number" value="{{ old('phone_number') }}" class="flex-1 border rounded px-3 py-2 mt-1" placeholder="Eg. 234567890" required>
+                        </div>
                     </div>
                     <div class="flex justify-between">
                         <button type="button" @click="setStep(1)" class="px-4 py-2 bg-gray-200 rounded">Back</button>
-                        <button type="button" @click="setStep(3)" class="px-4 py-2 bg-blue-600 text-white rounded" :disabled="!isStep2Valid" :class="!isStep2Valid ? 'opacity-50 cursor-not-allowed' : ''">Next</button>
+                        <button type="button" @click="setStep(3)" class="px-4 py-2 bg-[#7464B6] text-white rounded" :disabled="!isStep2Valid" :class="!isStep2Valid ? 'opacity-50 cursor-not-allowed' : ''">Next</button>
                     </div>
                 </div>
 
@@ -136,7 +211,7 @@
                     </div>
                     <div class="flex justify-between">
                         <button type="button" @click="setStep(2)" class="px-4 py-2 bg-gray-200 rounded">Back</button>
-                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded" :disabled="!isStep3Valid" :class="!isStep3Valid ? 'opacity-50 cursor-not-allowed' : ''">Finish</button>
+                        <button type="submit" class="px-4 py-2 bg-[#7464B6] text-white rounded" :disabled="!isStep3Valid" :class="!isStep3Valid ? 'opacity-50 cursor-not-allowed' : ''">Finish</button>
                     </div>
                 </div>
             </form>

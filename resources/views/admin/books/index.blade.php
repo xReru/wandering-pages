@@ -75,11 +75,13 @@
                                         >
                                             <i class="fas fa-edit"></i> Edit
                                         </button>
-                                        <form action="{{ route('admin.books.destroy', $book) }}" method="POST" class="inline">
+                                        <form action="{{ route('admin.books.archive', $book) }}" method="POST" class="inline" id="archive-form-{{ $book->id }}">
                                             @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this book?')">
-                                                <i class="fas fa-trash"></i> Delete
+                                            @method('PUT')
+                                            <button type="button" 
+                                                onclick="confirmArchive('{{ $book->title }}', {{ $book->id }})" 
+                                                class="text-yellow-600 hover:text-yellow-900">
+                                                <i class="fas fa-archive"></i> Archive
                                             </button>
                                         </form>
                                     </td>
@@ -207,6 +209,23 @@
         // Update alerts every 5 minutes
         updateLowStockAlerts();
         setInterval(updateLowStockAlerts, 300000);
+
+        function confirmArchive(bookTitle, bookId) {
+            Swal.fire({
+                title: 'Archive Book',
+                html: `Are you sure you want to archive <strong>${bookTitle}</strong>?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#eab308',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Yes, archive it',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById(`archive-form-${bookId}`).submit();
+                }
+            });
+        }
     </script>
     @endpush
 

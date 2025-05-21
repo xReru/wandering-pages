@@ -38,6 +38,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/dashboard/top-selling-products', [App\Http\Controllers\Admin\DashboardController::class, 'getTopSellingProducts']);
     Route::get('/dashboard/order-status', [App\Http\Controllers\Admin\DashboardController::class, 'getOrderStatus']);
 
+    // Book Archive Routes - Place these BEFORE the resource route
+    Route::get('/books/archived', [AdminBookController::class, 'archived'])->name('books.archived');
+    Route::put('/books/{book}/archive', [AdminBookController::class, 'archive'])->name('books.archive');
+    Route::put('/books/{book}/restore', [AdminBookController::class, 'restore'])->name('books.restore');
+    Route::delete('/books/{book}/permanent-delete', [AdminBookController::class, 'permanentDelete'])->name('books.permanent-delete');
+
     Route::resource('books', AdminBookController::class);
     Route::resource('genres', GenreController::class);
     Route::resource('banner-slides', \App\Http\Controllers\Admin\BannerSlideController::class);

@@ -13,13 +13,20 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::latest()->paginate(10);
+        $books = Book::where('is_archived', false)
+            ->latest()
+            ->paginate(10);
         $genres = Book::distinct()->pluck('genre');
         $inventoryLogs = InventoryLog::with(['book', 'order'])
             ->latest()
             ->paginate(20);
 
         return view('admin.books.index', compact('books', 'genres', 'inventoryLogs'));
+    }
+
+    public function show(Book $book)
+    {
+        return view('admin.books.show', compact('book'));
     }
 
     public function create()
@@ -135,5 +142,61 @@ class BookController extends Controller
 
         return redirect()->route('admin.books.index')
             ->with('success', 'Book deleted successfully.');
+    }
+
+    public function archived()
+    {
+        $archivedBooks = Book::where('is_archived', true)
+            ->orderBy('archived_at', 'desc')
+            ->paginate(10);
+
+        return view('admin.books.archive', compact('archivedBooks'));
+    }
+
+    public function archive(Book $book)
+    {
+        $book->update([
+            'is_archived' => true,
+            'archived_at' => now(),
+        ]);
+
+        return redirect()->route('admin.books.index')
+            ->with('success', 'Book has been archived successfully.');
+    }
+
+    public function restore(Book $book)
+    {
+        $book->update([
+            'is_archived' => false,
+            'archived_at' => null,
+        ]);
+
+        return redirect()->route('admin.books.archive')
+            ->with('success', 'Book has been restored successfully.');
+    }
+
+    public function permanentDelete(Book $book)
+    {
+        // Only allow permanent deletion of archived books
+        if (!$book->is_archived) {
+            return redirect()->route('admin.books.archive')
+                ->with('error', 'Only archived books can be permanently deleted.');
+        }
+
+        // Delete the book's image if it exists
+        if ($book->image) {
+            Storage::disk('public')->delete($book->image);
+        }
+
+        // Delete associated records
+        $book->ratings()->delete();
+        $book->likes()->delete();
+        $book->inventoryLogs()->delete();
+
+        // Delete the book
+        $book->delete();
+
+        return redirect()->route('admin.books.archived')
+            ->with('success', 'Book has been permanently deleted.');
     }
 } 

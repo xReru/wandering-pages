@@ -38,6 +38,9 @@
                 <a href="{{ route('admin.books.index') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.books.*') ? 'bg-gray-700' : '' }}">
                     <i class="fas fa-book mr-2"></i> Inventory Management
                 </a>
+                <a href="{{ route('admin.books.archived') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.books.archived') ? 'bg-gray-700' : '' }}">
+                    <i class="fas fa-archive mr-2"></i> Archived Books
+                </a>
                 <a href="{{ route('admin.cms.dashboard') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.cms.*') ? 'bg-gray-700' : '' }}">
                     <i class="fas fa-cogs mr-2"></i> Content Management
                 </a>

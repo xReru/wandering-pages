@@ -30,8 +30,8 @@
 <div class="max-w-6xl mx-auto px-4 py-8">
     <!-- Header -->
     <div class="text-center mb-8">
-        <p class="text-gray-500 mb-1">Complete Series Of</p>
-        <h1 class="book-title text-4xl font-bold mb-1 text-gray-900">GrishaVerse Series</h1>
+        <p class="mb-1 " style="color: #7464B6;">Complete Series Of</p>
+        <h1 class="book-title text-6xl font-black mb-1 text-black-900 tracking-[3px]">GrishaVerse Series</h1>
         <p class="text-gray-500 text-sm">Original series of Leigh Bardugo</p>
     </div>
 
@@ -45,7 +45,7 @@
             <div class="p-4">
                 <p class="text-gray-500 text-sm mb-1">Fantasy</p>
                 <h3 class="bs-title text-xl font-bold mb-1 text-gray-800">Shadow and Bone</h3>
-                <p class="font-bold text-gray-700 mb-2">$24.00</p>
+                <p class=" mb-2" style="color: #7464B6;">$24.00</p>
             </div>
         </div>
 
@@ -57,7 +57,7 @@
             <div class="p-4">
                 <p class="text-gray-500 text-sm mb-1">Fantasy</p>
                 <h3 class="bs-title text-xl font-bold mb-1 text-gray-800">Siege and Storm</h3>
-                <p class="font-bold text-gray-700 mb-2">$24.00</p>
+                <p class=" text-gray-700 mb-2"style="color: #7464B6;">$24.00</p>
             </div>
         </div>
 
@@ -69,7 +69,7 @@
             <div class="p-4">
                 <p class="text-gray-500 text-sm mb-1">Fantasy</p>
                 <h3 class="bs-title text-xl font-bold mb-1 text-gray-800">Ruin and Rising</h3>
-                <p class="font-bold text-gray-700 mb-2">$24.00</p>
+                <p class="text-gray-700 mb-2"style="color: #7464B6;">$24.00</p>
             </div>
         </div>
     </div>

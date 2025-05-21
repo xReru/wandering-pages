@@ -7,11 +7,11 @@
         <div class="flex items-center justify-between">
             <!-- Logo and Navigation -->
             <div class="flex items-center space-x-6">
-                <a href="#" class="logo text-gray-800">Wandering Pages</a>
+                <a href="{{ route('home') }}" class="logo text-gray-800">Wandering Pages</a>
                 <nav class="hidden md:flex space-x-6">
-                    <a href="/" class="text-gray-700 hover:text-gray-900">Home</a>
-                    <a href="/browse-books" class="text-gray-700 hover:text-gray-900">Shop</a>
-                    <a href="/contact-us" class="text-gray-700 hover:text-gray-900">Contact</a>
+                    <a href="{{ route('home') }}" class="text-gray-700 hover:text-gray-900">Home</a>
+                    <a href="{{ route('browse-books') }}" class="text-gray-700 hover:text-gray-900">Shop</a>
+                    <a href="{{ route('contact-us') }}" class="text-gray-700 hover:text-gray-900">Contact</a>
                 </nav>
             </div>
 

@@ -27,7 +27,7 @@
     }
 </script>
 <body class="bg-gray-100">
-<div class="max-w-6xl mx-auto px-4 py-8">
+<div class="max-w-6xl mx-auto px-4 py-8 mt-10">
     <!-- Header -->
     <div class="text-center mb-8">
         <p class="mb-1 " style="color: #7464B6;">Complete Series Of</p>

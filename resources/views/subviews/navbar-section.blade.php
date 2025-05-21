@@ -202,7 +202,7 @@
                     <span>Selected Items Subtotal:</span>
                     <span class="text-purple-700">$<span x-text="$store.cart.selectedSubtotal"></span></span>
                 </div>
-                <button class="mt-6 w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-lg font-bold text-lg shadow hover:from-purple-700 hover:to-indigo-700 transition disabled:opacity-50"
+                <button class="mt-6 w-full !bg-gradient-to-r !from-purple-600 !to-indigo-600 text-white py-3 rounded-lg font-bold text-lg shadow hover:!from-purple-700 hover:!to-indigo-700 transition disabled:opacity-50"
                         @click.prevent="$store.cart.proceedToCheckout()"
                         :disabled="!$store.cart.hasSelectedItems">
                     CHECKOUT

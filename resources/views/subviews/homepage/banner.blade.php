@@ -9,21 +9,22 @@
                     @foreach($bannerSlides as $slide)
                         @if($slide->book)
                             <li class="splide__slide">
-                                <div class="flex book-container items-center justify-between px-8 md:px-16">
+                                <div class="flex book-container items-center justify-between px-8 md:px-24">
                                     <!-- Book Information -->
                                     <div class="book-info w-full md:w-1/2 pr-0 md:pr-8">
                                         <div class="mb-6">
-                                            <p class="text-xs uppercase tracking-widest text-indigo-800 font-medium mb-2">
+                                            <p class="text-xs uppercase tracking-widest font-medium mb-2" style="color: #7464B6;"> <!-- Book Category -->
+                                                {{ strtoupper(str_replace('_', ' ', $slide->book->type)) }}
                                                 {{ strtoupper(str_replace('_', ' ', $slide->type)) }}
                                             </p>
                                             <h1 class="book-title text-5xl md:text-6xl mb-2">{{ $slide->book->title }}</h1>
-                                            <p class="book-author text-indigo-800 mb-6">{{ $slide->book->author }}</p>
+                                            <p class="book-author mb-6" style="color: #7464B6;">{{ $slide->book->author }}</p>
                                             <p class="text-gray-700 mb-8 text-sm">
                                                 {{ $slide->book->description }}
                                             </p>
                                             <div class="flex space-x-3">
                                                 <a href="{{ route('books.show', $slide->book) }}" 
-                                                   class="bg-indigo-700 hover:bg-indigo-800 text-white px-5 py-2 rounded text-sm font-medium">
+                                                   class="bg-purple-700 hover:bg-purple-800 text-white px-5 py-2 rounded text-sm font-medium">
                                                     View Details
                                                 </a>
                                             </div>

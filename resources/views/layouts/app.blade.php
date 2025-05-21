@@ -32,6 +32,13 @@
             font-weight: 400;
             font-style: normal;
         }
+
+        @font-face {
+            font-family: 'DMSans';
+            src: url('/fonts/DMSans-Regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
     </style>
 </head>
 
@@ -62,7 +69,6 @@
     <main class="flex-grow">
         @yield('content')
     </main>
-    {{--@include('subviews.newsletter-section')--}}
     @include('subviews.footer-section')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/js/splide.min.js"></script>
     <script>

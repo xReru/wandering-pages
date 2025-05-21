@@ -17,34 +17,34 @@
 </head>
 
 <body class="bg-gray-200">
-    <div class="container mx-auto px-4 py-12" x-data="bookShowcase()">
+    <div class="container mx-auto px-25 py-16" x-data="bookShowcase()">
         <div class="flex flex-col md:flex-row items-center justify-center">
             <!-- Text Content -->
             <div class="w-full md:w-1/3 mb-8 md:mb-0 space-y-4 text-center md:text-left">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Buy a Complete Series</h2>
+                <h2 class="text-3xl md:text-5xl font-bold text-gray-900" style="font-family: 'EB Garamond', serif;">Buy a Complete Series</h2>
                 <p class="text-lg text-gray-800">SoulBlood Series by Brenna Harlow</p>
                 <button
-                    class="bg-[#5440AA] text-white font-medium py-2 px-8 rounded-md hover:bg-purple-800 transition duration-300">
+                    class="bg-[#7464B6] text-white font-sm py-2 px-8 rounded-md hover:bg-purple-800 transition duration-300">
                     $43.50
                 </button>
             </div>
 
             <!-- Book Slider -->
-            <div class="w-full md:w-2/3 relative h-[400px] md:h-[500px] flex items-center justify-center">
+            <div class="w-full md:w-2/3 relative h-[400px] md:h-[500px] flex items-center justify-center -ml-8">
                 <div class="book-cover-container relative h-full w-full flex items-center justify-center">
                     <template x-for="(book, index) in books" :key="index">
                         <div class="book-cover absolute" :style="getBookStyle(index)" @click="setActiveBook(index)">
-                            <img :src="book.image" :alt="book.title" class="h-48 sm:h-56 md:h-64 lg:h-72 rounded-md shadow-lg">
+                            <img :src="book.image" :alt="book.title" class="h-40 sm:h-50 md:h-64 lg:h-72 rounded-md shadow-lg">
                         </div>
                     </template>
                 </div>
-                <div class="absolute top-1/2 left-0 right-0 flex justify-between transform -translate-y-1/2 px-4 md:px-8">
+                <div class="absolute top-1/2 left-40 right-0 flex justify-between transform -translate-y-1/2 px-4 md:px-8">
                     <button @click="prevBook()"
-                        class="bg-white text-gray-800 rounded-full p-2 shadow-lg hover:bg-gray-100 transition duration-300">
+                        class="hidden bg-white text-gray-800 rounded-full p-2 shadow-lg hover:bg-gray-100 transition duration-300">
                         <i class="fas fa-chevron-left"></i>
                     </button>
                     <button @click="nextBook()"
-                        class="bg-white text-gray-800 rounded-full p-2 shadow-lg hover:bg-gray-100 transition duration-300">
+                        class="hidden bg-white text-gray-800 rounded-full p-2 shadow-lg hover:bg-gray-100 transition duration-300">
                         <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
@@ -92,12 +92,12 @@
                             // Active book
                             translateX = '0%';
                             opacity = 1;
-                            scale = 1;
+                            scale = 1.2;
                         } else {
                             // Other books
-                            translateX = `${20 * offset}%`;
+                            translateX = `${30 * offset}%`;
                             opacity = 1;
-                            scale = 1 - (offset * 0.05);
+                            scale = 1.2 - (offset * 0.02);
                         }
 
                         return `

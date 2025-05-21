@@ -10,8 +10,8 @@
         <h1 class="font-['EBGaramond'] text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6">Browse All Books</h1>
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 bg-gray-100 rounded-lg px-4 py-3">
             <div x-data="{ 
-                genre: '{{ $selectedGenre }}',
-                sort: '{{ $selectedSort }}',
+                genre: '{{ $selectedGenre ?? 'all' }}',
+                sort: '{{ $selectedSort ?? '' }}',
                 loading: false,
                 async updateFilters() {
                     console.log('Updating filters...', { genre: this.genre, sort: this.sort });
@@ -51,6 +51,7 @@
                 <div>
                     <label for="genre" class="block text-xs font-semibold text-gray-700 font-['EBGaramond'] tracking-wide mb-1">GENRE:</label>
                     <select name="genre" id="genre" x-model="genre" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 font-['EBGaramond'] text-base">
+                        <option value="all" @if($selectedGenre == 'all') selected @endif>All</option>
                         @foreach($genres as $genre)
                             <option value="{{ $genre }}" @if($selectedGenre == $genre) selected @endif>{{ $genre }}</option>
                         @endforeach
@@ -59,6 +60,7 @@
                 <div>
                     <label for="sort" class="block text-xs font-semibold text-gray-700 font-['EBGaramond'] tracking-wide mb-1">SORT BY:</label>
                     <select name="sort" id="sort" x-model="sort" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 font-['EBGaramond'] text-base">
+                        <option value="">Default</option>
                         <option value="best_selling" @if($selectedSort == 'best_selling') selected @endif>Best Selling</option>
                         <option value="price_asc" @if($selectedSort == 'price_asc') selected @endif>Price: Low to High</option>
                         <option value="price_desc" @if($selectedSort == 'price_desc') selected @endif>Price: High to Low</option>

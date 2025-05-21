@@ -53,13 +53,13 @@ class BookController extends Controller
         $query->where('is_active', true);
 
         // Filtering by genre
-        $genre = $request->input('genre');
-        if ($genre && $genre !== 'All') {
+        $genre = $request->input('genre', 'all');
+        if ($genre && $genre !== 'all') {
             $query->where('genre', $genre);
         }
 
         // Sorting
-        $sort = $request->input('sort', 'best_selling');
+        $sort = $request->input('sort', '');
         if ($sort === 'best_selling') {
             $query->leftJoin('order_items', 'books.id', '=', 'order_items.book_id')
                   ->leftJoin('orders', 'order_items.order_id', '=', 'orders.id')
@@ -135,13 +135,13 @@ class BookController extends Controller
         $query->where('is_active', true);
 
         // Filtering by genre
-        $genre = $request->input('genre');
-        if ($genre && $genre !== 'All') {
+        $genre = $request->input('genre', 'all');
+        if ($genre && $genre !== 'all') {
             $query->where('genre', $genre);
         }
 
         // Sorting
-        $sort = $request->input('sort', 'best_selling');
+        $sort = $request->input('sort', '');
         if ($sort === 'best_selling') {
             $query->leftJoin('order_items', 'books.id', '=', 'order_items.book_id')
                   ->leftJoin('orders', 'order_items.order_id', '=', 'orders.id')

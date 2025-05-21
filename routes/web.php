@@ -87,6 +87,7 @@ Route::middleware(['auth:customer'])->group(function () {
         return view('customers.profile-info');
     })->name('dashboard');
     Route::post('/customer/password/change', [CustomerController::class, 'changePassword'])->name('customer.password.change');
+    Route::post('/orders/{order}/cancel', [App\Http\Controllers\Customer\OrderController::class, 'cancel'])->name('orders.cancel');
 });
 
 // Password Reset Routes (accessible to guests)

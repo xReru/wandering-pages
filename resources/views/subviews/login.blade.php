@@ -1,3 +1,8 @@
+@php
+    if (Auth::guard('customer')->check()) {
+        redirect()->route('dashboard')->send();
+    }
+@endphp
 @extends('layouts.app')
 
 @section('content')

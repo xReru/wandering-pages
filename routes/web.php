@@ -15,12 +15,12 @@ use App\Http\Controllers\RatingController;
 use App\Http\Controllers\LikeController;
 
 // Public Routes
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/contact-us', function () {
     return view('contact');
-});
+})->name('contact-us');
 
-Route::get('/browse-books', [BookController::class, 'index']);
+Route::get('/browse-books', [BookController::class, 'index'])->name('browse-books');
 Route::get('/api/filtered-books', [BookController::class, 'getFilteredBooks']);
 Route::get('/search-books', [BookController::class, 'search']);
 Route::get('/books/{book}', [App\Http\Controllers\BookController::class, 'show'])->name('books.show');

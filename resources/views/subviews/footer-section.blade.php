@@ -13,9 +13,9 @@
                 <!-- Navigation Links -->
                 <nav class="mb-4 md:mb-0">
                     <ul class="flex space-x-4 md:space-x-8">
-                        <li><a href="#" class="hover:text-purple-700 transition">Home</a></li>
-                        <li><a href="#" class="hover:text-purple-700 transition">Shop</a></li>
-                        <li><a href="#" class="hover:text-purple-700 transition">Contact Us</a></li>
+                        <li><a href="{{ route('home') }}" class="hover:text-purple-700 transition">Home</a></li>
+                        <li><a href="{{ route('browse-books') }}" class="hover:text-purple-700 transition">Shop</a></li>
+                        <li><a href="{{ route('contact-us') }}" class="hover:text-purple-700 transition">Contact Us</a></li>
                     </ul>
                 </nav>
                 

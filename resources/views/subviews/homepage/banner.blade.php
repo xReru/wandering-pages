@@ -13,11 +13,11 @@
                                     <!-- Book Information -->
                                     <div class="book-info w-full md:w-1/2 pr-0 md:pr-8">
                                         <div class="mb-6">
-                                            <p class="text-xs uppercase tracking-widest font-medium mb-2" style="color: #7464B6;"> <!-- Book Category -->
+                                            <p class="text-xs uppercase tracking-widest font-bold mb-4" style="color: #7464B6;"> <!-- Book Category -->
                                                 {{ strtoupper(str_replace('_', ' ', $slide->book->type)) }}
                                                 {{ strtoupper(str_replace('_', ' ', $slide->type)) }}
                                             </p>
-                                            <h1 class="book-title text-5xl md:text-6xl mb-2">{{ $slide->book->title }}</h1>
+                                            <h1 class="book-title text-5xl md:text-6xl mb-3 text-[#282035]">{{ $slide->book->title }}</h1>
                                             <p class="book-author mb-6" style="color: #7464B6;">{{ $slide->book->author }}</p>
                                             <p class="text-gray-700 mb-8 text-sm">
                                                 {{ $slide->book->description }}

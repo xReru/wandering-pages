@@ -1,3 +1,11 @@
+@php
+    if (Auth::guard('web')->check()) {
+        redirect()->route('admin.dashboard')->send();
+    }
+    if (Auth::guard('customer')->check()) {
+        redirect()->route('dashboard')->send();
+    }
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>

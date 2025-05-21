@@ -23,7 +23,7 @@
                 </p>
                 <div class="mt-2">
                     <button
-                        class="notify-btn bg-[#5440aa] text-white py-2 px-8 rounded transition duration-300 ease-in-out">
+                        class="notify-btn bg-[#7464B6] text-white text-sm py-2 px-8 rounded transition duration-300 ease-in-out">
                         Notify Me
                     </button>
                 </div>

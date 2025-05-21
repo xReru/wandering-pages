@@ -24,7 +24,7 @@
                                             </p>
                                             <div class="flex space-x-3">
                                                 <a href="{{ route('books.show', $slide->book) }}" 
-                                                   class="bg-purple-700 hover:bg-purple-800 text-white px-5 py-2 rounded text-sm font-medium">
+                                                   class="bg-[#7464B6] hover:bg-[#6354A0] text-white px-5 py-2 rounded text-sm font-medium">
                                                     View Details
                                                 </a>
                                             </div>

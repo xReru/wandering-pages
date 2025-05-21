@@ -15,7 +15,7 @@
 <div class="container mx-auto px-4 py-12 max-w-6xl">
     <!-- Books Section -->
     <section class="p-6 md:p-8">
-        <h2 class="text-3xl font-bold mb-8 text-gray-800">More Books</h2>
+        <h2 class="text-3xl font-bold mb-8 text-black-800" style="font-family: 'EB Garamond', serif;">More Books</h2>
 
         <!-- First Row of Books -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
@@ -31,7 +31,7 @@
                 <div class="flex items-start justify-between">
                     <div>
                         <h3 class="font-semibold text-sm md:text-base">{{ $book->title }}</h3>
-                        <p class="text-gray-600 text-xs md:text-sm">${{ number_format($book->price, 2) }}</p>
+                        <p class="text-xs md:text-sm" style="color: #7464B6;">${{ number_format($book->price, 2) }}</p>
                     </div>
                 </div>
                 </a>
@@ -53,7 +53,7 @@
                 <div class="flex items-start justify-between">
                     <div>
                         <h3 class="font-semibold text-sm md:text-base">{{ $book->title }}</h3>
-                        <p class="text-gray-600 text-xs md:text-sm">${{ number_format($book->price, 2) }}</p>
+                        <p class="text-xs md:text-sm" style="color: #7464B6;">${{ number_format($book->price, 2) }}</p>
                     </div>
                 </div>
                 </a>
@@ -64,8 +64,9 @@
         <!-- Browse All Books Button -->
         <div class="flex justify-center mt-8">
             <a href="/browse-books"
-                class="browse-btn bg-[#5440aa] hover:bg-indigo-700 text-white px-6 py-2 rounded-md font-medium transition duration-300">Browse
-                All Books</a>
+                class="browse-btn bg-[#7464B6] hover:bg-[#6354A0] text-white px-6 py-2 rounded-md font-medium transition duration-300">
+                Browse All Books
+            </a>
         </div>
     </section>
 </div>

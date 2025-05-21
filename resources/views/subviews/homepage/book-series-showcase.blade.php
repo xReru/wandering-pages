@@ -24,7 +24,7 @@
                 <h2 class="text-3xl md:text-5xl font-bold text-gray-900" style="font-family: 'EB Garamond', serif;">Buy a Complete Series</h2>
                 <p class="text-lg text-gray-800">SoulBlood Series by Brenna Harlow</p>
                 <button
-                    class="bg-[#7464B6] text-white font-sm py-2 px-8 rounded-md hover:bg-purple-800 transition duration-300">
+                    class="bg-[#7464B6] text-white font-sm py-2 px-8 rounded-md hover:bg-[#6354A0] transition duration-300">
                     $43.50
                 </button>
             </div>

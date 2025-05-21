@@ -3,6 +3,32 @@
     use Illuminate\Support\Str;
 @endphp
 @section('content')
+    <!-- Add SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Add Flash Message Handler -->
+    @if(session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '{{ session('success') }}',
+            confirmButtonColor: '#9333ea'
+        });
+    </script>
+    @endif
+
+    @if(session('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('error') }}',
+            confirmButtonColor: '#9333ea'
+        });
+    </script>
+    @endif
+
     <div class="flex flex-col md:flex-row w-full min-h-screen">
         <!-- Left: Bookshelf Image -->
         <div class="md:w-1/2 w-full flex items-center justify-center bg-white rounded-r-lg overflow-hidden">
@@ -25,7 +51,7 @@
                         </div>
                     </div>
                 @endif
-                <form action="{{ route('signup') }}" method="POST" class="space-y-4">
+                <form action="{{ route('signup') }}" method="POST" class="space-y-4" id="signupForm">
                     @csrf
                     <div>
                         <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
@@ -34,12 +60,10 @@
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
                         <input id="email" name="email" type="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 @error('email') border-red-500 @enderror" placeholder="Email" value="{{ old('email') }}">
-                        
                     </div>
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                         <input id="password" name="password" type="password" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 @error('password') border-red-500 @enderror" placeholder="Password">
-                        
                     </div>
                     <button type="submit" class="w-full py-2 px-4 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-md shadow focus:outline-none">Sign Up</button>
                 </form>
@@ -47,4 +71,64 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(async response => {
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    const data = await response.json();
+                    if (!response.ok) {
+                        throw data;
+                    }
+                    return data;
+                } else {
+                    // If the response is not JSON, it's a redirect response
+                    const redirectUrl = response.url;
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Account created successfully. Please log in.',
+                        confirmButtonColor: '#9333ea'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = redirectUrl;
+                        }
+                    });
+                    return;
+                }
+            })
+            .catch(error => {
+                let errorMessage = 'An error occurred while processing your request.';
+                
+                if (error.errors) {
+                    // Handle validation errors
+                    const errorMessages = Object.values(error.errors).flat();
+                    errorMessage = errorMessages.join('\n');
+                } else if (error.message) {
+                    errorMessage = error.message;
+                }
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: errorMessage,
+                    confirmButtonColor: '#9333ea'
+                });
+            });
+        });
+    </script>
 @endsection 

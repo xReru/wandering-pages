@@ -76,6 +76,9 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+// Customer Signup Routes
+Route::get('/signup', [SignupController::class, 'showSignupForm'])->name('signup');
+Route::post('/signup', [SignupController::class, 'signup'])->name('signup.submit');
 
 // Customer Profile Routes
 Route::middleware(['auth:customer'])->group(function () {
@@ -118,9 +121,6 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::post('/cart/update/{item}', [CartController::class, 'updateCartItem']);
     Route::delete('/cart/remove/{item}', [CartController::class, 'removeFromCart']);
 });
-
-Route::get('/signup', [SignupController::class, 'showSignupForm'])->name('signup');
-Route::post('/signup', [SignupController::class, 'signup']);
 
 Route::post('/newsletter/subscribe', [NewsletterSubscriberController::class, 'store'])->name('newsletter.subscribe');
 

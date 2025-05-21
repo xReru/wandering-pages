@@ -8,6 +8,7 @@ use App\Models\Like;
 use Illuminate\Support\Facades\Auth;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -166,5 +167,40 @@ class BookController extends Controller
                 'total' => $books->total(),
             ]
         ]);
+    }
+
+    public function search(Request $request)
+    {
+        try {
+            $query = trim($request->input('query', ''));
+            
+            if (strlen($query) < 3) {
+                return response()->json([]);
+            }
+
+            $books = Book::where('is_active', true)
+                ->where(function($q) use ($query) {
+                    $q->where('title', 'like', "%{$query}%")
+                      ->orWhere('author', 'like', "%{$query}%")
+                      ->orWhere('genre', 'like', "%{$query}%");
+                })
+                ->select('id', 'title', 'author', 'price', 'image')
+                ->limit(5)
+                ->get()
+                ->map(function($book) {
+                    return [
+                        'id' => $book->id,
+                        'title' => $book->title,
+                        'author' => $book->author,
+                        'price' => number_format($book->price, 2),
+                        'image_url' => $book->image ? asset('storage/' . $book->image) : '/api/placeholder/320/480'
+                    ];
+                });
+
+            return response()->json($books);
+        } catch (\Exception $e) {
+            \Log::error('Search error: ' . $e->getMessage());
+            return response()->json(['error' => 'An error occurred while searching'], 500);
+        }
     }
 }

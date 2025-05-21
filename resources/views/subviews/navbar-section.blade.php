@@ -16,12 +16,83 @@
             </div>
 
             <!-- Search, Cart and Account -->
-            <div class="flex items-center space-x-4" x-data="{ showUserModal: false }" x-init="$store.cart.init()">
+            <div class="flex items-center space-x-4" x-data="{ showUserModal: false, searchQuery: '', searchResults: [], isSearching: false, showResults: false, searchError: null }" x-init="$store.cart.init()">
                 <div class="relative w-48 hidden md:block">
-                    <input type="text" class="w-full px-4 py-1 border border-gray-300 rounded-md" placeholder="Search...">
+                    <input type="text" 
+                           x-model="searchQuery"
+                           @input.debounce.300ms="
+                               if(searchQuery.length > 2) {
+                                   isSearching = true;
+                                   showResults = true;
+                                   searchError = null;
+                                   fetch('/search-books?query=' + encodeURIComponent(searchQuery))
+                                       .then(response => {
+                                           if (!response.ok) {
+                                               throw new Error('Search failed. Please try again.');
+                                           }
+                                           return response.json();
+                                       })
+                                       .then(data => {
+                                           if (data.error) {
+                                               throw new Error(data.error);
+                                           }
+                                           searchResults = data;
+                                           isSearching = false;
+                                       })
+                                       .catch(error => {
+                                           console.error('Search error:', error);
+                                           searchError = error.message;
+                                           searchResults = [];
+                                           isSearching = false;
+                                       });
+                               } else {
+                                   searchResults = [];
+                                   showResults = false;
+                                   searchError = null;
+                               }
+                           "
+                           @click.away="showResults = false"
+                           class="w-full px-4 py-1 border border-gray-300 rounded-md" 
+                           placeholder="Search books...">
                     <button class="absolute right-2 inset-y-0 flex items-center text-gray-400 search-icon-btn">
                         <i class="fas fa-search"></i>
                     </button>
+                    
+                    <!-- Search Results Dropdown -->
+                    <div x-show="showResults && searchResults.length > 0" 
+                         class="absolute z-50 w-full mt-1 bg-white rounded-md shadow-lg max-h-96 overflow-y-auto">
+                        <template x-for="book in searchResults" :key="book.id">
+                            <a :href="'/books/' + book.id" 
+                               class="flex items-center p-3 hover:bg-gray-100 border-b border-gray-100">
+                                <img :src="book.image_url" class="w-12 h-16 object-cover rounded shadow-sm mr-3" :alt="book.title">
+                                <div>
+                                    <div class="font-medium text-gray-900" x-text="book.title"></div>
+                                    <div class="text-sm text-gray-600" x-text="book.author"></div>
+                                    <div class="text-sm font-medium text-indigo-600">$<span x-text="book.price"></span></div>
+                                </div>
+                            </a>
+                        </template>
+                    </div>
+                    
+                    <!-- Loading State -->
+                    <div x-show="isSearching" 
+                         class="absolute z-50 w-full mt-1 bg-white rounded-md shadow-lg p-3 text-center">
+                        <i class="fas fa-spinner fa-spin text-indigo-600"></i>
+                        <span class="ml-2 text-gray-600">Searching...</span>
+                    </div>
+                    
+                    <!-- Error State -->
+                    <div x-show="searchError" 
+                         class="absolute z-50 w-full mt-1 bg-white rounded-md shadow-lg p-3 text-center text-red-600">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span class="ml-2" x-text="searchError"></span>
+                    </div>
+                    
+                    <!-- No Results -->
+                    <div x-show="showResults && !isSearching && !searchError && searchResults.length === 0" 
+                         class="absolute z-50 w-full mt-1 bg-white rounded-md shadow-lg p-3 text-center text-gray-600">
+                        No books found
+                    </div>
                 </div>
                 @if(Auth::guard('customer')->check())
                 <div class="flex items-center">

@@ -164,15 +164,20 @@
                     <div class="flex items-center bg-gray-50 rounded-lg shadow-sm p-3 mb-4 group transition">
                         <input type="checkbox"
                             :checked="item.selected"
-                            @change="!item.isOutOfStock && $store.cart.toggleItemSelection(item.id)"
-                            :disabled="item.isOutOfStock"
+                            @change="!item.isOutOfStock && !item.isArchived && $store.cart.toggleItemSelection(item.id)"
+                            :disabled="item.isOutOfStock || item.isArchived"
                             class="mr-3 h-5 w-5 text-purple-600 focus:ring-purple-500 border-gray-300 rounded cursor-pointer transition"
-                            :class="{'opacity-50 cursor-not-allowed': item.isOutOfStock}">
+                            :class="{'opacity-50 cursor-not-allowed': item.isOutOfStock || item.isArchived}">
                         <img :src="item.book.image_url" class="h-16 w-12 object-cover rounded shadow-sm mr-3 border" alt="Book Cover">
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center justify-between">
                                 <span class="font-semibold truncate" x-text="item.book.title"></span>
-                                <span x-show="item.isOutOfStock" class="ml-2 px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded">OUT OF STOCK</span>
+                                <template x-if="item.isArchived">
+                                    <span class="ml-2 px-2 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded">BOOK UNAVAILABLE</span>
+                                </template>
+                                <template x-if="!item.isArchived && item.isOutOfStock">
+                                    <span class="ml-2 px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded">OUT OF STOCK</span>
+                                </template>
                             </div>
                             <div class="flex items-center gap-2 mt-2">
                                 <button @click="$store.cart.updateQuantity(item.id, item.quantity - 1)"
@@ -257,8 +262,26 @@ document.addEventListener('alpine:init', () => {
                         item.book.image_url = item.book.image.startsWith('http') ? item.book.image : '/storage/' + item.book.image;
                         // Ensure quantity is a number
                         item.quantity = parseInt(item.quantity) || 0;
-                        // Check if item is out of stock based on quantity or is_active
-                        item.isOutOfStock = item.quantity <= 0 || item.book.is_active === 0;
+                        
+                        // Debug logging for initial values
+                        console.log('Processing item:', {
+                            title: item.book.title,
+                            is_archived: item.book.is_archived,
+                            quantity: item.book.quantity
+                        });
+                        
+                        // Check if item is archived (handle both boolean and number values)
+                        item.isArchived = item.book.is_archived === true || item.book.is_archived === 1;
+                        console.log('Archived status:', item.isArchived);
+                        
+                        // Set out of stock status based on archived status
+                        if (item.isArchived) {
+                            item.isOutOfStock = false;
+                            console.log('Item is archived, setting out of stock to false');
+                        } else {
+                            item.isOutOfStock = item.book.quantity < 1;
+                            console.log('Item is not archived, checking stock:', item.isOutOfStock);
+                        }
                     });
                 }
                 this.updateCartCounts();

@@ -10,7 +10,58 @@
                         <input type="password" x-model="current_password" class="w-full border rounded px-2 py-1 mt-1" required />
                     </label>
                     <div class="flex justify-end">
-                        <button type="button" @click="forgotPasswordLoading = true; forgotPasswordError = ''; forgotPasswordSuccess = ''; fetch('{{ route('customer.password.email') }}', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content') } }).then(async r => { const data = await r.json(); forgotPasswordLoading = false; if(r.ok && data.success){ forgotPasswordSuccess = data.success; } else { forgotPasswordError = data.error || 'An error occurred.'; } }).catch(() => { forgotPasswordLoading = false; forgotPasswordError = 'An error occurred.'; })" class="text-sm text-purple-700 hover:text-purple-800" :disabled="forgotPasswordLoading">
+                        <button type="button" @click="Swal.fire({
+                            title: 'Forgot Password?',
+                            text: 'We will send a password reset link to your email address.',
+                            icon: 'question',
+                            showCancelButton: true,
+                            confirmButtonColor: '#6B46C1',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, send reset link',
+                            cancelButtonText: 'Cancel'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                forgotPasswordLoading = true;
+                                forgotPasswordError = '';
+                                forgotPasswordSuccess = '';
+                                fetch('{{ route('customer.password.email') }}', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
+                                    }
+                                }).then(async r => {
+                                    const data = await r.json();
+                                    forgotPasswordLoading = false;
+                                    if(r.ok && data.success) {
+                                        Swal.fire({
+                                            title: 'Success!',
+                                            text: data.success,
+                                            icon: 'success',
+                                            confirmButtonColor: '#6B46C1'
+                                        });
+                                        forgotPasswordSuccess = data.success;
+                                    } else {
+                                        Swal.fire({
+                                            title: 'Error!',
+                                            text: data.error || 'An error occurred.',
+                                            icon: 'error',
+                                            confirmButtonColor: '#6B46C1'
+                                        });
+                                        forgotPasswordError = data.error || 'An error occurred.';
+                                    }
+                                }).catch(() => {
+                                    forgotPasswordLoading = false;
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: 'An error occurred.',
+                                        icon: 'error',
+                                        confirmButtonColor: '#6B46C1'
+                                    });
+                                    forgotPasswordError = 'An error occurred.';
+                                });
+                            }
+                        })" class="text-sm text-purple-700 hover:text-purple-800" :disabled="forgotPasswordLoading">
                             <span x-show="!forgotPasswordLoading">Forgot Password?</span>
                             <span x-show="forgotPasswordLoading">Sending...</span>
                         </button>

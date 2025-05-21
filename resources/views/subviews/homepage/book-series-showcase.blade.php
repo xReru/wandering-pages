@@ -96,7 +96,7 @@
                         } else {
                             // Other books
                             translateX = `${20 * offset}%`;
-                            opacity = 1 - (offset * 0.15);
+                            opacity = 1;
                             scale = 1 - (offset * 0.05);
                         }
 

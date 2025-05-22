@@ -42,7 +42,7 @@
     </style>
 </head>
 
-<body class="h-full flex flex-col bg-white">
+<body class="h-full flex flex-col !bg-[#F9F8FF]">
     @include('subviews.navbar-section')
     
     @if(Auth::guard('customer')->check() && (empty(Auth::guard('customer')->user()->first_name) || 

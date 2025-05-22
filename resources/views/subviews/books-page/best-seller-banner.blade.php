@@ -1,4 +1,4 @@
-<section class="bg-gray-200 py-12 px-4 sm:px-6 lg:px-8">
+<section class="bg-[#F9F8FF] py-12 px-4 sm:px-6 lg:px-8">
     <div class="container mx-auto">
         <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold font-['EBGaramond'] text-[#1B1146] mb-8">Best Sellers</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
@@ -18,7 +18,7 @@
                             <p class="text-sm text-[#1B1146] font-['Heebo'] mb-2">by {{ $book->author }}</p>
                         </div>
                         <div class="flex items-center justify-between mt-2">
-                            <span class="tfont-secondary font-semibold text-xs text-[#6354A0]">$ {{ number_format($book->price, 2) }}</span>
+                            <span class="tfont-secondary font-semibold text-s text-[#6354A0]">$ {{ number_format($book->price, 2) }}</span>
                             <span class="text-xs text-gray-500">Top Seller</span>
                         </div>
                     </div>

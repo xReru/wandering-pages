@@ -13,7 +13,7 @@
                 <p class="text-sm text-gray-600 mb-2 font-['EBGaramond']">by {{ $book->author }}</p>
             </div>
             <div class="flex items-center justify-between mt-2">
-                <span class="text-purple-700 font-bold text-lg font-['EBGaramond']">${{ number_format($book->price, 2) }}</span>
+                <span class="text-[#7464B6] font-bold text-lg font-['EBGaramond']">${{ number_format($book->price, 2) }}</span>
             </div>
         </div>
     </a>

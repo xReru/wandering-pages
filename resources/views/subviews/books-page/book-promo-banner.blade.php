@@ -44,14 +44,14 @@
         <div class="flex flex-col md:flex-row items-center justify-between bg-purple-200/80 rounded-lg overflow-hidden shadow-lg">
             <!-- Left Section with Text and CTA -->
             <div class="p-6 md:p-8 lg:p-12 md:w-1/2 lg:w-2/5 flex flex-col justify-center h-full">
-                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-purple-900 mb-4 font-['EBGaramond']">{{ $title }}</h2>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1B1146] mb-4 font-['EBGaramond']">{{ $title }}</h2>
                 <div class="flex items-center mb-6 font-['EBGaramond']">
-                    <p class="text-gray-500 line-through mr-3 text-lg">${{ number_format($originalPrice, 2) }}</p>
-                    <p class="text-purple-900 font-bold text-xl sm:text-2xl">${{ number_format($salePrice, 2) }}</p>
+                    <p class="text-[#1B1146] line-through mr-3 text-lg font-['EBGaramond']">$ {{ number_format($originalPrice, 2) }}</p>
+                    <p class="text-[#1B1146] font-bold text-xl sm:text-2xl font-['EBGaramond']">$ {{ number_format($salePrice, 2) }}</p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-3 font-['EBGaramond']">
-                    <a href="{{ $buyNowUrl }}" class="bg-purple-700 hover:bg-purple-800 text-white font-medium py-2 px-6 rounded transition duration-300 text-center">Buy Now</a>
-                    <a href="{{ $browseMoreUrl }}" class="border border-purple-400 hover:border-purple-600 text-purple-700 font-medium py-2 px-6 rounded transition duration-300 text-center">Browse More</a>
+                    <a href="{{ $buyNowUrl }}" class="bg-[#7464B6] hover:bg-[#6354A0] text-white font-medium py-2 px-6 rounded transition duration-300 text-center">Buy Now</a>
+                    <a href="{{ $browseMoreUrl }}" class="border border-[#7464B6] hover:border-[#6354A0] text-[#7464B6] font-medium py-2 px-6 rounded transition duration-300 text-center">Browse More</a>
                 </div>
             </div>
             <!-- Right Section with Book Covers Fan/Slider -->
@@ -89,7 +89,7 @@
                         scale = 1;
                     } else {
                         translateX = `${20 * offset}%`;
-                        opacity = 1 - (offset * 0.15);
+                        opacity = 1;
                         scale = 1 - (offset * 0.05);
                     }
                     return `transform: translateX(${translateX}) scale(${scale}); z-index: ${zIndex}; opacity: ${opacity};`;

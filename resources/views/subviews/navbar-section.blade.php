@@ -301,69 +301,127 @@
                 
                 <!-- Cart Modal -->
 @if(Auth::guard('customer')->check())
-<div x-show="$store.cart.open" class="fixed inset-0 flex justify-end z-50" style="display: none;">
-    <div class="bg-white w-full max-w-md p-6 shadow-2xl h-full overflow-y-auto relative flex flex-col">
-        <button @click="$store.cart.open = false" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl">
-            <i class="fas fa-times"></i>
-        </button>
-        <h2 class="text-2xl font-bold mb-6">Shopping Cart</h2>
-        <template x-if="$store.cart.cart && $store.cart.cart.items && $store.cart.cart.items.length">
-            <div class="flex-1">
-                <template x-for="item in $store.cart.cart.items" :key="item.id">
-                    <div class="flex items-center bg-gray-50 rounded-lg shadow-sm p-3 mb-4 group transition">
-                        <input type="checkbox"
-                            :checked="item.selected"
-                            @change="!item.isOutOfStock && !item.isArchived && $store.cart.toggleItemSelection(item.id)"
-                            :disabled="item.isOutOfStock || item.isArchived"
-                            class="mr-3 h-5 w-5 text-purple-600 focus:ring-purple-500 border-gray-300 rounded cursor-pointer transition"
-                            :class="{'opacity-50 cursor-not-allowed': item.isOutOfStock || item.isArchived}">
-                        <img :src="item.book.image_url" class="h-16 w-12 object-cover rounded shadow-sm mr-3 border" alt="Book Cover">
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center justify-between">
-                                <span class="font-semibold truncate" x-text="item.book.title"></span>
-                                <template x-if="item.isArchived">
-                                    <span class="ml-2 px-2 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded">BOOK UNAVAILABLE</span>
-                                </template>
-                                <template x-if="!item.isArchived && item.isOutOfStock">
-                                    <span class="ml-2 px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded">OUT OF STOCK</span>
-                                </template>
-                            </div>
-                            <div class="flex items-center gap-2 mt-2">
-                                <button @click="$store.cart.updateQuantity(item.id, item.quantity - 1)"
-                                    class="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded text-sm font-bold transition"
-                                    :disabled="item.quantity <= 1">-</button>
-                                <span x-text="item.quantity" class="w-8 text-center font-medium"></span>
-                                <button @click="$store.cart.updateQuantity(item.id, item.quantity + 1)"
-                                    class="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded text-sm font-bold transition">+</button>
-                                <button @click="$store.cart.removeItem(item.id)"
-                                    class="ml-2 text-red-500 hover:text-red-700 transition"
-                                    title="Remove from cart">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                                <span class="ml-auto text-sm text-gray-700 font-semibold">
-                                    $<span x-text="(item.book.price * item.quantity).toFixed(2)"></span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-                <div class="mt-6 p-4 bg-purple-50 rounded-lg flex items-center justify-between font-bold text-lg shadow">
-                    <span>Selected Items Subtotal:</span>
-                    <span class="text-purple-700">$<span x-text="$store.cart.selectedSubtotal"></span></span>
-                </div>
-                <button class="mt-6 w-full !bg-gradient-to-r !from-purple-600 !to-indigo-600 text-white py-3 rounded-lg font-bold text-lg shadow hover:!from-purple-700 hover:!to-indigo-700 transition disabled:opacity-50"
-                        @click.prevent="$store.cart.proceedToCheckout()"
-                        :disabled="!$store.cart.hasSelectedItems">
-                    CHECKOUT
+<div x-show="$store.cart.open" 
+     x-transition:enter="transition ease-out duration-300"
+     x-transition:enter-start="opacity-0"
+     x-transition:enter-end="opacity-100"
+     x-transition:leave="transition ease-in duration-200"
+     x-transition:leave-start="opacity-100"
+     x-transition:leave-end="opacity-0"
+     class="fixed inset-0 z-50" 
+     style="display: none;">
+    <!-- Backdrop -->
+    <div class="fixed inset-0 bg-black/70" @click="$store.cart.open = false"></div>
+    
+    <!-- Cart Content -->
+    <div class="fixed inset-y-0 right-0 w-full max-w-md transform transition-transform duration-300 ease-in-out"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="translate-x-full"
+         x-transition:enter-end="translate-x-0"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="translate-x-0"
+         x-transition:leave-end="translate-x-full">
+        <div class="h-full bg-white shadow-2xl flex flex-col">
+            <!-- Header -->
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h2 class="text-2xl font-bold text-gray-900">Shopping Cart</h2>
+                <button @click="$store.cart.open = false" 
+                        class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
-        </template>
-        <template x-if="!$store.cart.cart || !$store.cart.cart.items || $store.cart.cart.items.length === 0">
-            <div class="text-gray-400 text-center mt-16">
-                <i class="fas fa-shopping-cart text-4xl mb-4"></i>
-                <div>Your cart is empty.</div>
+
+            <!-- Cart Items -->
+            <div class="flex-1 overflow-y-auto p-6">
+                <template x-if="$store.cart.cart && $store.cart.cart.items && $store.cart.cart.items.length">
+                    <div class="space-y-4">
+                        <template x-for="item in $store.cart.cart.items" :key="item.id">
+                            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition-shadow">
+                                <div class="flex items-start space-x-4">
+                                    <input type="checkbox"
+                                        :checked="item.selected"
+                                        @change="!item.isOutOfStock && !item.isArchived && $store.cart.toggleItemSelection(item.id)"
+                                        :disabled="item.isOutOfStock || item.isArchived"
+                                        class="mt-2 h-5 w-5 text-purple-600 focus:ring-purple-500 border-gray-300 rounded cursor-pointer transition"
+                                        :class="{'opacity-50 cursor-not-allowed': item.isOutOfStock || item.isArchived}">
+                                    
+                                    <img :src="item.book.image_url" 
+                                         class="h-24 w-16 object-cover rounded-lg shadow-sm border" 
+                                         :alt="item.book.title">
+                                    
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-start justify-between">
+                                            <div>
+                                                <h3 class="text-lg font-semibold text-gray-900 truncate" x-text="item.book.title"></h3>
+                                                <p class="text-sm text-gray-500 mt-1" x-text="item.book.author"></p>
+                                            </div>
+                                            <div class="flex flex-col items-end">
+                                                <template x-if="item.isArchived">
+                                                    <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full">UNAVAILABLE</span>
+                                                </template>
+                                                <template x-if="!item.isArchived && item.isOutOfStock">
+                                                    <span class="px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-full">OUT OF STOCK</span>
+                                                </template>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-4 flex items-center justify-between">
+                                            <div class="flex items-center space-x-3">
+                                                <button @click="$store.cart.updateQuantity(item.id, item.quantity - 1)"
+                                                    class="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 font-bold transition-colors"
+                                                    :disabled="item.quantity <= 1">-</button>
+                                                <span x-text="item.quantity" class="w-8 text-center font-medium text-gray-900"></span>
+                                                <button @click="$store.cart.updateQuantity(item.id, item.quantity + 1)"
+                                                    :disabled="item.isArchived || item.isOutOfStock" class="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 font-bold transition-colors">+</button>
+                                            </div>
+                                            
+                                            <div class="flex items-center space-x-4">
+                                                <span class="text-lg font-semibold text-purple-600">
+                                                    $<span x-text="(item.book.price * item.quantity).toFixed(2)"></span>
+                                                </span>
+                                                <button @click="$store.cart.removeItem(item.id)"
+                                                    class="text-gray-400 hover:text-red-500 transition-colors"
+                                                    title="Remove from cart">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+
+                <!-- Empty Cart State -->
+                <template x-if="!$store.cart.cart || !$store.cart.cart.items || $store.cart.cart.items.length === 0">
+                    <div class="h-full flex flex-col items-center justify-center text-center py-12">
+                        <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-shopping-cart text-4xl text-gray-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Your cart is empty</h3>
+                        <p class="text-gray-500 mb-6">Add some books to your cart to start shopping</p>
+                        <a href="{{ route('browse-books') }}" 
+                           class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors">
+                            Browse Books
+                        </a>
+                    </div>
+                </template>
             </div>
-        </template>
+
+            <!-- Footer -->
+            <div class="border-t border-gray-200 p-6 bg-gray-50">
+                <div class="flex items-center justify-between mb-6">
+                    <span class="text-lg font-semibold text-gray-900">Selected Items Subtotal:</span>
+                    <span class="text-2xl font-bold text-purple-600">$<span x-text="$store.cart.selectedSubtotal"></span></span>
+                </div>
+                <button class="w-full !bg-gradient-to-r !from-purple-600 !to-indigo-600 hover:!from-purple-700 hover:!to-indigo-700 text-white py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        @click.prevent="$store.cart.proceedToCheckout()"
+                        :disabled="!$store.cart.hasSelectedItems">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 @endif

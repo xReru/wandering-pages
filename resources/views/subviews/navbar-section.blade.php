@@ -245,7 +245,7 @@
 
                 @if(Auth::guard('customer')->check())
                 <div class="flex items-center">
-                    <span class="text-indigo-800 font-medium mr-1">$<span x-text="$store.cart.subtotal">0.00</span></span>
+                    <span class="text-[#6354A0] font-normal font-medium mr-1">$ <span x-text="$store.cart.subtotal">0.00</span></span>
                     <div class="relative cursor-pointer" @click="$store.cart.open = true; $store.cart.fetchCart()">
                         <i class="fas fa-shopping-bag text-gray-700"></i>
                         <span class="absolute -top-2 -right-2 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" x-text="$store.cart.cartCount">0</span>

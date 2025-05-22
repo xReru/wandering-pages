@@ -115,9 +115,9 @@
                                class="flex items-center p-3 hover:bg-gray-100 border-b border-gray-100">
                                 <img :src="book.image_url" class="w-12 h-16 object-cover rounded shadow-sm mr-3" :alt="book.title">
                                 <div>
-                                    <div class="font-medium text-gray-900" x-text="book.title"></div>
-                                    <div class="text-sm text-gray-600" x-text="book.author"></div>
-                                    <div class="text-sm font-medium text-indigo-600">$<span x-text="book.price"></span></div>
+                                    <div class="font-primary text-md font-semibold text-[#1B1146]" x-text="book.title"></div>
+                                    <div class="font-secondary text-sm text-[#1B1146] font-regular" x-text="book.author"></div>
+                                    <div class="font-secondary text-sm font-medium text-[#6354A0]">$ <span class="font-secondary text-sm font-medium text-[#6354A0]" x-text="book.price"></span></div>
                                 </div>
                             </a>
                         </template>
@@ -146,91 +146,99 @@
 
                 <!-- Mobile Search Modal -->
                 <div x-show="mobileSearchOpen" 
-                     class="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden"
+                     class="fixed inset-0 z-50 md:hidden"
                      @click.away="mobileSearchOpen = false"
                      style="display: none;">
-                    <div class="bg-white p-4" @click.stop>
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-semibold">Search Books</h3>
-                            <button @click="mobileSearchOpen = false" class="text-gray-500 hover:text-gray-700">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        <div class="relative">
-                            <input type="text" 
-                                   x-model="searchQuery"
-                                   @input.debounce.300ms="
-                                       if(searchQuery.length > 2) {
-                                           isSearching = true;
-                                           showResults = true;
-                                           searchError = null;
-                                           fetch('/search-books?query=' + encodeURIComponent(searchQuery))
-                                               .then(response => {
-                                                   if (!response.ok) {
-                                                       throw new Error('Search failed. Please try again.');
-                                                   }
-                                                   return response.json();
-                                               })
-                                               .then(data => {
-                                                   if (data.error) {
-                                                       throw new Error(data.error);
-                                                   }
-                                                   searchResults = data;
-                                                   isSearching = false;
-                                               })
-                                               .catch(error => {
-                                                   console.error('Search error:', error);
-                                                   searchError = error.message;
-                                                   searchResults = [];
-                                                   isSearching = false;
-                                               });
-                                       } else {
-                                           searchResults = [];
-                                           showResults = false;
-                                           searchError = null;
-                                       }
-                                   "
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-md" 
-                                   placeholder="Search books...">
-                            <button class="absolute right-2 inset-y-0 flex items-center text-gray-400">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                        
-                        <!-- Mobile Search Results -->
-                        <div class="mt-4 max-h-[60vh] overflow-y-auto">
-                            <template x-if="isSearching">
-                                <div class="text-center py-4">
-                                    <i class="fas fa-spinner fa-spin text-indigo-600"></i>
-                                    <span class="ml-2 text-gray-600">Searching...</span>
-                                </div>
-                            </template>
+                    <!-- Backdrop with blur -->
+                    <div class="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"></div>
+                    
+                    <!-- Modal Content -->
+                    <div class="fixed left-0 right-0 top-0 w-full bg-white shadow-lg rounded-b-2xl transform transition-all duration-300 ease-in-out z-50"
+                         :class="mobileSearchOpen ? 'translate-y-0' : '-translate-y-full'">
+                        <div class="p-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-primary text-lg font-semibold text-[#1B1146]">Search Books</h3>
+                                <button @click="mobileSearchOpen = false" class="text-gray-500 hover:text-gray-700 transition-colors">
+                                    <i class="fas fa-times text-xl"></i>
+                                </button>
+                            </div>
+                            <div class="relative">
+                                <input type="text" 
+                                       x-model="searchQuery"
+                                       @input.debounce.300ms="
+                                           if(searchQuery.length > 2) {
+                                               isSearching = true;
+                                               showResults = true;
+                                               searchError = null;
+                                               fetch('/search-books?query=' + encodeURIComponent(searchQuery))
+                                                   .then(response => {
+                                                       if (!response.ok) {
+                                                           throw new Error('Search failed. Please try again.');
+                                                       }
+                                                       return response.json();
+                                                   })
+                                                   .then(data => {
+                                                       if (data.error) {
+                                                           throw new Error(data.error);
+                                                       }
+                                                       searchResults = data;
+                                                       isSearching = false;
+                                                   })
+                                                   .catch(error => {
+                                                       console.error('Search error:', error);
+                                                       searchError = error.message;
+                                                       searchResults = [];
+                                                       isSearching = false;
+                                                   });
+                                           } else {
+                                               searchResults = [];
+                                               showResults = false;
+                                               searchError = null;
+                                           }
+                                       "
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all" 
+                                       placeholder="Search books...">
+                                <button class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
                             
-                            <template x-if="searchError">
-                                <div class="text-center py-4 text-red-600">
-                                    <i class="fas fa-exclamation-circle"></i>
-                                    <span class="ml-2" x-text="searchError"></span>
-                                </div>
-                            </template>
-                            
-                            <template x-if="showResults && !isSearching && !searchError && searchResults.length === 0">
-                                <div class="text-center py-4 text-gray-600">
-                                    No books found
-                                </div>
-                            </template>
-                            
-                            <template x-for="book in searchResults" :key="book.id">
-                                <a :href="'/books/' + book.id" 
-                                   @click="mobileSearchOpen = false"
-                                   class="flex items-center p-3 hover:bg-gray-100 border-b border-gray-100">
-                                    <img :src="book.image_url" class="w-12 h-16 object-cover rounded shadow-sm mr-3" :alt="book.title">
-                                    <div>
-                                        <div class="font-medium text-gray-900" x-text="book.title"></div>
-                                        <div class="text-sm text-gray-600" x-text="book.author"></div>
-                                        <div class="text-sm font-medium text-indigo-600">$<span x-text="book.price"></span></div>
+                            <!-- Mobile Search Results -->
+                            <div class="mt-4 max-h-[calc(100vh-200px)] overflow-y-auto">
+                                <template x-if="isSearching">
+                                    <div class="flex items-center justify-center py-8">
+                                        <i class="fas fa-spinner fa-spin text-purple-600 text-xl"></i>
+                                        <span class="ml-3 text-gray-600">Searching...</span>
                                     </div>
-                                </a>
-                            </template>
+                                </template>
+                                
+                                <template x-if="searchError">
+                                    <div class="flex items-center justify-center py-8 text-red-600">
+                                        <i class="fas fa-exclamation-circle text-xl"></i>
+                                        <span class="ml-3" x-text="searchError"></span>
+                                    </div>
+                                </template>
+                                
+                                <template x-if="showResults && !isSearching && !searchError && searchResults.length === 0">
+                                    <div class="text-center py-8 text-gray-600">
+                                        <i class="fas fa-search text-2xl mb-2"></i>
+                                        <p>No books found</p>
+                                    </div>
+                                </template>
+                                
+                                <template x-for="book in searchResults" :key="book.id">
+                                    <a :href="'/books/' + book.id" 
+                                       @click="mobileSearchOpen = false"
+                                       class="flex items-center p-4 hover:bg-gray-50 border-b border-gray-100 transition-colors">
+                                        <img :src="book.image_url" class="w-16 h-20 object-cover rounded-lg shadow-sm mr-4" :alt="book.title">
+                                        <div class="flex-1 min-w-0">
+                                            <div class="font-primary font-medium text-[#1B1146] truncate" x-text="book.title"></div>
+                                            <div class="text-sm text-gray-600" x-text="book.author"></div>
+                                            <div class="text-sm font-medium text-[#6354A0] mt-1">$ <span x-text="book.price" class="font-secondary text-sm font-medium text-[#6354A0]"></span></div>
+                                        </div>
+                                    </a>
+                                </template>
+                            </div>
                         </div>
                     </div>
                 </div>

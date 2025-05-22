@@ -58,7 +58,7 @@
                     </div>
                     <p class="text-sm text-gray-600 text-center lg:text-left">
                         We care about your data. Read our 
-                        <a href="#" class="text-[#51518e] hover:text-[#3f3f6e] hover:underline transition-colors duration-200">
+                        <a href="#" class="text-[#774DD9git] hover:text-[#54339F] hover:underline transition-colors duration-200">
                             privacy policy
                         </a>.
                     </p>

@@ -73,7 +73,7 @@
   <button 
     x-show="showButton"
     @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
-    class="bg-[#7464B6] text-white p-3 rounded-full shadow-lg hover:bg-[#6354A0] transition"
+    class="bg-[#7464B6] animate-bounce text-white p-3 rounded-full shadow-lg hover:bg-[#6354A0] transition"
     aria-label="Scroll to top"
   >
     <i class="fas fa-arrow-up"></i>

@@ -102,9 +102,7 @@
                 </div>
             @endif
             
-            <div class="bg-white rounded-xl shadow-sm p-6">
-                @yield('content')
-            </div>
+            @yield('content')
         </main>
     </div>
 

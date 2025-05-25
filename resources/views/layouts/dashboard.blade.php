@@ -56,7 +56,7 @@
                     <span class="font-medium">Likes</span>
                 </a>
                 <a href="{{ route('orders.pending') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200">
-                    <i class="fas fa-clock text-blue-600 w-5"></i>
+                    <i class="far fa-clock text-blue-600 w-5"></i>
                     <span class="font-medium">Pending</span>
                 </a>
                 <a href="{{ route('orders.shipping') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200">
@@ -68,7 +68,7 @@
                     <span class="font-medium">Delivering</span>
                 </a>
                 <a href="{{ route('orders.completed') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200">
-                    <i class="fas fa-star text-yellow-500 w-5"></i>
+                    <i class="far fa-star text-yellow-500 w-5"></i>
                     <span class="font-medium">Ratings</span>
                 </a>
                 <a href="{{ route('orders.history') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200">

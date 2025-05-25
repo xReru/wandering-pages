@@ -2,7 +2,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/css/splide.min.css" rel="stylesheet">
 </head>
-<header class="bg-white shadow-sm" x-data="{ mobileMenuOpen: false, showUserModal: false, searchQuery: '', searchResults: [], isSearching: false, showResults: false, searchError: null, mobileSearchOpen: false }" x-init="$store.cart.init()">
+<header class="bg-white shadow-sm fixed top-0 left-0 right-0 z-[100]" x-data="{ mobileMenuOpen: false, showUserModal: false, searchQuery: '', searchResults: [], isSearching: false, showResults: false, searchError: null, mobileSearchOpen: false }" x-init="$store.cart.init()">
     <div class="container mx-auto px-4 py-3">
         <!-- Mobile Menu Overlay -->
         <div x-show="mobileMenuOpen" 
@@ -324,7 +324,7 @@
         <div class="h-full bg-white shadow-2xl flex flex-col">
             <!-- Header -->
             <div class="p-6 border-b border-gray-200 flex items-center justify-between">
-                <h2 class="text-2xl font-bold text-gray-900">Shopping Cart</h2>
+                <h2 class="font-normal text-2xl font-bold text-gray-900">Shopping Cart</h2>
                 <button @click="$store.cart.open = false" 
                         class="text-gray-400 hover:text-gray-600 transition-colors">
                     <i class="fas fa-times text-xl"></i>
@@ -352,7 +352,25 @@
                                     <div class="flex-1 min-w-0">
                                         <div class="flex items-start justify-between">
                                             <div>
-                                                <h3 class="text-lg font-semibold text-gray-900 truncate" x-text="item.book.title"></h3>
+                                                <div class="relative inline-block">
+                                                    <h3 class="font-normal text-lg font-semibold text-gray-900 truncate" 
+                                                        x-text="item.book.title.length > 26 ? item.book.title.substring(0, 26) + '...' : item.book.title"
+                                                        x-data="{ tooltip: false }"
+                                                        @mouseenter="tooltip = true"
+                                                        @mouseleave="tooltip = false">
+                                                    </h3>
+                                                    <div x-show="tooltip && item.book.title.length > 26"
+                                                         x-transition:enter="transition ease-out duration-200"
+                                                         x-transition:enter-start="opacity-0"
+                                                         x-transition:enter-end="opacity-100"
+                                                         x-transition:leave="transition ease-in duration-150"
+                                                         x-transition:leave-start="opacity-100"
+                                                         x-transition:leave-end="opacity-0"
+                                                         class="absolute z-[9999] px-3 py-2 bg-gray-900 text-white text-sm rounded-lg shadow-lg whitespace-normal max-w-xs -top-2 left-1/2 transform -translate-x-1/2 -translate-y-full pointer-events-none">
+                                                        <span x-text="item.book.title"></span>
+                                                        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rotate-45 w-2 h-2 bg-gray-900"></div>
+                                                    </div>
+                                                </div>
                                                 <p class="text-sm text-gray-500 mt-1" x-text="item.book.author"></p>
                                             </div>
                                             <div class="flex flex-col items-end">
@@ -376,11 +394,11 @@
                                             </div>
                                             
                                             <div class="flex items-center space-x-4">
-                                                <span class="text-lg font-semibold text-purple-600">
-                                                    $<span x-text="(item.book.price * item.quantity).toFixed(2)"></span>
+                                                <span class="text-lg font-semibold text-[#6354A0]">
+                                                    $ <span x-text="(item.book.price * item.quantity).toFixed(2)"></span>
                                                 </span>
                                                 <button @click="$store.cart.removeItem(item.id)"
-                                                    class="text-gray-400 hover:text-red-500 transition-colors"
+                                                    class="text-gray-400 hover:text-[#6354A0] transition-colors"
                                                     title="Remove from cart">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
@@ -413,9 +431,9 @@
             <div class="border-t border-gray-200 p-6 bg-gray-50">
                 <div class="flex items-center justify-between mb-6">
                     <span class="text-lg font-semibold text-gray-900">Selected Items Subtotal:</span>
-                    <span class="text-2xl font-bold text-purple-600">$<span x-text="$store.cart.selectedSubtotal"></span></span>
+                    <span class="text-2xl font-bold text-[#6354A0]">$ <span x-text="$store.cart.selectedSubtotal"></span></span>
                 </div>
-                <button class="w-full !bg-gradient-to-r !from-purple-600 !to-indigo-600 hover:!from-purple-700 hover:!to-indigo-700 text-white py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                <button class="font-normal w-full bg-[#7464B6] hover:bg-[#6354A0] text-white py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                         @click.prevent="$store.cart.proceedToCheckout()"
                         :disabled="!$store.cart.hasSelectedItems">
                     Proceed to Checkout
@@ -431,6 +449,30 @@
 </header>
 <script>
 document.addEventListener('alpine:init', () => {
+    // Add tooltip directive
+    Alpine.directive('tooltip', (el, { expression }) => {
+        if (!expression) return;
+        
+        const tooltip = document.createElement('div');
+        tooltip.className = 'absolute z-[200] px-2 py-1 text-sm text-white bg-gray-900 rounded shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none whitespace-normal max-w-xs';
+        tooltip.style.bottom = '100%';
+        tooltip.style.left = '50%';
+        tooltip.style.transform = 'translateX(-50%)';
+        tooltip.style.marginBottom = '5px';
+        
+        el.style.position = 'relative';
+        el.appendChild(tooltip);
+        
+        el.addEventListener('mouseenter', () => {
+            tooltip.textContent = expression;
+            tooltip.style.opacity = '1';
+        });
+        
+        el.addEventListener('mouseleave', () => {
+            tooltip.style.opacity = '0';
+        });
+    });
+
     Alpine.store('cart', {
         open: false,
         cart: null,

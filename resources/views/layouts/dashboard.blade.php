@@ -53,34 +53,34 @@
                             <i class="fas fa-butterfly"></i>
                         </span>
                     <div class="text-center">
-                        <h2 class="text-xl font-semibold text-gray-800">Edit Profile</h2>
+                        <h2 class="font-normal text-xl text-gray-800">Profile</h2>
                         <p class="text-sm text-gray-500">Manage your account</p>
                     </div>
                 </div>
             </div>
             
             <nav class="p-6 space-y-2">
-                <a href="{{ route('customers.likes') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200">
+                <a href="{{ route('customers.likes') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-[#F2F2FF] hover:text-[#7464B6] rounded-lg transition-colors duration-200">
                     <i class="fas fa-heart text-red-500 w-5"></i>
                     <span class="font-medium">Likes</span>
                 </a>
-                <a href="{{ route('orders.pending') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200">
-                    <i class="fas fa-clock text-blue-600 w-5"></i>
+                <a href="{{ route('orders.pending') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-[#F2F2FF] hover:text-[#7464B6] rounded-lg transition-colors duration-200">
+                    <i class="fas fa-clock text-indigo-600 w-5"></i>
                     <span class="font-medium">Pending</span>
                 </a>
-                <a href="{{ route('orders.shipping') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200">
+                <a href="{{ route('orders.shipping') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-[#F2F2FF] hover:text-[#7464B6] rounded-lg transition-colors duration-200">
                     <i class="fas fa-shipping-fast text-orange-500 w-5"></i>
                     <span class="font-medium">Shipping</span>
                 </a>
-                <a href="{{ route('orders.delivering') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200">
+                <a href="{{ route('orders.delivering') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-[#F2F2FF] hover:text-[#7464B6] rounded-lg transition-colors duration-200">
                     <i class="fas fa-truck text-blue-400 w-5"></i>
                     <span class="font-medium">Delivering</span>
                 </a>
-                <a href="{{ route('orders.completed') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200">
+                <a href="{{ route('orders.completed') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-[#F2F2FF] hover:text-[#7464B6] rounded-lg transition-colors duration-200">
                     <i class="fas fa-star text-yellow-500 w-5"></i>
                     <span class="font-medium">Ratings</span>
                 </a>
-                <a href="{{ route('orders.history') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg transition-colors duration-200">
+                <a href="{{ route('orders.history') }}" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-[#F2F2FF] hover:text-[#7464B6] rounded-lg transition-colors duration-200">
                     <i class="fas fa-history text-red-400 w-5"></i>
                     <span class="font-medium">History</span>
                 </a>

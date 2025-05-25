@@ -24,103 +24,79 @@
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="font-sans antialiased bg-gray-50">
-    <div x-data="{ sidebarOpen: false }" class="min-h-screen flex flex-col md:flex-row">
-        <!-- Mobile Sidebar Overlay -->
-        <div x-show="sidebarOpen" 
-             x-transition:enter="transition-opacity ease-linear duration-300"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition-opacity ease-linear duration-300"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
-             class="fixed inset-0 z-20 bg-gray-900 bg-opacity-50 md:hidden"
-             @click="sidebarOpen = false">
-        </div>
-
+<body class="font-sans antialiased bg-gray-100">
+    <div class="min-h-screen flex">
         <!-- Sidebar -->
-        <div x-show="sidebarOpen" 
-             x-transition:enter="transition ease-in-out duration-300 transform"
-             x-transition:enter-start="-translate-x-full"
-             x-transition:enter-end="translate-x-0"
-             x-transition:leave="transition ease-in-out duration-300 transform"
-             x-transition:leave-start="translate-x-0"
-             x-transition:leave-end="-translate-x-full"
-             class="fixed inset-y-0 left-0 z-30 w-64 bg-gray-800 text-white transform md:relative md:translate-x-0 md:static md:inset-0">
-            <div class="flex items-center justify-between p-4 border-b border-gray-700">
+        <div class="w-64 bg-gray-800 text-white">
+            <div class="p-4">
                 <h2 class="text-2xl font-bold font-['EBGaramond']">Admin Panel</h2>
-                <button @click="sidebarOpen = false" class="md:hidden text-gray-400 hover:text-white">
-                    <i class="fas fa-times"></i>
-                </button>
             </div>
-            <nav class="mt-4 space-y-1">
-                <a href="{{ route('admin.dashboard') }}" 
-                   class="flex items-center px-4 py-3 text-sm font-medium transition-colors duration-200 {{ request()->routeIs('admin.dashboard') ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
-                    <i class="fas fa-home w-6"></i>
-                    <span>Dashboard</span>
+            <nav class="mt-4">
+                <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.dashboard') ? 'bg-gray-700' : '' }}">
+                    <i class="fas fa-home mr-2"></i> Dashboard
                 </a>
-                <a href="{{ route('admin.books.index') }}" 
-                   class="flex items-center px-4 py-3 text-sm font-medium transition-colors duration-200 {{ request()->routeIs('admin.books.*') ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
-                    <i class="fas fa-book w-6"></i>
-                    <span>Inventory</span>
+                <a href="{{ route('admin.books.index') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.books.*') ? 'bg-gray-700' : '' }}">
+                    <i class="fas fa-book mr-2"></i> Inventory Management
                 </a>
-                <a href="{{ route('admin.books.archived') }}" 
-                   class="flex items-center px-4 py-3 text-sm font-medium transition-colors duration-200 {{ request()->routeIs('admin.books.archived') ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
-                    <i class="fas fa-archive w-6"></i>
-                    <span>Archived Books</span>
+                <a href="{{ route('admin.books.archived') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.books.archived') ? 'bg-gray-700' : '' }}">
+                    <i class="fas fa-archive mr-2"></i> Archived Books
                 </a>
-                <a href="{{ route('admin.cms.dashboard') }}" 
-                   class="flex items-center px-4 py-3 text-sm font-medium transition-colors duration-200 {{ request()->routeIs('admin.cms.*') ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
-                    <i class="fas fa-cogs w-6"></i>
-                    <span>Content Management</span>
+                <a href="{{ route('admin.cms.dashboard') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.cms.*') ? 'bg-gray-700' : '' }}">
+                    <i class="fas fa-cogs mr-2"></i> Content Management
                 </a>
-                <a href="{{ route('admin.orders.index') }}" 
-                   class="flex items-center px-4 py-3 text-sm font-medium transition-colors duration-200 {{ request()->routeIs('admin.orders.*') ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
-                    <i class="fas fa-shopping-cart w-6"></i>
-                    <span>Orders</span>
+                <a href="{{ route('admin.orders.index') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.orders.*') ? 'bg-gray-700' : '' }}">
+                    <i class="fas fa-shopping-cart mr-2"></i> Orders
                 </a>
             </nav>
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col min-h-screen">
-            <header class="bg-white shadow-sm">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between items-center py-4">
-                        <div class="flex items-center">
-                            <button @click="sidebarOpen = true" class="md:hidden text-gray-500 hover:text-gray-600 focus:outline-none">
-                                <i class="fas fa-bars text-xl"></i>
-                            </button>
-                            <h1 class="ml-4 md:ml-0 text-2xl font-bold text-gray-900 font-['EBGaramond']">
-                                @yield('header')
-                            </h1>
-                        </div>
-                        <form method="POST" action="{{ route('logout') }}" class="inline" id="admin-logout-form">
-                            @csrf
-                            <button type="button" 
-                                    onclick="confirmAdminLogout()" 
-                                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center text-sm">
-                                <i class="fas fa-sign-out-alt mr-2"></i>
-                                <span class="hidden sm:inline">Logout</span>
-                            </button>
-                        </form>
-                    </div>
+        <div class="flex-1">
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+                    <h1 class="text-3xl font-bold text-gray-900 font-['EBGaramond']">
+                        @yield('header')
+                    </h1>
+                    <form method="POST" action="{{ route('logout') }}" class="inline" id="admin-logout-form">
+                        @csrf
+                        <button type="button" onclick="confirmAdminLogout()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center">
+                            <i class="fas fa-sign-out-alt mr-2"></i>
+                            Logout
+                        </button>
+                    </form>
+
+                    <script>
+                        function confirmAdminLogout() {
+                            Swal.fire({
+                                title: 'Logout',
+                                text: 'Are you sure you want to logout?',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#ef4444',
+                                cancelButtonColor: '#6b7280',
+                                confirmButtonText: 'Yes, logout',
+                                cancelButtonText: 'Cancel'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    document.getElementById('admin-logout-form').submit();
+                                }
+                            });
+                        }
+                    </script>
                 </div>
             </header>
 
-            <main class="flex-1 py-6">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <main class="py-6">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     @if(session('success'))
-                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-4 flex items-center" role="alert">
-                            <i class="fas fa-check-circle mr-2"></i>
-                            <span>{{ session('success') }}</span>
+                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                            <span class="block sm:inline">{{ session('success') }}</span>
                         </div>
                     @endif
 
                     @if(session('error'))
-                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4 flex items-center" role="alert">
-                            <i class="fas fa-exclamation-circle mr-2"></i>
-                            <span>{{ session('error') }}</span>
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                            <span class="block sm:inline">{{ session('error') }}</span>
                         </div>
                     @endif
 
@@ -141,7 +117,7 @@
         x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100 transform translate-y-0"
         x-transition:leave-end="opacity-0 transform translate-y-2"
-        class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50"
+        class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg"
         style="display: none;"
     >
         <span x-text="message"></span>
@@ -152,25 +128,5 @@
     
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-        function confirmAdminLogout() {
-            Swal.fire({
-                title: 'Logout',
-                text: 'Are you sure you want to logout?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#ef4444',
-                cancelButtonColor: '#6b7280',
-                confirmButtonText: 'Yes, logout',
-                cancelButtonText: 'Cancel',
-                focusCancel: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('admin-logout-form').submit();
-                }
-            });
-        }
-    </script>
 </body>
 </html> 

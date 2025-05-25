@@ -34,15 +34,24 @@
     }
 </style>
 
-<body class="h-full font-sans antialiased">
+<body class="h-full font-normal antialiased">
     <div class="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-purple-50 to-white">
         <!-- Sidebar -->
         <aside class="w-full md:w-72 lg:w-80 bg-white shadow-lg transform transition-transform duration-300 ease-in-out md:translate-x-0">
             <div class="p-6 border-b border-gray-100">
                 <div class="flex flex-col items-center space-y-4">
-                    <div class="w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center shadow-md">
-                        <i class="fas fa-user text-3xl text-white"></i>
-                    </div>
+                @if(Auth::guard('customer')->user()->profile_picture)
+                            <img src="{{ asset('storage/' . Auth::guard('customer')->user()->profile_picture) }}" 
+                                class="w-32 h-32 rounded-full object-cover border-3 border-purple-200 shadow-sm transition-transform duration-300 group-hover:scale-105" 
+                                alt="Profile Picture" />
+                        @else
+                            <div class="w-32 h-32 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center shadow-sm">
+                                <i class="fas fa-user text-5xl text-purple-400"></i>
+                            </div>
+                        @endif
+                        <span class="absolute top-3 right-2 text-purple-500 text-xl animate-pulse">
+                            <i class="fas fa-butterfly"></i>
+                        </span>
                     <div class="text-center">
                         <h2 class="text-xl font-semibold text-gray-800">Edit Profile</h2>
                         <p class="text-sm text-gray-500">Manage your account</p>

@@ -17,65 +17,47 @@
     <div class="bg-white rounded-lg shadow-md overflow-hidden">
         <div class="p-4 sm:p-6">
             <div class="flex flex-col lg:flex-row gap-6">
-                <!-- Profile Picture Section -->
-                <div class="flex flex-col items-center lg:items-start w-full lg:w-1/4">
-                    <div class="relative group">
-                        @if(Auth::guard('customer')->user()->profile_picture)
-                            <img src="{{ asset('storage/' . Auth::guard('customer')->user()->profile_picture) }}" 
-                                class="w-32 h-32 rounded-full object-cover border-3 border-purple-200 shadow-sm transition-transform duration-300 group-hover:scale-105" 
-                                alt="Profile Picture" />
-                        @else
-                            <div class="w-32 h-32 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center shadow-sm">
-                                <i class="fas fa-user text-5xl text-purple-400"></i>
-                            </div>
-                        @endif
-                        <span class="absolute top-3 right-2 text-purple-500 text-xl animate-pulse">
-                            <i class="fas fa-butterfly"></i>
-                        </span>
-                    </div>
-                </div>
-
                 <!-- Profile Information Section -->
                 <div class="flex-1 w-full">
-                    <h2 class="text-xl font-bold mb-4 text-gray-800 border-b border-gray-200 pb-3">My Profile</h2>
+                    <h2 class="text-xl font-normal font-semibold mb-4 text-gray-800 border-b border-gray-200 pb-3">My Profile</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="space-y-3">
                             <div class="bg-gray-50 p-3 rounded-md">
-                                <span class="font-semibold text-gray-600 block mb-0.5">Username</span>
+                                <span class="font-normal text-gray-600 block mb-0.5">Username</span>
                                 <span class="text-gray-800">{{ Auth::guard('customer')->user()->username }}</span>
                             </div>
                             <div class="bg-gray-50 p-3 rounded-md">
-                                <span class="font-semibold text-gray-600 block mb-0.5">Full Name</span>
+                                <span class="font-normal text-gray-600 block mb-0.5">Full Name</span>
                                 <span class="text-gray-800">{{ Auth::guard('customer')->user()->first_name }} {{ Auth::guard('customer')->user()->last_name }}</span>
                             </div>
                             <div class="bg-gray-50 p-3 rounded-md">
-                                <span class="font-semibold text-gray-600 block mb-0.5">Email</span>
+                                <span class="font-normal text-gray-600 block mb-0.5">Email</span>
                                 <span class="text-gray-800">{{ Str::mask(Auth::guard('customer')->user()->email, '*', 2, strpos(Auth::guard('customer')->user()->email, '@') - 2) }}</span>
                             </div>
                             <div class="bg-gray-50 p-3 rounded-md">
-                                <span class="font-semibold text-gray-600 block mb-0.5">Phone</span>
+                                <span class="font-normal text-gray-600 block mb-0.5">Phone</span>
                                 <span class="text-gray-800">********{{ substr(Auth::guard('customer')->user()->phone_number, -4) }}</span>
                             </div>
                         </div>
                         <div class="space-y-3">
                             <div class="bg-gray-50 p-3 rounded-md">
-                                <span class="font-semibold text-gray-600 block mb-0.5">Address</span>
+                                <span class="font-normal text-gray-600 block mb-0.5">Address</span>
                                 <span class="text-gray-800">{{ Auth::guard('customer')->user()->address }}</span>
                             </div>
                             <div class="bg-gray-50 p-3 rounded-md">
-                                <span class="font-semibold text-gray-600 block mb-0.5">Gender</span>
+                                <span class="font-normal text-gray-600 block mb-0.5">Gender</span>
                                 <span class="text-gray-800">{{ ucfirst(Auth::guard('customer')->user()->gender) ?? 'N/A' }}</span>
                             </div>
                             <div class="bg-gray-50 p-3 rounded-md">
-                                <span class="font-semibold text-gray-600 block mb-0.5">Date of Birth</span>
+                                <span class="font-normal text-gray-600 block mb-0.5">Date of Birth</span>
                                 <span class="text-gray-800">{{ Auth::guard('customer')->user()->date_of_birth ? Auth::guard('customer')->user()->date_of_birth->format('F d, Y') : '****' }}</span>
                             </div>
                             <div class="bg-gray-50 p-3 rounded-md">
-                                <span class="font-semibold text-gray-600 block mb-0.5">Password</span>
+                                <span class="font-normal text-gray-600 block mb-0.5">Password</span>
                                 <div class="flex items-center">
                                     <span class="text-gray-800">********</span>
                                     <button @click.prevent="openChangePassword = true" 
-                                            class="ml-2 text-purple-700 hover:text-purple-800 text-sm font-semibold transition-colors duration-200">
+                                            class="ml-2 text-[#7464B6] hover:text-[#6454A6] text-sm font-normal transition-colors duration-200">
                                         Change Password
                                     </button>
                                 </div>
@@ -85,7 +67,7 @@
 
                     <div class="mt-6 flex justify-end">
                         <button @click="openEditProfile = true" 
-                                class="bg-purple-700 text-white px-5 py-2 rounded-md font-semibold hover:bg-purple-800 transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+                                class="font-normal bg-[#7464B6] text-white px-5 py-2 rounded-md hover:bg-[#6454A6] transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
                             Edit Profile
                         </button>
                     </div>

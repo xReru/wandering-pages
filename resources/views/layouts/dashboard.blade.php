@@ -34,7 +34,7 @@
     }
 </style>
 
-<body class="h-full font-normal antialiased">
+<body class="h-full font-normal antialiased mt-[60px]">
     <div class="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-purple-50 to-white">
         <!-- Sidebar -->
         <aside class="w-full md:w-72 lg:w-80 bg-white shadow-lg transform transition-transform duration-300 ease-in-out md:translate-x-0">

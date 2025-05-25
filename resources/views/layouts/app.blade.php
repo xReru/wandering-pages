@@ -49,7 +49,7 @@
         empty(Auth::guard('customer')->user()->last_name) || 
         empty(Auth::guard('customer')->user()->phone_number) || 
         empty(Auth::guard('customer')->user()->address)))
-    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-[60px]">
         <div class="flex">
             <div class="flex-shrink-0">
                 <i class="fas fa-exclamation-triangle text-yellow-400"></i>
@@ -65,8 +65,22 @@
         </div>
     </div>
     @endif
+    <div 
+  x-data="{ showButton: false }" 
+  x-init="window.addEventListener('scroll', () => showButton = window.scrollY > 300)"
+  class="fixed bottom-4 right-4"
+>
+  <button 
+    x-show="showButton"
+    @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    class="bg-[#7464B6] text-white p-3 rounded-full shadow-lg hover:bg-[#6354A0] transition"
+    aria-label="Scroll to top"
+  >
+    <i class="fas fa-arrow-up"></i>
+  </button>
+</div>
 
-    <main class="flex-grow">
+    <main class="flex-grow mt-[60px]">
         @yield('content')
     </main>
     @include('subviews.footer-section')

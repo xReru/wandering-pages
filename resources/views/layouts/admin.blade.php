@@ -25,27 +25,36 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="font-sans antialiased bg-gray-100">
-    <div class="min-h-screen flex">
+    <div class="min-h-screen flex" x-data="{ sidebarOpen: true }">
         <!-- Sidebar -->
-        <div class="w-64 bg-gray-800 text-white">
-            <div class="p-4">
-                <h2 class="text-2xl font-bold font-['EBGaramond']">Admin Panel</h2>
+        <div class="bg-gray-800 text-white transition-all duration-300 ease-in-out"
+             :class="sidebarOpen ? 'w-64' : 'w-13'">
+            <div class="p-4 flex items-center justify-between">
+                <h2 class="text-2xl font-bold font-['EBGaramond']" x-show="sidebarOpen">Admin Panel</h2>
+                <button @click="sidebarOpen = !sidebarOpen" class="text-white hover:text-gray-300 focus:outline-none">
+                    <i class="fas" :class="sidebarOpen ? 'fa-chevron-left' : 'fa-chevron-right'"></i>
+                </button>
             </div>
             <nav class="mt-4">
                 <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.dashboard') ? 'bg-gray-700' : '' }}">
-                    <i class="fas fa-home mr-2"></i> Dashboard
+                    <i class="fas fa-home mr-2"></i>
+                    <span x-show="sidebarOpen">Dashboard</span>
                 </a>
                 <a href="{{ route('admin.books.index') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.books.*') ? 'bg-gray-700' : '' }}">
-                    <i class="fas fa-book mr-2"></i> Inventory Management
+                    <i class="fas fa-book mr-2"></i>
+                    <span x-show="sidebarOpen">Inventory Management</span>
                 </a>
                 <a href="{{ route('admin.books.archived') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.books.archived') ? 'bg-gray-700' : '' }}">
-                    <i class="fas fa-archive mr-2"></i> Archived Books
+                    <i class="fas fa-archive mr-2"></i>
+                    <span x-show="sidebarOpen">Archived Books</span>
                 </a>
                 <a href="{{ route('admin.cms.dashboard') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.cms.*') ? 'bg-gray-700' : '' }}">
-                    <i class="fas fa-cogs mr-2"></i> Content Management
+                    <i class="fas fa-cogs mr-2"></i>
+                    <span x-show="sidebarOpen">Content Management</span>
                 </a>
                 <a href="{{ route('admin.orders.index') }}" class="block px-4 py-2 hover:bg-gray-700 {{ request()->routeIs('admin.orders.*') ? 'bg-gray-700' : '' }}">
-                    <i class="fas fa-shopping-cart mr-2"></i> Orders
+                    <i class="fas fa-shopping-cart mr-2"></i>
+                    <span x-show="sidebarOpen">Orders</span>
                 </a>
             </nav>
         </div>

@@ -51,7 +51,7 @@
 
                             <div class="flex justify-end">
                                 <a href="{{ route('orders.show', $order) }}" 
-                                   class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-purple-700 bg-purple-50 rounded-md hover:bg-purple-100 transition-colors duration-200">
+                                   class="inline-flex items-center px-3 py-1.5 text-sm font-medium rounded-md text-white bg-[#7464B6] hover:bg-[#6354A0] transition-colors duration-200">
                                     View Details
                                 </a>
                             </div>

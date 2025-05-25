@@ -5,7 +5,7 @@
     <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
         <div class="flex items-center justify-between mb-4 sm:mb-6">
             <h1 class="text-xl sm:text-2xl font-serif font-semibold text-gray-800">Shipping Orders</h1>
-            <a href="/browse-books" class="hidden sm:inline-block px-4 py-2 bg-purple-600 text-white text-sm rounded-md hover:bg-purple-700 transition-colors duration-200">
+            <a href="/browse-books" class="hidden sm:inline-block px-4 py-2 bg-[#7464B6] text-white text-sm rounded-md hover:bg-[#6354A0] transition-colors duration-200">
                 Browse Books
             </a>
         </div>
@@ -51,7 +51,7 @@
 
                             <div class="flex justify-end">
                                 <a href="{{ route('orders.show', $order) }}" 
-                                   class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-purple-700 bg-purple-50 rounded-md hover:bg-purple-100 transition-colors duration-200">
+                                   class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-white bg-[#7464B6] hover:bg-[#6354A0] rounded-md transition-colors duration-200">
                                     View Details
                                 </a>
                             </div>

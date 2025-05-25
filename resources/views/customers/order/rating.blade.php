@@ -26,15 +26,15 @@
                                                  alt="Book Cover" 
                                                  class="w-16 h-24 sm:w-20 sm:h-28 object-cover rounded-lg shadow-sm border border-gray-100" />
                                             <div class="flex-grow min-w-0">
-                                                <h3 class="font-serif text-base sm:text-lg font-medium text-gray-900 truncate">{{ $item->book->title }}</h3>
-                                                <div class="text-sm text-purple-600 font-semibold">${{ number_format($item->book->price, 2) }}</div>
+                                                <h3 class="font-normal text-base sm:text-lg font-medium text-gray-900 truncate">{{ $item->book->title }}</h3>
+                                                <div class="font-normal text-sm text-[#7464B6] font-semibold">${{ number_format($item->book->price, 2) }}</div>
                                                 @if($item->rating && $item->rating->review)
-                                                    <div class="text-sm text-gray-600 italic mt-1">"{{ $item->rating->review }}"</div>
+                                                    <div class="font-normal text-sm text-gray-600 italic mt-1">"{{ $item->rating->review }}"</div>
                                                 @endif
                                                 @if(!$item->rating)
                                                     <div x-data="{ open: false, rating: 0, hover: 0, review: '' }" class="relative mt-2">
                                                         <button @click="open = true" 
-                                                                class="inline-flex items-center px-3 py-1.5 border border-purple-200 text-purple-700 text-xs font-medium rounded-lg hover:bg-purple-50 transition-colors duration-200">
+                                                                class="font-normal inline-flex items-center px-3 py-1.5 border border-[#7464B6] text-[#7464B6] text-xs font-medium rounded-lg hover:bg-purple-50 transition-colors duration-200">
                                                             Leave a Rating
                                                         </button>
                                                         <!-- Modal -->
@@ -50,8 +50,8 @@
                                                                          alt="Book Cover" 
                                                                          class="w-16 h-24 object-cover rounded-lg shadow-sm border border-gray-100" />
                                                                     <div class="min-w-0">
-                                                                        <h4 class="font-serif text-base font-semibold text-gray-900 truncate">{{ $item->book->title }}</h4>
-                                                                        <p class="text-sm text-gray-500">by {{ $item->book->author }}</p>
+                                                                        <h4 class="font-normal text-base font-semibold text-gray-900 truncate">{{ $item->book->title }}</h4>
+                                                                        <p class="font-normal text-sm text-gray-500">by {{ $item->book->author }}</p>
                                                                     </div>
                                                                 </div>
                                                                 <form method="POST" action="{{ route('ratings.store') }}" class="space-y-4">
@@ -64,13 +64,14 @@
                                                                                  @mouseleave="hover = 0" 
                                                                                  @click="rating = i" 
                                                                                  :fill="i <= (hover || rating) ? '#facc15' : 'none'" 
-                                                                                 xmlns="http://www.w3.org/2000/svg" 
+                                                                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
                                                                                  viewBox="0 0 24 24" 
-                                                                                 stroke="#facc15" 
+                                                                                 stroke="#facc15"
+                                                                                 version="1.1"
                                                                                  class="w-6 h-6 sm:w-7 sm:h-7 cursor-pointer transition-transform hover:scale-110">
                                                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.036 6.29a1 1 0 00.95.69h6.631c.969 0 1.371 1.24.588 1.81l-5.37 3.905a1 1 0 00-.364 1.118l2.036 6.29c.3.921-.755 1.688-1.54 1.118l-5.37-3.905a1 1 0 00-1.176 0l-5.37 3.905c-.784.57-1.838-.197-1.54-1.118l2.036-6.29a1 1 0 00-.364-1.118L2.342 11.717c-.783-.57-.38-1.81.588-1.81h6.631a1 1 0 00.95-.69l2.036-6.29z" />
                                                                             </svg>
-                                                                        </template>
+                                                                            </template>
                                                                         <input type="hidden" name="rating" x-model="rating">
                                                                     </div>
                                                                     <textarea name="review" 
@@ -80,7 +81,7 @@
                                                                               placeholder="Write a review (optional)"></textarea>
                                                                     <div class="flex justify-end">
                                                                         <button type="submit" 
-                                                                                class="inline-flex items-center px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition-colors duration-200">
+                                                                                class="inline-flex items-center px-4 py-2 bg-[#7464B6] text-white text-sm font-medium rounded-lg hover:bg-[#6354A0] transition-colors duration-200">
                                                                             Submit Rating
                                                                         </button>
                                                                     </div>
@@ -98,20 +99,20 @@
                                         <div class="space-y-2">
                                             <div class="flex justify-between text-sm">
                                                 <span class="text-gray-600">Subtotal:</span>
-                                                <span class="text-purple-600 font-medium">${{ number_format($order->total_amount - $order->shipping_fee, 2) }}</span>
+                                                <span class="text-[#7464B6] font-medium">${{ number_format($order->total_amount - $order->shipping_fee, 2) }}</span>
                                             </div>
                                             <div class="flex justify-between text-sm">
                                                 <span class="text-gray-600">Shipping Fee:</span>
-                                                <span class="text-purple-600 font-medium">${{ number_format($order->shipping_fee, 2) }}</span>
+                                                <span class="text-[#7464B6] font-medium">${{ number_format($order->shipping_fee, 2) }}</span>
                                             </div>
                                             <div class="flex justify-between text-base font-semibold pt-2 border-t border-gray-200">
-                                                <span class="text-gray-900">Order Total:</span>
-                                                <span class="text-purple-600">${{ number_format($order->total_amount, 2) }}</span>
+                                                <span class="text-[#7464B6]">Order Total:</span>
+                                                <span class="text-[#7464B6]">${{ number_format($order->total_amount, 2) }}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="flex justify-end">
-                                        <button class="inline-flex items-center px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition-colors duration-200">
+                                        <button class="inline-flex items-center px-4 py-2 text-white bg-[#7464B6] hover:bg-[#6354A0] text-sm font-medium rounded-lg  transition-colors duration-200">
                                             Buy Again
                                         </button>
                                     </div>

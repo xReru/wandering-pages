@@ -1,12 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<div class="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-4">
-    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+<div class="bg-white rounded-lg shadow-sm overflow-hidden">
         <div class="px-4 py-4 sm:px-5">
             <div class="flex items-center justify-between mb-4">
-                <h1 class="text-2xl font-serif font-bold text-gray-900">Pending Orders</h1>
-                <a href="/browse-books" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors duration-200">
+                <h1 class="font-normal text-2xl font-bold text-gray-900">Pending Orders</h1>
+                <a href="/browse-books" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#7464B6] hover:bg-[#6354A0] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors duration-200">
                     Browse Books
                 </a>
             </div>
@@ -70,7 +69,7 @@
 
                                 <div class="flex flex-col sm:flex-row justify-end gap-2">
                                     <a href="{{ route('orders.show', $order) }}" 
-                                       class="inline-flex items-center justify-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors duration-200">
+                                       class="inline-flex items-center justify-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-[#7464B6] hover:bg-[#6354A0] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors duration-200">
                                         <svg class="h-4 w-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -80,7 +79,7 @@
                                     @if(in_array($order->status, ['pending', 'paid']))
                                         <button type="button" 
                                                 onclick="confirmCancel('{{ $order->id }}')" 
-                                                class="inline-flex items-center justify-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200">
+                                                class="inline-flex items-center justify-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-[#db5856] hover:bg-[#833534] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200">
                                             <svg class="h-4 w-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                             </svg>
@@ -95,7 +94,7 @@
             @endif
         </div>
     </div>
-</div>
+
 @endsection
 
 @push('scripts')
@@ -105,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.confirmCancel = function(orderId) {
         Swal.fire({
             title: 'Cancel Order',
-            text: "Are you sure you want to cancel this order? This action cannot be undone.",
+            text: "This action cannot be undone.",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',

@@ -1,4 +1,4 @@
-<div class="min-h-screen flex flex-col items-center justify-center bg-[#e6e6fa] py-8 px-2">
+<div class="min-h-screen flex flex-col items-center justify-center !bg-[#F9F8FF] py-8 px-2">
     <div class="w-full max-w-2xl bg-white rounded-lg shadow-lg p-8">
         <h2 class="font-normal text-[#1B1146] text-3xl font-bold text-center mb-2">Talk to us—we’d love to hear from you!</h2>
         <p class="text-center text-gray-600 mb-6">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit</p>
@@ -11,11 +11,6 @@
                         <span class="inline-flex items-center justify-center w-7 h-7 bg-[#7464B6] text-white rounded"><i class="fas fa-envelope"></i></span>
                         <span class="text-sm font-normal">wanderingpages@gmail.com</span>
                     </div>
-                </div>
-                <div class="flex space-x-4 mt-4 md:mt-0">
-                    <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-[#7464B6] hover:text-white transition"><i class="fab fa-google"></i></a>
-                    <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-[#7464B6] hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-[#7464B6] hover:text-white transition"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
             <hr class="mb-4 border-gray-300">

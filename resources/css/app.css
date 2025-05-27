@@ -15,7 +15,7 @@
     --font-normal: 'DMSans', sans-serif;
     --font-tertiary: 'Poppins', sans-serif;
     --color-pri-purp: #000000;
-    --color-regal-blue: #243c5a; 
+    --color-regal-blue: #243c5a;
 }
 
 /*Global styles*/
@@ -89,4 +89,54 @@ body {
 .bs-title {
     font-family: 'EBGaramond', regular;
     font-weight: 100;
+}
+
+/* Image loading states */
+.image-loading {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.image-loaded {
+    opacity: 1;
+}
+
+/* Optimize font loading */
+@font-face {
+    font-family: 'YourFont';
+    font-display: swap;
+    src: url('/fonts/your-font.woff2') format('woff2');
+}
+
+/* Critical CSS for above-the-fold content */
+.critical-content {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Optimize scrolling */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+}
+
+/* Optimize touch targets */
+@media (hover: none) and (pointer: coarse) {
+
+    button,
+    [role="button"],
+    a {
+        min-height: 44px;
+        min-width: 44px;
+    }
 }

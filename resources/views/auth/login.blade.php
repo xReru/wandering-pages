@@ -37,7 +37,6 @@
             <div class="text-center mb-8">
                 <a href="{{ route('home') }}" class="logo text-5xl font-bold text-[#7464B6] tracking-tight mb-4 inline-block">Wandering Pages</a>
                 <h1 class="font-normal text-xl font-bold text-gray-900 tracking-tight">Welcome Back, Admin</h1>
-                <p class="mt-2 text-sm text-gray-600">Please sign in to your account</p>
             </div>
             <!-- Login Card -->
             <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8" x-data="{ showPassword: false }">

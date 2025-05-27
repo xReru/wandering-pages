@@ -14,8 +14,8 @@
                         <span class="text-xs text-gray-700 font-['EBGaramond'] mb-2">{{ $related->author }}</span>
                         <div class="flex items-center gap-2 mt-auto">
                             <span
-                                class="text-[#6c47ff] font-bold text-sm font-['EBGaramond']">${{ number_format($related->price, 2) }}</span>
-                            <button class="ml-2 text-gray-400 hover:text-[#6c47ff] transition p-0.5"
+                                class="text-[#6354A0] font-bold text-sm font-['EBGaramond']">${{ number_format($related->price, 2) }}</span>
+                            <button class="ml-2 text-gray-400 hover:text-[#6354A0] transition p-0.5"
                                 aria-label="Add to wishlist">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" fill="currentColor"
                                     class="w-5 h-5">

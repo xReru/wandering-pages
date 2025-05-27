@@ -18,13 +18,13 @@
             <!-- Book Information Section -->
             <div class="md:col-span-2 space-y-6">
                 <div class="space-y-4">
-                    <span class="inline-block px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">{{ $book->genre }}</span>
-                    <h1 class="text-3xl md:text-4xl font-bold font-['EBGaramond'] text-gray-900 leading-tight">{{ $book->title }}</h1>
+                    <span class="inline-block px-3 py-1 bg-purple-100 text-[#7464B6] rounded-full text-sm font-medium">{{ $book->genre }}</span>
+                    <h1 class="text-3xl md:text-4xl font-bold font-['EBGaramond'] text-[#1B1146] leading-tight">{{ $book->title }}</h1>
                     <p class="text-lg text-gray-700 font-['EBGaramond']">
-                        By <a href="#" class="text-purple-700 hover:text-purple-800 transition-colors duration-200 font-medium">{{ $book->author }}</a>
+                        By <a href="#" class="text-[#7464B6] hover:text-[#6354A0] transition-colors duration-200 font-medium">{{ $book->author }}</a>
                     </p>
                     <div class="flex items-center space-x-4">
-                        <span class="text-3xl font-bold text-purple-700 font-['EBGaramond']">${{ number_format($book->price, 2) }}</span>
+                        <span class="text-3xl font-bold text-[#7464B6] font-['EBGaramond']">${{ number_format($book->price, 2) }}</span>
             @if($book->quantity <= 0)
                             <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">Out of Stock</span>
                         @else
@@ -157,7 +157,7 @@
                             <span class="w-8 text-center font-medium" x-text="qty"></span>
                             <button class="w-8 h-8 flex items-center justify-center bg-white rounded-md shadow-sm hover:bg-gray-100 transition-colors" @click="qty++">+</button>
                         </div>
-                        <button class="flex-1 bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-800 transition-colors duration-200 shadow-sm hover:shadow-md" @click="addToCart">
+                        <button class="flex-1 bg-[#7464B6] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6354A0] transition-colors duration-200 shadow-sm hover:shadow-md" @click="addToCart">
                             Add to Cart
                         </button>
                         <button @click="toggleLike" :aria-label="liked ? 'Remove from likes' : 'Add to likes'" 
@@ -167,7 +167,7 @@
             </div>
             @else
                     <div class="mt-6">
-                        <a href="/login" class="inline-block bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-800 transition-colors duration-200 shadow-sm hover:shadow-md">
+                        <a href="/login" class="inline-block bg-[#7464B6] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#6354A0] transition-colors duration-200 shadow-sm hover:shadow-md">
                             Sign in to add to cart
                         </a>
             </div>
@@ -187,7 +187,7 @@
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                                        <span class="text-purple-700 font-medium">
+                                        <span class="text-[#7464B6] font-medium">
                                     {{ substr($rating->user->username, 0, 2) . str_repeat('*', strlen($rating->user->username) - 2) }}
                                 </span>
                                     </div>

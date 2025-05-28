@@ -19,22 +19,22 @@
                         <!-- Shipping Information Card -->
                         <div class="bg-gray-50 rounded-xl p-6 mb-8">
                             <h3 class="text-lg font-semibold mb-4 text-gray-900 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[#7464B6]" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                                 </svg>
                                 Shipping Information
                             </h3>
                             <div class="space-y-3 text-sm">
                                 <div class="flex items-center">
-                                    <span class="w-24 font-medium text-purple-700">Full Name:</span>
+                                    <span class="w-24 font-medium text-[#7464B6]">Full Name:</span>
                                     <span class="text-gray-800">{{ $user->name ?? $user->username }}</span>
                                 </div>
                                 <div class="flex items-center">
-                                    <span class="w-24 font-medium text-purple-700">Phone:</span>
+                                    <span class="w-24 font-medium text-[#7464B6]">Phone:</span>
                                     <span class="text-gray-800">{{ $user->phone_number ?? 'N/A' }}</span>
                                 </div>
                                 <div class="flex items-center">
-                                    <span class="w-24 font-medium text-purple-700">Address:</span>
+                                    <span class="w-24 font-medium text-[#7464B6]">Address:</span>
                                     <span class="text-gray-800">{{ $user->address ?? 'N/A' }}</span>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                         <!-- Payment Method Card -->
                         <div class="bg-gray-50 rounded-xl p-6 mb-8">
                             <h3 class="text-lg font-semibold mb-4 text-gray-900 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[#7464B6]" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
                                     <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd" />
                                 </svg>
@@ -52,34 +52,34 @@
                             <form id="payment-form" class="space-y-4">
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <label class="relative flex items-center p-4 bg-white rounded-lg border-2 cursor-pointer transition"
-                                           :class="paymentMethod === 'Apple Pay' ? 'border-purple-500 bg-purple-50' : 'border-gray-200 hover:border-purple-500'">
+                                           :class="paymentMethod === 'Apple Pay' ? 'border-[#6354A0] bg-purple-50' : 'border-gray-200 hover:border-[#6354A0]'">
                                         <input type="radio" name="payment_method" value="Apple Pay" class="sr-only" @change="paymentMethod = 'Apple Pay'">
                                         <div class="flex items-center">
-                                            <img src="{{ asset('images/apple_pay.png') }}" alt="Apple Pay" class="h-6 w-6 mr-3">
+                                            <img src="{{ asset('images/apple_pay.png') }}" alt="Apple Pay" class="h-8 w-10 mr-3">
                                             <span class="text-sm font-medium text-gray-900">Apple Pay</span>
                                         </div>
                                     </label>
                                     <label class="relative flex items-center p-4 bg-white rounded-lg border-2 cursor-pointer transition"
-                                           :class="paymentMethod === 'Google Pay' ? 'border-purple-500 bg-purple-50' : 'border-gray-200 hover:border-purple-500'">
+                                           :class="paymentMethod === 'Google Pay' ? 'border-[#6354A0] bg-[#6354A0]' : 'border-gray-200 hover:border-[#6354A0]'">
                                         <input type="radio" name="payment_method" value="Google Pay" class="sr-only" @change="paymentMethod = 'Google Pay'">
                                         <div class="flex items-center">
-                                            <img src="{{ asset('images/google_pay.png') }}" alt="Google Pay" class="h-6 w-6 mr-3">
+                                            <img src="{{ asset('images/google_pay.png') }}" alt="Google Pay" class="h-8 w-10 mr-3">
                                             <span class="text-sm font-medium text-gray-900">Google Pay</span>
                                         </div>
                                     </label>
                                     <label class="relative flex items-center p-4 bg-white rounded-lg border-2 cursor-pointer transition"
-                                           :class="paymentMethod === 'GCash' ? 'border-purple-500 bg-purple-50' : 'border-gray-200 hover:border-purple-500'">
+                                           :class="paymentMethod === 'GCash' ? 'border-[#6354A0] bg-[#6354A0]' : 'border-gray-200 hover:border-[#6354A0]'">
                                         <input type="radio" name="payment_method" value="GCash" class="sr-only" checked @change="paymentMethod = 'GCash'">
                                         <div class="flex items-center">
-                                            <img src="{{ asset('images/gcash.png') }}" alt="GCash" class="h-6 w-6 mr-3">
+                                            <img src="{{ asset('images/gcash.png') }}" alt="GCash" class="h-8 w-10 mr-3">
                                             <span class="text-sm font-medium text-gray-900">GCash</span>
                                         </div>
                                     </label>
                                     <label class="relative flex items-center p-4 bg-white rounded-lg border-2 cursor-pointer transition"
-                                           :class="paymentMethod === 'Paypal' ? 'border-purple-500 bg-purple-50' : 'border-gray-200 hover:border-purple-500'">
+                                           :class="paymentMethod === 'Paypal' ? 'border-[#6354A0] bg-[#6354A0]' : 'border-gray-200 hover:border-[#6354A0]'">
                                         <input type="radio" name="payment_method" value="Paypal" class="sr-only" @change="paymentMethod = 'Paypal'">
                                         <div class="flex items-center">
-                                            <img src="{{ asset('images/paypal.png') }}" alt="Paypal" class="h-6 w-6 mr-3">
+                                            <img src="{{ asset('images/paypal.png') }}" alt="Paypal" class="h-8 w-10 mr-3">
                                             <span class="text-sm font-medium text-gray-900">Paypal</span>
                                         </div>
                                     </label>
@@ -90,7 +90,7 @@
                         <!-- Shipping Method Card -->
                         <div class="bg-gray-50 rounded-xl p-6">
                             <h3 class="text-lg font-semibold mb-4 text-gray-900 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[#7464B6]" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
                                     <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1v-1h3.05a2.5 2.5 0 014.9 0H19a1 1 0 001-1v-6a1 1 0 00-.293-.707l-2-2A1 1 0 0017 4H3z" />
                                 </svg>
@@ -99,12 +99,12 @@
                             <form id="shipping-method-form" class="space-y-4">
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <label class="relative flex items-start p-4 bg-white rounded-lg border-2 cursor-pointer transition"
-                                           :class="shippingMethod === 'standard' ? 'border-purple-500 bg-purple-50' : 'border-gray-200 hover:border-purple-500'">
+                                           :class="shippingMethod === 'standard' ? 'border-[#6354A0] bg-[#6354A0]' : 'border-gray-200 hover:border-[#6354A0]'">
                                         <input type="radio" name="shipping_method" value="standard" class="sr-only" checked @change="updateShipping('standard')">
                                         <div class="flex-1">
                                             <div class="flex items-center">
                                                 <div class="flex-shrink-0">
-                                                    <svg class="h-5 w-5 text-purple-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                    <svg class="h-5 w-5 text-[#7464B6]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                                     </svg>
                                                 </div>
@@ -113,16 +113,16 @@
                                                     <span class="block text-xs text-gray-500 mt-1">5-7 days delivery</span>
                                                 </div>
                                             </div>
-                                            <div class="mt-2 text-sm font-medium text-purple-600">$20.00</div>
+                                            <div class="mt-2 text-sm font-medium text-[#7464B6]">$20.00</div>
                                         </div>
                                     </label>
                                     <label class="relative flex items-start p-4 bg-white rounded-lg border-2 cursor-pointer transition"
-                                           :class="shippingMethod === 'express' ? 'border-purple-500 bg-purple-50' : 'border-gray-200 hover:border-purple-500'">
+                                           :class="shippingMethod === 'express' ? 'border-[#6354A0] bg-[#6354A0]' : 'border-gray-200 hover:border-[#6354A0]'">
                                         <input type="radio" name="shipping_method" value="express" class="sr-only" @change="updateShipping('express')">
                                         <div class="flex-1">
                                             <div class="flex items-center">
                                                 <div class="flex-shrink-0">
-                                                    <svg class="h-5 w-5 text-purple-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                    <svg class="h-5 w-5 text-[#7464B6]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                                     </svg>
                                                 </div>
@@ -131,7 +131,7 @@
                                                     <span class="block text-xs text-gray-500 mt-1">2-5 days delivery</span>
                                                 </div>
                                             </div>
-                                            <div class="mt-2 text-sm font-medium text-purple-600">$50.00</div>
+                                            <div class="mt-2 text-sm font-medium text-[#7464B6]">$50.00</div>
                                         </div>
                                     </label>
                                 </div>
@@ -155,7 +155,7 @@
                                             <div class="flex-1 min-w-0">
                                                 <h4 class="text-sm font-medium text-gray-900 truncate" x-text="item.book.title"></h4>
                                                 <p class="text-sm text-gray-500 mt-1" x-text="item.quantity + 'x'"></p>
-                                                <p class="text-sm font-medium text-purple-600 mt-2" x-text="'$' + (item.book.price * item.quantity).toFixed(2)"></p>
+                                                <p class="text-sm font-medium text-[#7464B6] mt-2" x-text="'$' + (item.book.price * item.quantity).toFixed(2)"></p>
                                             </div>
                                         </div>
                                     </template>
@@ -186,7 +186,7 @@
                                 <div class="border-t border-gray-200 pt-3 mt-3">
                                     <div class="flex justify-between">
                                         <span class="text-base font-medium text-gray-900">Total</span>
-                                        <span class="text-base font-medium text-purple-600" x-text="'$' + total.toFixed(2)"></span>
+                                        <span class="text-base font-medium text-[#7464B6]" x-text="'$' + total.toFixed(2)"></span>
                                     </div>
                                 </div>
                             </div>
@@ -195,15 +195,15 @@
                         <!-- Promo Code -->
                         <div class="mb-6">
                             <form class="flex space-x-2">
-                                <input type="text" placeholder="Enter promo code" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm">
-                                <button type="button" class="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors text-sm font-medium">Apply</button>
+                                <input type="text" placeholder="Enter promo code" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6354A0] focus:border-[#6354A0] text-sm">
+                                <button type="button" class="px-4 py-2 bg-purple-100 text-[#7464B6] rounded-lg hover:bg-purple-200 transition-colors text-sm font-medium">Apply</button>
                             </form>
                             <p class="mt-2 text-xs text-gray-500">Enter your promo code to get special discounts</p>
                         </div>
 
                         <!-- Place Order Button -->
                         <div x-data="{ showModal: false }">
-                            <button @click="showModal = true" class="w-full bg-purple-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors">
+                            <button @click="showModal = true" class="w-full bg-[#7464B6] text-white py-3 px-4 rounded-lg font-medium hover:bg-[#6354A0] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7464B6] transition-colors">
                                 Place Order
                             </button>
 
@@ -262,7 +262,7 @@
                                                                         <div class="border-t border-gray-200 pt-3 mt-3">
                                                                             <div class="flex justify-between">
                                                                                 <span class="font-medium">Total to pay</span>
-                                                                                <span class="font-medium text-purple-600" x-text="'$' + total.toFixed(2)"></span>
+                                                                                <span class="font-medium text-[#7464B6]" x-text="'$' + total.toFixed(2)"></span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -274,7 +274,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <form id="payment-modal-form" class="mt-6">
+                                                        <form id="payment-modal-form" class="mt-3">
                                                             <input type="hidden" name="transaction_no" value="{{ $transactionNo }}">
                                                             <input type="hidden" name="payment_method" x-model="paymentMethod">
                                                             <input type="hidden" name="shipping_method" x-model="shippingMethod">
@@ -313,7 +313,7 @@
                                             </div>
                                         </div>
                                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                            <button @click="submitOrder()" type="button" class="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm">
+                                            <button @click="submitOrder()" type="button" class="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-[#7464B6] text-base font-medium text-white hover:bg-[#6354A0] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7464B6] sm:ml-3 sm:w-auto sm:text-sm">
                                                 Complete Payment
                                             </button>
                                             <button @click="showModal = false" type="button" class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">

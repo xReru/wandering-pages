@@ -1,6 +1,6 @@
 <p align="center"><img src="https://raw.githubusercontent.com/xReru/wandering-pages/18447d21b6a3b2730a11da2f0c1a3ea972829cc6/public/images/wp-logo.png" width="600" alt="Wandering Pages Logo"></p>
-
-# Wandering Pages - E-commerce Book Store Documentation
+<br>
+<p align="center"> E-commerce Book Store Documentation </p>
 
 ## 1. Project Overview
 Wandering Pages is a Laravel-based e-commerce platform specializing in book sales. The application provides a complete solution for online book retailing with features for both customers and administrators.

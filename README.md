@@ -1,61 +1,167 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Wandering Pages - E-commerce Book Store Documentation
 
-## About Laravel
+## 1. Project Overview
+Wandering Pages is a Laravel-based e-commerce platform specializing in book sales. The application provides a complete solution for online book retailing with features for both customers and administrators.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Key Features:
+- User authentication and authorization (Customer & Admin roles)
+- Book browsing and searching with filters
+- Shopping cart functionality
+- Order management system
+- Customer profile management
+- Admin dashboard with analytics
+- Inventory management
+- Newsletter subscription
+- Rating and review system
+- Book archiving system
+- Bulk email functionality
+- Order status tracking
+- Waybill generation
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 2. Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Backend:
+- PHP 8.2+
+- Laravel 12.0
+- MySQL Database
+- Laravel Tinker
+- Milon Barcode (for product barcodes)
 
-## Learning Laravel
+### Frontend:
+- Laravel Blade Templates
+- JavaScript
+- Alpine JS
+- CSS
+- Vite (Asset Bundling)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 3. Installation Instructions
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Prerequisites:
+- PHP 8.2 or higher
+- Composer
+- Node.js and NPM
+- MySQL Database
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Setup Steps:
+1. Clone the repository:
+```bash
+git clone [repository-url]
+cd wandering-pages
+```
 
-## Laravel Sponsors
+2. Install PHP dependencies:
+```bash
+composer install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. Install Node.js dependencies:
+```bash
+npm install
+```
 
-### Premium Partners
+4. Environment setup:
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+5. Configure your database in `.env`:
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=wandering_pages
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 
-## Contributing
+6. Run migrations and seeders:
+```bash
+php artisan migrate --seed
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+7. Start the development server:
+```bash
+php artisan serve
+npm run dev
+```
 
-## Code of Conduct
+## 4. Usage Guide
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Running the Application
+- Development server: `php artisan serve`
+- Asset compilation: `npm run dev`
 
-## Security Vulnerabilities
+### Default Login Credentials
+- Admin:
+  - Email: admin@example.com
+  - Password: password
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Important Routes
+- Home: `/`
+- Book Browsing: `/browse-books`
+- Admin Dashboard: `/admin/dashboard`
+- Customer Dashboard: `/dashboard`
+- Cart: `/cart`
+- Checkout: `/customers/order/order-checkout`
 
-## License
+## 5. Project Structure
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Key Directories:
+- `app/` - Core application code
+  - `Http/Controllers/` - Application controllers
+  - `Models/` - Eloquent models
+  - `Services/` - Business logic services
+  - `Traits/` - Reusable traits
+  - `Observers/` - Model observers
+  - `Policies/` - Authorization policies
+- `resources/` - Views and frontend assets
+- `routes/` - Application routes
+- `database/` - Migrations and seeders
+- `config/` - Configuration files
+- `public/` - Publicly accessible files
+- `storage/` - Application storage
+- `tests/` - Application tests
+
+## 6. API Reference
+
+### Book Management
+- `GET /browse-books` - List all books
+- `GET /api/filtered-books` - Get filtered book list
+- `GET /search-books` - Search books
+- `GET /books/{book}` - Get book details
+
+### Cart Operations
+- `GET /cart` - Get cart contents
+- `POST /cart/add` - Add item to cart
+- `POST /cart/update/{item}` - Update cart item
+- `DELETE /cart/remove/{item}` - Remove item from cart
+
+### Order Management
+- `GET /customers/orders` - List customer orders
+- `POST /customers/order/submit` - Submit new order
+- `GET /customers/orders/{order}` - Get order details
+- `POST /orders/{order}/cancel` - Cancel order
+
+### Admin Operations
+- `GET /admin/books` - List all books (admin)
+- `POST /admin/books` - Create new book
+- `PUT /admin/books/{book}` - Update book
+- `DELETE /admin/books/{book}` - Delete book
+- `GET /admin/orders` - List all orders
+- `POST /admin/orders/{order}/status` - Update order status
+
+## 8. Contributing Guide
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Write/update tests
+5. Submit a pull request
+
+---
+
+This documentation provides a comprehensive overview of the Wandering Pages e-commerce application. For more specific details or clarification, please refer to the inline code documentation.
+

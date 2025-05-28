@@ -102,6 +102,7 @@ npm run dev
 ### Important Routes
 - Home: `/`
 - Book Browsing: `/browse-books`
+- Admin Login: `/admin/login`
 - Admin Dashboard: `/admin/dashboard`
 - Customer Dashboard: `/dashboard`
 - Cart: `/cart`

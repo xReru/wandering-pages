@@ -3,18 +3,17 @@
     Order Management System
 @endsection
 @section('content')
-<div class="container mx-auto px-4 py-8">
-
-    <div class="bg-white rounded-lg shadow overflow-hidden">
+<div class="container mx-auto px-2 sm:px-4 py-4 sm:py-6 max-w-7xl">
+    <div class="bg-white rounded-lg shadow-sm border border-gray-100">
         <!-- Bulk Actions -->
-        <div class="p-4 border-b border-gray-200 bg-gray-50">
-            <form id="bulk-action-form" action="{{ route('admin.orders.bulk-update') }}" method="POST" class="flex items-center space-x-4">
+        <div class="p-3 sm:p-4 border-b border-gray-100 bg-gray-50/50">
+            <form id="bulk-action-form" action="{{ route('admin.orders.bulk-update') }}" method="POST" class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
                 @csrf
                 <div class="flex items-center space-x-2">
-                    <input type="checkbox" id="select-all" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                    <label for="select-all" class="text-sm text-gray-700">Select All</label>
+                    <input type="checkbox" id="select-all" class=" p-3 rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    <label for="select-all" class="text-sm font-medium text-gray-700">Select All</label>
                 </div>
-                <select name="status" id="bulk-status" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <select name="status" id="bulk-status" class="p-3 w-full sm:w-auto rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-sm">
                     <option value="">Bulk Actions</option>
                     <option value="pending">Mark as Pending</option>
                     <option value="paid">Mark as Paid</option>
@@ -23,7 +22,7 @@
                     <option value="completed">Mark as Completed</option>
                     <option value="cancelled">Mark as Cancelled</option>
                 </select>
-                <button type="submit" id="bulk-update-btn" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                <button type="submit" id="bulk-update-btn" class="w-full sm:w-auto px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200" disabled>
                     Update Selected
                 </button>
             </form>
@@ -31,37 +30,37 @@
 
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+                <thead class="bg-gray-50/50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Select</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Select</th>
+                        <th class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                        <th class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                        <th class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Date</th>
+                        <th class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                        <th class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach($orders as $order)
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                    <tr class="hover:bg-gray-50 transition-colors duration-150">
+                        <td class="px-3 sm:px-6 py-3 whitespace-nowrap">
                             <input type="checkbox" name="selected_orders[]" value="{{ $order->id }}" class="order-checkbox rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <td class="px-3 sm:px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
                             {{ $order->transaction_no }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td class="px-3 sm:px-6 py-3 whitespace-nowrap text-sm text-gray-600">
                             {{ $order->user->full_name }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td class="px-3 sm:px-6 py-3 whitespace-nowrap text-sm text-gray-600 hidden sm:table-cell">
                             {{ $order->created_at->format('M d, Y H:i') }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td class="px-3 sm:px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
                             ${{ number_format($order->total_amount, 2) }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
+                        <td class="px-3 sm:px-6 py-3 whitespace-nowrap">
+                            <span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
                                 @if($order->status === 'pending') bg-yellow-100 text-yellow-800
                                 @elseif($order->status === 'paid') bg-green-100 text-green-800
                                 @elseif($order->status === 'shipped') bg-blue-100 text-blue-800
@@ -71,20 +70,20 @@
                                 {{ ucfirst($order->status) }}
                             </span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <a href="{{ route('admin.orders.show', $order) }}" class="text-purple-600 hover:text-purple-900">View Details</a>
+                        <td class="px-3 sm:px-6 py-3 whitespace-nowrap text-sm">
+                            <a href="{{ route('admin.orders.show', $order) }}" class="text-indigo-600 hover:text-indigo-900 font-medium transition-colors duration-150">View Details</a>
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <div class="px-6 py-4 border-t border-gray-200">
-            <div class="flex items-center justify-between">
-                <div class="text-sm text-gray-700">
+        <div class="px-3 sm:px-6 py-3 border-t border-gray-100">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div class="text-sm text-gray-600">
                     Showing {{ $orders->firstItem() ?? 0 }} to {{ $orders->lastItem() ?? 0 }} of {{ $orders->total() }} orders
                 </div>
-                <div class="flex space-x-2">
+                <div class="flex space-x-1">
                     {{ $orders->links() }}
                 </div>
             </div>

@@ -82,10 +82,10 @@
                                     </dt>
                                     <dd class="mt-1 text-sm text-gray-900">
                                         <div class="space-y-2">
-                                            <a href="{{ route('admin.genres.create') }}" class="block text-indigo-600 hover:text-indigo-900">
+                                            <a href="{{ route('admin.genres.index') }}" class="block text-indigo-600 hover:text-indigo-900">
                                                 <i class="fas fa-plus mr-1"></i> Add New Genre
                                             </a>
-                                            <a href="{{ route('admin.banner-slides.create') }}" class="block text-indigo-600 hover:text-indigo-900">
+                                            <a href="{{ route('admin.banner-slides.index') }}" class="block text-indigo-600 hover:text-indigo-900">
                                                 <i class="fas fa-plus mr-1"></i> Add New Banner
                                             </a>
                                             <a href="{{ route('admin.bulk-email.index') }}" class="block text-indigo-600 hover:text-indigo-900">

@@ -38,8 +38,8 @@
                         <div class="ml-4">
                             <p class="text-sm font-medium text-gray-500">Quick Actions</p>
                             <div class="mt-2 space-y-2">
-                                <a href="{{ route('admin.books.create') }}" class="block text-sm text-blue-600 hover:text-blue-500 transition-colors duration-200">
-                                    <i class="fas fa-plus mr-1"></i> Add New Book
+                                <a href="{{ route('admin.orders.index') }}" class="block text-sm text-blue-600 hover:text-blue-500 transition-colors duration-200">
+                                    <i class="fas fa-plus mr-1"></i> Go to Orders
                                 </a>
                                 <a href="{{ route('admin.cms.dashboard') }}" class="block text-sm text-blue-600 hover:text-blue-500 transition-colors duration-200">
                                     <i class="fas fa-cogs mr-1"></i> Go to CMS

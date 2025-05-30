@@ -114,7 +114,6 @@ npm run dev
   - `Http/Controllers/` - Application controllers
   - `Models/` - Eloquent models
   - `Services/` - Business logic services
-  - `Traits/` - Reusable traits
   - `Observers/` - Model observers
   - `Policies/` - Authorization policies
 - `resources/` - Views and frontend assets
@@ -152,14 +151,6 @@ npm run dev
 - `DELETE /admin/books/{book}` - Delete book
 - `GET /admin/orders` - List all orders
 - `POST /admin/orders/{order}/status` - Update order status
-
-## 8. Contributing Guide
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Write/update tests
-5. Submit a pull request
 
 ---
 
